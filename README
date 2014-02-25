@@ -1,5 +1,3 @@
-SABcli is a terminal / command line based client for SABnzbd+
-
 SABcurses is a curses client for SABnzbd+
 
 I suggest using the curses version. It is easier and more intuitive to use.
