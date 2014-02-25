@@ -1,6 +1,6 @@
 import sys
 
-class sabMiscController():
+class sabStatusController():
 
     def __init__(self):
         self.statusPresenter = sys.modules["__main__"].statusPresenter

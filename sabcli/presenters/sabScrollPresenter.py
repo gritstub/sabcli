@@ -23,7 +23,7 @@ class sabScrollPresenter( object ):
             index = self.index[self.view]
         else :
             index = -1
-
+'''
         # Redraw * in front of selected item.
         if index == -1:
             self.scroll['firstline'] = 0
@@ -81,3 +81,4 @@ class sabScrollPresenter( object ):
             self.scroll['firstline'] = self.scroll['totallines'] - int(self.size[0])+4
         else:
             self.scroll['firstline'] -= (int(self.size[0])-7)/2
+            '''

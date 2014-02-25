@@ -1,6 +1,6 @@
 import sys
 
-class sabQueueController():
+class sabQueueDetailsController():
 
     def __init__(self):
         self.api = sys.modules["__main__"].api

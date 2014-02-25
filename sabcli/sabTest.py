@@ -13,9 +13,9 @@ def buildDependencyGraph():
 
     loadAPILayer()
 
-#    loadPresentationLayer()
+    #loadPresentationLayer()
 
-#    loadControlLayer()
+    #loadControlLayer()
 
 def loadCoreLayer():
     from sabCore.sabChannel import sabChannel
@@ -52,8 +52,8 @@ def loadPresentationLayer():
     window = sabWindow()
     sys.modules["__main__"].window = window
 
-    from presenters.sabScrollPresenter import sabWindowScrollControl
-    sys.modules["__main__"].scroller = sabWindowScrollControl()
+    from presenters.sabScrollPresenter import sabScrollPresenter
+    sys.modules["__main__"].scroller = sabScrollPresenter()
 
     from presenters.sabNavigationControl import sabNavigationControl
     sys.modules["__main__"].navigation = sabNavigationControl()
@@ -100,9 +100,8 @@ if __name__ == '__main__':
     buildDependencyGraph()
 
     try:
-#        controller.run()
-        api.listHistory()
-
+        print "test"
+        tmp = api.listHistory()
     except Exception as e:
         print repr(e)
         traceback.print_tb(sys.exc_info()[2])
