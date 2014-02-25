@@ -101,7 +101,8 @@ if __name__ == '__main__':
 
     try:
         print "test"
-        tmp = api.listHistory()
+        tmp = api.listQueue()
+        print repr(tmp)
     except Exception as e:
         print repr(e)
         traceback.print_tb(sys.exc_info()[2])

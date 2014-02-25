@@ -20,10 +20,10 @@ class sabController():
     def handleInput(self, keyPressed):
         self.window.addStr('handling keypress: ' + repr(keyPressed))
 
-        if keyPressed == ord('Q'): # quit
+        if keyPressed == ord('Q') or keyPressed == ord('q'): # quit
             self.quit = 1
 
-        elif keyPressed == 260: # Curser left
+        elif keyPressed == 260 and not self.currentController.selected: # Curser left
             i = self.controllers.index(self.currentController)
             if i == 0:
                 i = len(self.controllers) - 1
@@ -31,7 +31,7 @@ class sabController():
                 i = i - 1
             self.currentController = self.controllers[i]
 
-        elif keyPressed == 261: # Curser right
+        elif keyPressed == 261 and not self.currentController.selected: # Curser right
             i = self.controllers.index(self.currentController)
             if i == len(self.controllers) - 1:
                 i = 0
@@ -50,14 +50,13 @@ class sabController():
         elif keyPressed == ord('5') or keyPressed == ord('?'): # help
             self.currentController = self.controllers[4]
 
-        #elif c == ord('P'): self.action = 7 # pause
-        #elif c == ord('S'): self.action = 7 # shutdown
-        #elif c == ord('R'): self.action = 8 # restart
+        elif keyPressed == ord('P') and not self.currentController.selected:
+            self.action = 7 # pause
 
-        elif keyPressed == 259: # Curser up
-            self.currentController.selected = False
+        #elif keyPressed == ord('S'): self.action = 7 # shutdown
+        #elif keyPressed == ord('R'): self.action = 8 # restart
 
-        elif keyPressed == 258: # Curser down
+        elif keyPressed == 258 and not self.currentController.selected: # Curser down
             self.currentController.selected = True
 
     def calculateRefreshDelay(self):

@@ -1,9 +1,9 @@
 import sys
-import curses
 
 class sabScrollController( object ):
 
     def __init__(self):
+        self.scroller = sys.modules["__main__"].scroller
         self.index = []
         self.view = 0
 

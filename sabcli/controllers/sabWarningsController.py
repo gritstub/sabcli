@@ -10,6 +10,7 @@ class sabWarningsController( object ):
 
     def update(self):
         self.state = self.api.listWarnings()
+        return self.state
 
     def display(self):
         self.warningsPresenter.display(self.state)

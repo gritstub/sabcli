@@ -15,6 +15,7 @@ class sabQueueController():
 
     def update(self):
         self.state = self.api.listQueue()
+        return self.state
 
     def display(self):
         self.queuePresenter.display(self.state)

@@ -1,5 +1,4 @@
 import sys
-import curses
 
 class sabScrollPresenter( object ):
 
@@ -23,12 +22,11 @@ class sabScrollPresenter( object ):
             index = self.index[self.view]
         else :
             index = -1
-'''
-        # Redraw * in front of selected item.
+        # draw * in front of selected item.
         if index == -1:
             self.scroll['firstline'] = 0
-
-        if len(self.scroll['item']) > 0:
+'''
+        if len(self.scroll['totallines']) > 0:
             # removing *
             if self.scroll['lastitem'] > -1 and self.scroll['lastitem'] < len(self.scroll['item']):
                 for i in self.scroll['item'][self.scroll['lastitem']]:

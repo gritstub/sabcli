@@ -74,6 +74,9 @@ def loadPresentationLayer():
 
 
 def loadControlLayer():
+    from controllers.sabScrollController import sabScrollController
+    sys.modules["__main__"].scrollController = sabScrollController()
+
     from controllers.sabHelpController import sabHelpController
     sys.modules["__main__"].helpController = sabHelpController()
 
