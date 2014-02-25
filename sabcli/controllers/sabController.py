@@ -1,0 +1,106 @@
+import sys, time
+
+class sabController():
+
+    def __init__(self):
+        self.api = sys.modules["__main__"].api
+        self.window = sys.modules["__main__"].window
+        self.settings = sys.modules["__main__"].settings
+
+        # Public Variables
+        self.last_fetch = {'fetch': '', 'refresh': 10, 'time': time.mktime(time.localtime())}
+
+        self.debug = True
+
+        self.quit = 0
+        self.navigation = sys.modules["__main__"].navigation
+        self.currentController = sys.modules["__main__"].queueController
+        self.controllers = [sys.modules["__main__"].queueController, sys.modules["__main__"].historyController, sys.modules["__main__"].warningsController, sys.modules["__main__"].miscController, sys.modules["__main__"].helpController]
+
+    def handleInput(self, keyPressed):
+        self.window.addStr('handling keypress: ' + repr(keyPressed))
+
+        if keyPressed == ord('Q'): # quit
+            self.quit = 1
+
+        elif keyPressed == 260: # Curser left
+            i = self.controllers.index(self.currentController)
+            if i == 0:
+                i = len(self.controllers) - 1
+            else:
+                i = i - 1
+            self.currentController = self.controllers[i]
+
+        elif keyPressed == 261: # Curser right
+            i = self.controllers.index(self.currentController)
+            if i == len(self.controllers) - 1:
+                i = 0
+            else:
+                i = i + 1
+            self.currentController = self.controllers[i]
+
+        elif keyPressed == ord('1'): # queue
+            self.currentController = self.controllers[0]
+        elif keyPressed == ord('2'): # history
+            self.currentController = self.controllers[1]
+        elif keyPressed == ord('3'): # warnings
+            self.currentController = self.controllers[2]
+        elif keyPressed == ord('4'): # more
+            self.currentController = self.controllers[3]
+        elif keyPressed == ord('5') or keyPressed == ord('?'): # help
+            self.currentController = self.controllers[4]
+
+        #elif c == ord('P'): self.action = 7 # pause
+        #elif c == ord('S'): self.action = 7 # shutdown
+        #elif c == ord('R'): self.action = 8 # restart
+
+        elif keyPressed == 259: # Curser up
+            self.currentController.selected = False
+
+        elif keyPressed == 258: # Curser down
+            self.currentController.selected = True
+
+    def calculateRefreshDelay(self):
+        delay = int((self.last_fetch['refresh'] - ( time.mktime(time.localtime()) - self.last_fetch['time'] )) * 1000 + 100)
+        if delay > 10100:
+            delay = 10100
+        if self.quit:
+            delay = 100;
+        return delay
+
+    def getUserInput(self):
+        keyPressed = self.window.getUserInput()
+
+        if self.debug:
+            self.window.addString(1, 0, 'Captured key: ' + str(keyPressed))
+            self.window.refresh()
+
+        return keyPressed
+
+    def display(self):
+        self.window.clear()
+        self.window.addString(0, 0, '')
+        self.window.addString(1, 50, 'controller: ' + str(self.controllers.index(self.currentController)))
+        self.navigation.display(self.controllers.index(self.currentController), {"paused":"True"})
+        self.currentController.display()
+        self.window.update()
+
+    def run(self):
+
+        while self.quit == 0:
+            self.currentController.update()
+
+            self.display()
+
+            delay = self.calculateRefreshDelay()
+            self.window.wait(delay)
+            keyPressed = self.getUserInput()
+
+            if self.currentController.selected:
+                if not self.currentController.handleInput(keyPressed):
+                    self.handleInput(keyPressed)
+            else:
+                self.handleInput(keyPressed)
+
+
+        self.window.close()
