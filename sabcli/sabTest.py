@@ -100,8 +100,7 @@ if __name__ == '__main__':
     buildDependencyGraph()
 
     try:
-        print "test"
-        tmp = api.listQueue()
+        tmp = api.listWarnings()
         print repr(tmp)
     except Exception as e:
         print repr(e)

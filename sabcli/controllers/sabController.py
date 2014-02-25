@@ -7,12 +7,13 @@ class sabController():
         self.window = sys.modules["__main__"].window
         self.settings = sys.modules["__main__"].settings
 
-        # Public Variables
+        #internal members
         self.last_fetch = {'fetch': '', 'refresh': 10, 'time': time.mktime(time.localtime())}
-
+        self.state = {}
         self.debug = True
-
         self.quit = 0
+
+        #controllers
         self.navigation = sys.modules["__main__"].navigation
         self.currentController = sys.modules["__main__"].queueController
         self.controllers = [sys.modules["__main__"].queueController, sys.modules["__main__"].historyController, sys.modules["__main__"].warningsController, sys.modules["__main__"].miscController, sys.modules["__main__"].helpController]
@@ -100,6 +101,4 @@ class sabController():
                     self.handleInput(keyPressed)
             else:
                 self.handleInput(keyPressed)
-
-
         self.window.close()

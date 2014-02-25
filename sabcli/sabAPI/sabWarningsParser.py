@@ -1,9 +1,7 @@
 class sabWarningsParser():
 
     def parse(self, response = {}):
-
         state = {}
-
         warnings = []
         if response["warnings"] != None:
             try:
@@ -21,8 +19,8 @@ class sabWarningsParser():
         for warning in warnings:
             warning = warning.split("\n")
             warning[2] = warning[2].replace("WARNING: ","")
-            if warning[2].find(':') > 0:
-                warning[2] = warning[2][:warning[2].find(':')]
+            warning[2] = warning[2].replace("filename=","")
+            warning[2] = warning[2].replace(", type=None","")
             entry = {
                 "timestamp" : warning[0],
                 "type": warning[1],
