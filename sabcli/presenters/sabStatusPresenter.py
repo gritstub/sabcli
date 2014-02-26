@@ -14,10 +14,11 @@ class sabStatusPresenter():
     def display_diskwarnings(self, state = {}):
         if float(state['mbleft']) / 1024 > float(state['diskspace2']):
             self.window.addString(1, 3, "WARNING:", curses.color_pair(2))
-        self.window.addStr(" Insufficient free disk space left to finish queue.\n")
+            self.window.addStr(" Insufficient free disk space left to finish queue.\n")
+
         if float(state['mbleft']) / 1024 > float(state['diskspacetotal2']):
             self.window.addString(1, 3, "WARNING:", curses.color_pair(2))
-        self.window.addStr(" Insufficient total disk space to finish queue.\n")
+            self.window.addStr(" Insufficient total disk space to finish queue.\n")
 
     def display_status(self, state = {}):
         print repr(state)
