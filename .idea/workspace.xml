@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b48f9771-20cf-487c-bf9c-5440de2ee94a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sabcli/sabAPI/sabInfoParser.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sabcli/sabCore/xmltodict.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabAPI/sabAPI.py" afterPath="$PROJECT_DIR$/sabcli/sabAPI/sabAPI.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabCore/sabCore.py" afterPath="$PROJECT_DIR$/sabcli/sabCore/sabCore.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabCore/sabEncoder.py" afterPath="$PROJECT_DIR$/sabcli/sabCore/sabEncoder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabHelpController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabHelpController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabHistoryController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabHistoryController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabAPI/sabHistoryParser.py" afterPath="$PROJECT_DIR$/sabcli/sabAPI/sabHistoryParser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabMiscController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabMiscController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/presenters/sabMiscPresenter.py" afterPath="$PROJECT_DIR$/sabcli/presenters/sabMiscPresenter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/presenters/sabNavigationControl.py" afterPath="$PROJECT_DIR$/sabcli/presenters/sabNavigationControl.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabCore/sabParser.py" afterPath="$PROJECT_DIR$/sabcli/sabCore/sabParser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py" afterPath="$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/presenters/sabQueuePresenter.py" afterPath="$PROJECT_DIR$/sabcli/presenters/sabQueuePresenter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabStatusController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabStatusController.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/presenters/sabStatusPresenter.py" afterPath="$PROJECT_DIR$/sabcli/presenters/sabStatusPresenter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabTest.py" afterPath="$PROJECT_DIR$/sabcli/sabTest.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabAPI/sabWarningsParser.py" afterPath="$PROJECT_DIR$/sabcli/sabAPI/sabWarningsParser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabcurses.py" afterPath="$PROJECT_DIR$/sabcli/sabcurses.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sabcli.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -75,7 +55,7 @@
       <file leaf-file-name="sabStatusPresenter.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabStatusPresenter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="29" selection-start="1563" selection-end="1563" vertical-scroll-proportion="0.63150287" vertical-offset="43" max-vertical-offset="945">
+            <state line="16" column="66" selection-start="517" selection-end="517" vertical-scroll-proportion="0.24132948" vertical-offset="43" max-vertical-offset="960">
               <folding />
             </state>
           </provider>
@@ -650,7 +630,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabStatusPresenter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="29" selection-start="1563" selection-end="1563" vertical-scroll-proportion="0.63150287" vertical-offset="43" max-vertical-offset="945">
+        <state line="16" column="66" selection-start="517" selection-end="517" vertical-scroll-proportion="0.24132948" vertical-offset="43" max-vertical-offset="960">
           <folding />
         </state>
       </provider>
