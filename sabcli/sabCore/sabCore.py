@@ -14,8 +14,7 @@ class sabCore():
     def list(self, command):
         result = {}
         path = self.encoder.encode(command)
-        xml = self.channel.requestData(path)
-
-        if xml:
-            result = self.parser.convertSABXMLtoDictionary(xml)
+        response = self.channel.requestData(path)
+        if response:
+            result = self.parser.parse(response)
         return result

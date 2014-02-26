@@ -8,10 +8,13 @@ class sabNavigationControl():
     def displaySpeed(self, state = {}):
         self.speed = "--"
 
-        if state['paused'] == 'True':
+        if "status" not in state:
+            return
+
+        if state['status'] == 'Paused':
             self.speed = "Paused"
         else:
-            self.speed = "%.2f kb/s" %  float(state['kbpersec'])
+            self.speed = state["speed"]
 
         try:
             self.window.addString(0, int(self.window.size[1]) - 7 - len(self.speed), 'Speed: ')

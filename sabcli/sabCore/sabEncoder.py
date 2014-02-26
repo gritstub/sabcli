@@ -5,6 +5,7 @@ class sabEncoder( object ):
         self.settings = sys.modules["__main__"].settings
         self.fetchpath = "/api?apikey=" + self.settings.apikey + "&mode="
         self.servername = self.settings.host + ":" + self.settings.port
+        self.output = "&output=json"
 
     def encode(self, command, args = None,):
         ''' http://sabnzbdplus.wiki.sourceforge.net/Automation+Support '''
@@ -12,14 +13,12 @@ class sabEncoder( object ):
         url_fragment = command
 
         if args == None:
-            if command in ('version', 'shutdown', 'restart'):
+            if command in ('version', 'shutdown', 'restart', 'warnings'):
                 url_fragment += ''
             elif command == 'queue':
-                url_fragment += '&start=START&limit=LIMIT&output=xml'
+                url_fragment += '&start=START&limit=LIMIT'
             elif command == 'history':
-                url_fragment += '&start=START&limit=LIMIT&output=xml'
-            elif command == 'warnings':
-                url_fragment += '&output=xml'
+                url_fragment += '&start=START&limit=LIMIT'
             elif command == 'pause':
                 url_fragment = 'pause'
             elif command == 'resume':
@@ -28,7 +27,7 @@ class sabEncoder( object ):
                 self.stdscr.addstr('unhandled command: ' + command)
                 usage(self, 2)
 
-        url = 'http://' + self.servername + self.fetchpath + url_fragment
+        url = 'http://' + self.servername + self.fetchpath + url_fragment + self.output
         return url
 
 '''        elif len(args) == 1:

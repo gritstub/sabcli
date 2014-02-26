@@ -2,10 +2,10 @@ import  curses
 import sys
 import time
 
-class sabStatusControl():
+class sabStatusPresenter():
 
     def __init__(self):
-        self.window = sys.module["__main__"].window
+        self.window = sys.modules["__main__"].window
 
     def display(self, state = {}):
         self.display_diskwarnings(state)
@@ -20,7 +20,8 @@ class sabStatusControl():
         self.window.addStr(" Insufficient total disk space to finish queue.\n")
 
     def display_status(self, state = {}):
-        last_update = '[Updated: ' + time.strftime("%H:%M:%S", time.localtime(self.last_fetch['time'])) + '] '
+        print repr(state)
+        last_update = '[Updated: ' + time.strftime("%H:%M:%S", time.localtime(state['last_fetch_time'])) + '] '
 
         main_stats = ""
         if 'total_size' in state: # History view
@@ -28,14 +29,15 @@ class sabStatusControl():
         else: # Queue view or pre 0.5.2 view
             main_stats = str('[Queue: %.2f / %.2f GB (%2.0f%%)] [Up: %s]' % (state["downloaded"], state["total_queue"], state["progress_pct"], state["uptime"]))
 
-        disk_stats = '[Disk: %.2f / %.2f GB]' % ( float(rd['diskspace2']), float(rd['diskspacetotal2']))
+        disk_stats = '[Disk: %.2f / %.2f GB]' % ( float(state['diskspace2']), float(state['diskspacetotal2']))
 
-        self.window.addString
-        return self.printLine([disk_stats, main_stats, last_update])
+        status = self.printLine([disk_stats, main_stats, last_update])
+        self.window.addString(int(self.window.size[0]) - 1, 0, status)
+        return
 
     def printLine(self, segments):
-    # Calculate spacing between segments in line.
-        space = int(self.size[1])
+        # Calculate spacing between segments in line.
+        space = int(self.window.size[1])
         ls = len(segments)
 
         for segment in segments:
@@ -51,9 +53,8 @@ class sabStatusControl():
         combined = ''
         for segment in segments:
             # Don't add segment if the combined line is wider than the screen
-            if (len(combined) + len(segment) < int(self.size[1])):
+            if (len(combined) + len(segment) < int(self.window.size[1])):
                 combined += segment + " " * space
 
             # Remove trailing whitespaces from above.
         return combined.strip()
-

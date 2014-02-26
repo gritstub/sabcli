@@ -31,6 +31,9 @@ def loadCoreLayer():
     sys.modules["__main__"].core = sabCore()
 
 def loadAPILayer():
+    from sabAPI.sabInfoParser import sabInfoParser
+    sys.modules["__main__"].infoParser = sabInfoParser()
+
     from sabAPI.sabQueueParser import sabQueueParser
     sys.modules["__main__"].queueParser = sabQueueParser()
 
@@ -52,6 +55,9 @@ def loadPresentationLayer():
     window = sabWindow()
     sys.modules["__main__"].window = window
 
+    from presenters.sabStatusPresenter import sabStatusPresenter
+    sys.modules["__main__"].statusPresenter = sabStatusPresenter()
+
     from presenters.sabScrollPresenter import sabScrollPresenter
     sys.modules["__main__"].scroller = sabScrollPresenter()
 
@@ -68,6 +74,9 @@ def loadPresentationLayer():
     sys.modules["__main__"].miscPresenter = sabMiscPresenter()
 
 def loadControlLayer():
+    from controllers.sabStatusController import sabStatusController
+    sys.modules["__main__"].statusController = sabStatusController()
+
     from controllers.sabHelpController import sabHelpController
     sys.modules["__main__"].helpController = sabHelpController()
 
@@ -100,8 +109,7 @@ if __name__ == '__main__':
     buildDependencyGraph()
 
     try:
-        tmp = api.listWarnings()
-        print repr(tmp)
+        tmp = api.getApiInfo()
     except Exception as e:
         print repr(e)
         traceback.print_tb(sys.exc_info()[2])

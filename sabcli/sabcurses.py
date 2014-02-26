@@ -31,6 +31,9 @@ def loadCoreLayer():
     sys.modules["__main__"].core = sabCore()
 
 def loadAPILayer():
+    from sabAPI.sabInfoParser import sabInfoParser
+    sys.modules["__main__"].infoParser = sabInfoParser()
+
     from sabAPI.sabQueueParser import sabQueueParser
     sys.modules["__main__"].queueParser = sabQueueParser()
 
@@ -50,6 +53,9 @@ def loadPresentationLayer():
     from presenters.sabWindow import sabWindow
     window = sabWindow()
     sys.modules["__main__"].window = window
+
+    from presenters.sabStatusPresenter import sabStatusPresenter
+    sys.modules["__main__"].statusPresenter = sabStatusPresenter()
 
     from presenters.sabScrollPresenter import sabScrollPresenter
     sys.modules["__main__"].scroller = sabScrollPresenter()
@@ -74,6 +80,9 @@ def loadPresentationLayer():
 
 
 def loadControlLayer():
+    from controllers.sabStatusController import sabStatusController
+    sys.modules["__main__"].statusController = sabStatusController()
+
     from controllers.sabScrollController import sabScrollController
     sys.modules["__main__"].scrollController = sabScrollController()
 

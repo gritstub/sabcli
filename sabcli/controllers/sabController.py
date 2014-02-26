@@ -13,8 +13,11 @@ class sabController():
         self.debug = True
         self.quit = 0
 
-        #controllers
+        #presenters
         self.navigation = sys.modules["__main__"].navigation
+        self.status = sys.modules["__main__"].statusController
+
+        #controllers
         self.currentController = sys.modules["__main__"].queueController
         self.controllers = [sys.modules["__main__"].queueController, sys.modules["__main__"].historyController, sys.modules["__main__"].warningsController, sys.modules["__main__"].miscController, sys.modules["__main__"].helpController]
 
@@ -81,14 +84,16 @@ class sabController():
         self.window.clear()
         self.window.addString(0, 0, '')
         self.window.addString(1, 50, 'controller: ' + str(self.controllers.index(self.currentController)))
-        self.navigation.display(self.controllers.index(self.currentController), {"paused":"True"})
+        self.navigation.display(self.controllers.index(self.currentController), self.state)
         self.currentController.display()
+        self.status.update(self.state)
+        self.status.display()
         self.window.update()
 
     def run(self):
 
         while self.quit == 0:
-            self.currentController.update()
+            self.state = self.currentController.update()
 
             self.display()
 

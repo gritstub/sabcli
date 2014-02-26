@@ -2,18 +2,7 @@ class sabWarningsParser():
 
     def parse(self, response = {}):
         state = {}
-        warnings = []
-        if response["warnings"] != None:
-            try:
-                response["warnings"].keys()
-                warnings = [ response["warnings"]['warning'] ]
-            except AttributeError:
-                warnings = response["warnings"]['warning']
-
-            if warnings[0][0] != 1:
-                warnings = warnings[0]
-            if type(warnings) == str or type(warnings) == unicode:
-                warnings = [warnings]
+        warnings = response["warnings"]
 
         log = []
         for warning in warnings:

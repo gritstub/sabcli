@@ -10,10 +10,11 @@ class sabMiscController():
         self.cached = False
 
     def update(self):
-        pass
+        self.state = self.api.getApiInfo()
+        return self.state
 
     def display(self):
-        self.miscPresenter.display({}) # TODO: get version information to pass on to presenter
+        self.miscPresenter.display(self.state)
 
     def handleInput(self, keyPressed):
         handled = False

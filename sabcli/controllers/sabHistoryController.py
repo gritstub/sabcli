@@ -10,6 +10,7 @@ class sabHistoryController( object ):
 
     def update(self):
         self.state = self.api.listHistory()
+        return self.state
 
     def display(self):
         self.historyPresenter.display(self.state)

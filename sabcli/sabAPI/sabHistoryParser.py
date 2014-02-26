@@ -1,25 +1,13 @@
 class sabHistoryParser():
 
     def extractStageLog(self, slot):
-        actions = []
-        stage_log = slot["stage_log"]
-        if stage_log["slot"] != None:
-            try:
-                stage_log["slot"].keys()
-                actions = [stage_log["slot"]]
-            except AttributeError:
-                actions = stage_log["slot"]
+        actions = slot["stage_log"]
         return actions
 
     def extractUnpackOperationStatus(self, action, item):
-        if type(action['actions']['item']) == unicode or type(action['actions']['item']) == str:
-            data = [action['actions']['item']]
-        else:
-            data = action['actions']['item']
-
         unpack_log = []
         unpack_fail = 0
-        for error_string in data:
+        for error_string in action['actions']:
             if error_string.find('Unpacked') < 0:
                 unpack_log.append(error_string)
                 unpack_fail = 1
@@ -29,7 +17,7 @@ class sabHistoryParser():
 
     def parse(self, response = {}):
         state = {"status":response["history"]["status"],
-                 "speed":response["history"]["speed"],
+                 "speed":"%.2f kb/s" % float(response["history"]["kbpersec"]),
                  "size_left":response["history"]["sizeleft"],
                  "time_left":response["history"]["timeleft"],
                  "mb":response["history"]["mb"],
@@ -41,8 +29,7 @@ class sabHistoryParser():
         slots = []
         if response["history"]['slots'] != None:
             try:
-                response["history"]['slots']['slot'].keys()
-                slots = [ response["history"]['slots']['slot'] ]
+                slots = response["history"]['slots']
             except AttributeError:
                 slots = response["history"]['slots']['slot']
 
@@ -69,14 +56,9 @@ class sabHistoryParser():
         return state
 
     def extractRepairOperationStatus(self, action, item):
-        if type(action['actions']['item']) == unicode or type(action['actions']['item']) == str:
-            data = [ action['actions']['item'] ]
-        else:
-            data = action['actions']['item']
-
         repair_log = []
         repair_fail= 0
-        for error_string in data:
+        for error_string in action['actions']:
             if error_string.find('Quick Check OK') < 0 and error_string.find('Repaired in') < 0 and error_string.find('all files correct') < 0:
                 repair_log.append(error_string)
                 repair_fail= 1

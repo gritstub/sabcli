@@ -17,7 +17,7 @@ class sabQueuePresenter( object ):
         self.scroller.display()
 
     def displayFileInformation(self, slot):
-        self.window.pad.addStr('   ' + slot['index'], curses.color_pair(3))
+        self.window.pad.addStr('   ' + str(slot['index']), curses.color_pair(3))
         self.window.pad.addStr(' - ')
         self.window.pad.addStr(slot['filename'])
         self.window.pad.addStr(' [')

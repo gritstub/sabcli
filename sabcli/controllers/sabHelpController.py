@@ -9,7 +9,7 @@ class sabHelpController( object ):
         self.state = {}
 
     def update(self):
-        pass
+        return {}
 
     def display(self):
         self.helpPresenter.display()

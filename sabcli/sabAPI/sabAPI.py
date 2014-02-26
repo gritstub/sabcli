@@ -4,6 +4,7 @@ class sabAPI():
 
     def __init__(self):
         self.core = sys.modules["__main__"].core
+        self.infoParser = sys.modules["__main__"].infoParser
         self.queueParser = sys.modules["__main__"].queueParser
         self.historyParser = sys.modules["__main__"].historyParser
         self.warningsParser= sys.modules["__main__"].warningsParser
@@ -20,5 +21,6 @@ class sabAPI():
         history = self.core.list("history")
         return self.historyParser.parse(history)
 
-    def getSABStatus(self):
-        per = {}
+    def getApiInfo(self):
+        info = self.core.list("version")
+        return self.infoParser.parse(info)

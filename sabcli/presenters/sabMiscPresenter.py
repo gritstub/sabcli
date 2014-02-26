@@ -6,7 +6,7 @@ class sabMiscPresenter():
 
     def display(self, apiInfo = {}):
         self.window.addString(2, 3, 'Option - Description\n')
-        version = 'SABCurses: ' '2.2' #+ VERSION
+        version = 'SABCurses: ' + apiInfo['version']
         self.window.addString(2, int(self.window.size[1]) - len(version), version)
         self.window.addString(3, 0, '-' * int(self.window.size[1] + '\n'))
         self.window.addStr('\n')
@@ -19,7 +19,7 @@ class sabMiscPresenter():
         self.window.pad.addString(3, 35, '- Add a nzb from Newzbin.com to sabnzbd+ by entering a Newzbin Id')
         self.window.pad.addString(4, 8, 'Newzbin ID :\n\n')
 
-        self.window.pad.addStr('   Speed limit: 2.2') #+ str(self.speedlimit))
+        self.window.pad.addStr('   Speed limit: ' + apiInfo["speedlimit"])
         self.window.pad.addString(6, 35, '- Limit the download speed of sabnzbd+ (Useful to avoid network congestion)')
         self.window.pad.addString(7, 8, 'New limit :\n\n')
 
