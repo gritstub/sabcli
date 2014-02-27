@@ -27,6 +27,8 @@ class sabNavigationController():
         self.updateSpeed(state)
         self.updateSelectedView(selected_view)
 
+    def displayKeyPress(self, key_press):
+        self.navigation.displayKeyPress(key_press)
 
     def display(self):
         self.navigation.display(self.status)

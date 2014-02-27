@@ -5,6 +5,10 @@ class sabNavigationPresenter():
     def __init__(self):
         self.window = sys.modules["__main__"].window
 
+    def displayKeyPress(self, key_press):
+        self.window.addString(1, int(self.window.size[1]) - len(key_press), key_press)
+        self.window.refresh()
+
     def displaySpeed(self, state = {}):
         if 'speed' not in state:
             return

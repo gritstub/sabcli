@@ -76,36 +76,40 @@ class sabController():
 
         if self.debug:
             key_press = 'Captured key: ' + str(keyPressed)
-            self.window.addString(1, int(self.window.size[1]) - len(key_press), key_press)
-            self.window.refresh()
+            self.navigation.displayKeyPress(key_press)
 
         return keyPressed
 
     def display(self):
         self.window.clear()
-        self.window.addString(0, 0, '')
-        self.window.addString(1, 50, 'controller: ' + str(self.controllers.index(self.currentController)))
-        self.navigation.update(self.controllers.index(self.currentController), self.state)
         self.navigation.display()
         self.currentController.display()
-        self.status.update(self.state)
         self.status.display()
         self.window.update()
+
+    def updateApplicationState(self):
+        self.state = self.currentController.update()
+        self.navigation.update(self.controllers.index(self.currentController), self.state)
+        self.status.update(self.state)
+
+    def handleUserEvents(self):
+        keyPressed = self.getUserInput()
+        if self.currentController.selected:
+            if not self.currentController.handleInput(keyPressed):
+                self.handleInput(keyPressed)
+        else:
+            self.handleInput(keyPressed)
 
     def run(self):
 
         while self.quit == 0:
-            self.state = self.currentController.update()
+            self.updateApplicationState()
 
             self.display()
 
             delay = self.calculateRefreshDelay()
             self.window.wait(delay)
-            keyPressed = self.getUserInput()
 
-            if self.currentController.selected:
-                if not self.currentController.handleInput(keyPressed):
-                    self.handleInput(keyPressed)
-            else:
-                self.handleInput(keyPressed)
+            self.handleUserEvents()
+
         self.window.close()
