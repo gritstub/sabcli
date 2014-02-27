@@ -14,7 +14,7 @@ class sabController():
         self.quit = 0
 
         #presenters
-        self.navigation = sys.modules["__main__"].navigation
+        self.navigation = sys.modules["__main__"].navigationController
         self.status = sys.modules["__main__"].statusController
 
         #controllers
@@ -75,7 +75,8 @@ class sabController():
         keyPressed = self.window.getUserInput()
 
         if self.debug:
-            self.window.addString(1, 0, 'Captured key: ' + str(keyPressed))
+            key_press = 'Captured key: ' + str(keyPressed)
+            self.window.addString(1, int(self.window.size[1]) - len(key_press), key_press)
             self.window.refresh()
 
         return keyPressed
@@ -84,7 +85,8 @@ class sabController():
         self.window.clear()
         self.window.addString(0, 0, '')
         self.window.addString(1, 50, 'controller: ' + str(self.controllers.index(self.currentController)))
-        self.navigation.display(self.controllers.index(self.currentController), self.state)
+        self.navigation.update(self.controllers.index(self.currentController), self.state)
+        self.navigation.display()
         self.currentController.display()
         self.status.update(self.state)
         self.status.display()

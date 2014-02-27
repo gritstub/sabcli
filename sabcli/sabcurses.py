@@ -54,14 +54,14 @@ def loadPresentationLayer():
     window = sabWindow()
     sys.modules["__main__"].window = window
 
+    from presenters.sabNavigationPresenter import sabNavigationPresenter
+    sys.modules["__main__"].navigationPresenter = sabNavigationPresenter()
+
     from presenters.sabStatusPresenter import sabStatusPresenter
     sys.modules["__main__"].statusPresenter = sabStatusPresenter()
 
     from presenters.sabScrollPresenter import sabScrollPresenter
     sys.modules["__main__"].scroller = sabScrollPresenter()
-
-    from presenters.sabNavigationControl import sabNavigationControl
-    sys.modules["__main__"].navigation = sabNavigationControl()
 
     from presenters.sabQueuePresenter import sabQueuePresenter
     sys.modules["__main__"].queuePresenter = sabQueuePresenter()
@@ -80,6 +80,9 @@ def loadPresentationLayer():
 
 
 def loadControlLayer():
+    from controllers.sabNavigationController import sabNavigationController
+    sys.modules["__main__"].navigationController = sabNavigationController()
+
     from controllers.sabStatusController import sabStatusController
     sys.modules["__main__"].statusController = sabStatusController()
 

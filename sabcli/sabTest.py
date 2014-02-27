@@ -61,8 +61,8 @@ def loadPresentationLayer():
     from presenters.sabScrollPresenter import sabScrollPresenter
     sys.modules["__main__"].scroller = sabScrollPresenter()
 
-    from presenters.sabNavigationControl import sabNavigationControl
-    sys.modules["__main__"].navigation = sabNavigationControl()
+    from presenters.sabNavigationPresenter import sabNavigationPresenter
+    sys.modules["__main__"].navigation = sabNavigationPresenter()
 
     from presenters.sabQueuePresenter import sabQueuePresenter
     sys.modules["__main__"].queuePresenter = sabQueuePresenter()
