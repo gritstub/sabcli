@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b48f9771-20cf-487c-bf9c-5440de2ee94a" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/sabcli/presenters/sabNavigationControl.py" afterPath="$PROJECT_DIR$/sabcli/presenters/sabNavigationPresenter.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabTest.py" afterPath="$PROJECT_DIR$/sabcli/sabTest.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabcurses.py" afterPath="$PROJECT_DIR$/sabcli/sabcurses.py" />
+    <list default="true" id="b48f9771-20cf-487c-bf9c-5440de2ee94a" name="Default" comment="colots a updates">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sabcli.iws" />
@@ -77,7 +73,7 @@
       <file leaf-file-name="sabController.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="89" selection-start="3201" selection-end="3201" vertical-scroll-proportion="0.57815844" vertical-offset="900" max-vertical-offset="1740">
+            <state line="78" column="89" selection-start="3201" selection-end="3201" vertical-scroll-proportion="0.58064514" vertical-offset="900" max-vertical-offset="1740">
               <folding />
             </state>
           </provider>
@@ -471,6 +467,11 @@
       <created>1377949549736</created>
       <updated>1377949549736</updated>
     </task>
+    <task id="LOCAL-00001" summary="lots a updates">
+      <created>1393532057543</created>
+      <updated>1393532057543</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -479,16 +480,17 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32804233" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25824964" sideWeight="0.6719577" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32891247" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25824964" sideWeight="0.4272487" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25824964" sideWeight="0.4272487" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25824964" sideWeight="0.6710875" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -506,6 +508,8 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="lots a updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="lots a updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -622,7 +626,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabController.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="89" selection-start="3201" selection-end="3201" vertical-scroll-proportion="0.57815844" vertical-offset="900" max-vertical-offset="1740">
+        <state line="78" column="89" selection-start="3201" selection-end="3201" vertical-scroll-proportion="0.58064514" vertical-offset="900" max-vertical-offset="1740">
           <folding />
         </state>
       </provider>
