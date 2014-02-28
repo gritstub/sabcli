@@ -7,13 +7,13 @@ class sabCore():
         self.parser = sys.modules["__main__"].parser
 
     def sendCommand(self, command):
-        path = self.encoder.encode(command)
+        path = self.encoder.encodeQuery(command)
         # TODO: figure out the other variables
         self.channel.sendCommand(path, {}, {})
 
     def list(self, command):
         result = {}
-        path = self.encoder.encode(command)
+        path = self.encoder.encodeQuery(command)
         response = self.channel.requestData(path)
         if response:
             result = self.parser.parse(response)

@@ -117,6 +117,7 @@ class sabQueueController():
         return handled
 
     def handleDelete(self):
+        self.api.
         #self.action = 6 # TODO: replace with call to api
         return True
 
