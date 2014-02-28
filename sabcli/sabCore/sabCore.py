@@ -6,10 +6,10 @@ class sabCore():
         self.encoder = sys.modules["__main__"].encoder
         self.parser = sys.modules["__main__"].parser
 
-    def sendCommand(self, command):
-        path = self.encoder.encodeQuery(command)
+    def sendQueueCommand(self, command, args):
+        path = self.encoder.encodeQueueCommand(command, args)
         # TODO: figure out the other variables
-        self.channel.sendCommand(path, {}, {})
+        self.channel.sendCommand(path)
 
     def list(self, command):
         result = {}
