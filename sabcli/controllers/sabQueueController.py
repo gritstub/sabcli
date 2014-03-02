@@ -65,20 +65,19 @@ class sabQueueController():
         return handled
 
     def handleResume(self):
-        if self.index > -1:
-            self.api.resumeDownload(self.index)
+        if self.index > -1 and self.index < len(self.state["queue"]):
+            self.api.resumeDownload(self.state["queue"][self.index]["id"])
         return True
 
     def handlePause(self):
-        if self.index > -1:
-            self.api.pauseDownload(self.index)
+        if self.index > -1 and self.index < len(self.state["queue"]):
+            self.api.pauseDownload(self.state["queue"][self.index]["id"])
         return True
 
     def handleDelete(self):
         if self.index > -1 and self.index < len(self.state["queue"]):
-            download = self.state["queue"][self.index]
-            self.api.deleteDownload(download["id"])
-            return True
+            self.api.deleteDownload(self.state["queue"][self.index]["id"])
+        return True
 
     def handleUp(self):
         if self.selection == -1:

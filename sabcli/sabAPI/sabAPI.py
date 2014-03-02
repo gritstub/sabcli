@@ -45,3 +45,12 @@ class sabAPI():
 
     def deleteDownloadHistory(self, id):
         self.core.sendHistoryCommand("delete", id)
+
+    def pauseServer(self):
+        self.core.sendGeneralCommand("pause")
+
+    def resumeServer(self):
+        self.core.sendGeneralCommand("resume")
+
+    def shutdownServer(self):
+        self.core.sendGeneralCommand("shutdown")

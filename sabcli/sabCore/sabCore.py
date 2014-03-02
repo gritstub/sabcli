@@ -6,6 +6,10 @@ class sabCore():
         self.encoder = sys.modules["__main__"].encoder
         self.parser = sys.modules["__main__"].parser
 
+    def sendGeneralCommand(self, command):
+        path = self.encoder.encodeGeneralCommand(command)
+        self.channel.sendCommand(path)
+
     def sendHistoryCommand(self, command, args):
         path = self.encoder.encodeHistoryCommand(command, args)
         self.channel.sendCommand(path)

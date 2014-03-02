@@ -56,15 +56,12 @@ class sabController():
         elif keyPressed == ord('5') or keyPressed == ord('?'): # help
             self.currentController = self.controllers[4]
 
-        elif keyPressed == ord('P'): # pause
-            self.debug = True
-            # api call
+        elif keyPressed == ord('p'): # pause
+            self.api.pauseServer()
+        elif keyPressed == ord('r'): # resume
+            self.api.resumeServer()
         elif keyPressed == ord('S'): # shutdown
-            self.debug = True
-            # api call
-        elif keyPressed == ord('R'): # restart
-            self.debug = True
-            # api call
+            self.api.shutdownServer()
         elif keyPressed == 258: # Curser down
             self.currentController.selected = True
         elif keyPressed == 259: # Curser up

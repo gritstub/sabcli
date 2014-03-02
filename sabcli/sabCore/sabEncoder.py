@@ -11,21 +11,20 @@ class sabEncoder( object ):
         ''' http://sabnzbdplus.wiki.sourceforge.net/Automation+Support '''
         url_fragment = command
 
-        if command in ('version', 'shutdown', 'restart', 'warnings'):
+        if command in ('version', 'warnings'):
             url_fragment += ''
         elif command == 'queue':
             url_fragment += '&start=START&limit=LIMIT'
         elif command == 'history':
             url_fragment += '&start=START&limit=LIMIT'
-        elif command == 'pause':
-            url_fragment = 'pause'
-        elif command == 'resume':
-            url_fragment = 'resume'
         else:
             self.stdscr.addstr('unhandled command: ' + command)
 
-        url = 'http://' + self.servername + self.fetchpath + url_fragment + self.output
-        return url
+        return 'http://' + self.servername + self.fetchpath + url_fragment + self.output
+
+    def encodeGeneralCommand(self, command):
+        url_fragment = command
+        return 'http://' + self.servername + self.fetchpath + url_fragment + self.output
 
     def encodeQueueCommand(self, command, args):
         url_fragment = command
