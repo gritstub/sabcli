@@ -28,20 +28,22 @@ class sabController():
             self.quit = 1
 
         elif keyPressed == 260: # Curser left
-            i = self.controllers.index(self.currentController)
-            if i == 0:
-                i = len(self.controllers) - 1
+            current_controller_index = self.controllers.index(self.currentController)
+            if current_controller_index > 0:
+                current_controller_index -= 1
             else:
-                i = i - 1
-            self.currentController = self.controllers[i]
+                current_controller_index = len(self.controllers) - 1
+
+            self.currentController = self.controllers[current_controller_index]
 
         elif keyPressed == 261: # Curser right
-            i = self.controllers.index(self.currentController)
-            if i == len(self.controllers) - 1:
-                i = 0
+            current_controller_index = self.controllers.index(self.currentController)
+            if current_controller_index < len(self.controllers) - 1:
+                current_controller_index += 1
             else:
-                i = i + 1
-            self.currentController = self.controllers[i]
+                current_controller_index = 0
+
+            self.currentController = self.controllers[current_controller_index]
 
         elif keyPressed == ord('1'): # queue
             self.currentController = self.controllers[0]
@@ -54,13 +56,18 @@ class sabController():
         elif keyPressed == ord('5') or keyPressed == ord('?'): # help
             self.currentController = self.controllers[4]
 
-        elif keyPressed == ord('P') and not self.currentController.selected:
-            self.action = 7 # pause
-
-        #elif keyPressed == ord('S'): self.action = 7 # shutdown
-        #elif keyPressed == ord('R'): self.action = 8 # restart
-
-        elif keyPressed == 258 and not self.currentController.selected: # Curser down
+        elif keyPressed == ord('P'): # pause
+            self.debug = True
+            # api call
+        elif keyPressed == ord('S'): # shutdown
+            self.debug = True
+            # api call
+        elif keyPressed == ord('R'): # restart
+            self.debug = True
+            # api call
+        elif keyPressed == 258: # Curser down
+            self.currentController.selected = True
+        elif keyPressed == 259: # Curser up
             self.currentController.selected = True
 
     def calculateRefreshDelay(self):
