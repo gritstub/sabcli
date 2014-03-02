@@ -10,7 +10,7 @@ class sabCore():
         path = self.encoder.encodeHistoryCommand(command, args)
         self.channel.sendCommand(path)
 
-    def sendQueueCommand(self, command, args):
+    def sendQueueCommand(self, command, *args):
         path = self.encoder.encodeQueueCommand(command, args)
         self.channel.sendCommand(path)
 

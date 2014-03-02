@@ -12,6 +12,7 @@ class sabQueueController():
 
         self.index = -1
         self.selection = -1
+        self.priority = ['Low', 'Normal','High','Force','Repair']
 
     def update(self):
         self.state = self.api.listQueue()
@@ -64,11 +65,13 @@ class sabQueueController():
         return handled
 
     def handleResume(self):
-        #self.action = 5 # TODO: replace with call to api
+        if self.index > -1:
+            self.api.resumeDownload(self.index)
         return True
 
     def handlePause(self):
-        #self.action = 4 # TODO: replace with call to api
+        if self.index > -1:
+            self.api.pauseDownload(self.index)
         return True
 
     def handleDelete(self):
@@ -89,8 +92,10 @@ class sabQueueController():
         return handled
 
     def increaseDownloadPriority(self, download):
-        if download['priority'] < 2:
-            download["priority"] += 1
+        priority_index = self.priority.index(download["priority"])
+
+        if priority_index < 2:
+            download["priority"] = self.priority[priority_index + 1]
             self.api.changeDownloadPriority(download["id"], download["priority"])
         return True
 
@@ -101,13 +106,14 @@ class sabQueueController():
         return True
 
     def scrollUp(self):
-        handled = False
         if self.index > -1:
             self.index -= 1
-            handled = True
+        else:
+            self.index = len(self.state["queue"]) -1
+            self.selected = True
         if self.index == -1:
             self.selected = False
-        return handled
+        return True
 
     def handleDown(self):
         handled = False
@@ -122,15 +128,18 @@ class sabQueueController():
         return handled
 
     def scrollDown(self):
-        handled = False
         if self.index < len(self.state["queue"]) -1:
             self.index += 1
-            handled = True
-        return handled
+        else:
+            self.index = -1
+            self.selected = False
+        return True
 
     def decreaseDownloadPriority(self, download):
-        if download['priority'] > 0:
-            download["priority"] -= 1
+        priority_index = self.priority.index(download["priority"])
+
+        if priority_index > 0:
+            download["priority"] = self.priority[priority_index - 1]
             self.api.changeDownloadPriority(download["id"], download["priority"])
         return True
 
@@ -141,12 +150,14 @@ class sabQueueController():
         return True
 
     def handleLeft(self):
-        handled = False
-        return handled
+        if self.index > -1 and self.selection > -1:
+            self.selection -= 1
+        return True
 
     def handleRight(self):
-        handled = False
-        return handled
+        if self.index > -1 and self.selection < 2:
+            self.selection +=1
+        return True
 
     def handlePageUp(self):
         handled = True

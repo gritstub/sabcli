@@ -27,7 +27,7 @@ class sabController():
         if keyPressed == ord('Q') or keyPressed == ord('q'): # quit
             self.quit = 1
 
-        elif keyPressed == 260 and not self.currentController.selected: # Curser left
+        elif keyPressed == 260: # Curser left
             i = self.controllers.index(self.currentController)
             if i == 0:
                 i = len(self.controllers) - 1
@@ -35,7 +35,7 @@ class sabController():
                 i = i - 1
             self.currentController = self.controllers[i]
 
-        elif keyPressed == 261 and not self.currentController.selected: # Curser right
+        elif keyPressed == 261: # Curser right
             i = self.controllers.index(self.currentController)
             if i == len(self.controllers) - 1:
                 i = 0
@@ -94,12 +94,12 @@ class sabController():
 
     def handleUserEvents(self):
         keyPressed = self.getUserInput()
+        if not self.currentController.selected:
+            self.handleInput(keyPressed)
+
         if self.currentController.selected:
             if not self.currentController.handleInput(keyPressed):
                 self.handleInput(keyPressed)
-        else:
-            self.handleInput(keyPressed)
-            self.currentController.handleInput(keyPressed)
 
     def waitForRefresh(self):
         delay = self.calculateRefreshDelay()

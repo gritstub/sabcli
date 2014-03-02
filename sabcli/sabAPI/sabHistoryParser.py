@@ -17,13 +17,13 @@ class sabHistoryParser():
         item["unpack_log"] = unpack_log
 
     def parseHistory(self, response):
-        print repr(response)
         slots = response["history"]['slots']
 
         history = []
         for slot in slots:
             item = {"name": slot["name"],
                     "size": slot["size"],
+                    "id":slot["nzo_id"],
                     "status": slot["status"],
             }
 
@@ -47,7 +47,6 @@ class sabHistoryParser():
                  "size_left":response["history"]["sizeleft"],
                  "time_left":response["history"]["timeleft"],
                  "mb":response["history"]["mb"],
-                 "id":response["history"]["nzo_id"],
                  "mbleft":response["history"]["mbleft"],
                  "diskspace2":response["history"]["diskspace2"],
                  "diskspacetotal2":response["history"]["diskspacetotal2"],

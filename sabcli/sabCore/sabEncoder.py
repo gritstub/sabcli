@@ -27,7 +27,7 @@ class sabEncoder( object ):
         url = 'http://' + self.servername + self.fetchpath + url_fragment + self.output
         return url
 
-    def encodeQueueAction(self, command, args):
+    def encodeQueueCommand(self, command, args):
         url_fragment = command
         if len(args) == 1:
             if command == 'queuecompleted':

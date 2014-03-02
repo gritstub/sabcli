@@ -5,7 +5,6 @@ class sabQueuePresenter( object ):
     def __init__(self):
         self.window = sys.modules["__main__"].window
         self.scroller = sys.modules["__main__"].scroller
-        self.priority = { 'Low': -1, 'Normal': 0, 'High': 1, 'Force': 2, 'Repair': 3}
         self.options = ['Download', 'Repair', 'Unpack', 'Delete']
 
     def wait(self, delay):
@@ -15,16 +14,29 @@ class sabQueuePresenter( object ):
         self.displayQueue(state)
         self.scroller.display()
 
-    def displayFileInformation(self, slot):
+    def displayFileInformation(self, slot, current_selection = -1):
         self.window.pad.addStr('   ' + str(slot['index']), curses.color_pair(3))
         self.window.pad.addStr(' - ')
-        self.window.pad.addStr(slot['filename'])
+        if current_selection == 0:
+            self.window.pad.addStr(slot['filename'], curses.color_pair(2))
+        else:
+            self.window.pad.addStr(slot['filename'])
+
         self.window.pad.addStr(' [')
         self.window.pad.addStr(slot['avg_age'], curses.color_pair(3))
         self.window.pad.addStr('/')
-        self.window.pad.addStr(slot['priority'], curses.color_pair(3))
+
+        if current_selection == 1:
+            self.window.pad.addStr(slot['priority'], curses.color_pair(2))
+        else:
+            self.window.pad.addStr(slot['priority'], curses.color_pair(3))
         self.window.pad.addStr('/')
-        self.window.pad.addStr(self.options[int(slot['unpackopts'])], curses.color_pair(3))
+
+        if current_selection == 2:
+            self.window.pad.addStr(self.options[int(slot['unpackopts'])], curses.color_pair(2))
+        else:
+            self.window.pad.addStr(self.options[int(slot['unpackopts'])], curses.color_pair(3))
+
         self.window.pad.addStr('] (')
         self.window.pad.addStr(slot['status'], curses.color_pair(2))
         self.window.pad.addStr(')\n')
@@ -41,11 +53,9 @@ class sabQueuePresenter( object ):
         self.window.pad.addStr('      ')
         self.window.pad.addStr(slot["timeleft"], curses.color_pair(2))
         self.window.pad.addStr(' ')
-        tail = "%.2f / %.2f [%2.0f%%]" % (
-        float(slot['mb']) - float(slot['mb_left']), float(slot['mb']), float(slot['percentage']) )
+        tail = "%.2f / %.2f [%2.0f%%]" % (float(slot['mb']) - float(slot['mb_left']), float(slot['mb']), float(slot['percentage']) )
         tailLength = len(tail)
-        charsLeft = int(self.window.size[1]) - len(slot["timeleft"]) - tailLength - 9 - (
-        alignementLength + 9 - tailLength) - 5
+        charsLeft = int(self.window.size[1]) - len(slot["timeleft"]) - tailLength - 9 - (alignementLength + 9 - tailLength) - 5
         pct = (charsLeft) / 100.0 * float(slot['percentage'])
         progress = "=" * int(pct) + ">" + " " * (charsLeft - int(pct))
         self.window.pad.addStr('[' + progress + ']', curses.color_pair(5) | curses.A_BOLD) #
@@ -64,7 +74,10 @@ class sabQueuePresenter( object ):
         padding = self.calculateProgressBarPadding(state)
 
         for slot in state["queue"]:
-            self.displayFileInformation(slot)
+            if slot["index"] == state["current_index"]:
+                self.displayFileInformation(slot, state["current_selection"])
+            else:
+                self.displayFileInformation(slot)
             self.displayProgress(padding, slot)
         
         self.displaySelectedItem(state)
@@ -77,5 +90,6 @@ class sabQueuePresenter( object ):
                 self.window.pad.addString(i + start, 0, '*')
 
     def scrollViewPort(self, state):
+        #self.window.pad.scrollToLine()
         pass
 
