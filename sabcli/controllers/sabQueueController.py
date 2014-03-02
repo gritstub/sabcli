@@ -18,6 +18,8 @@ class sabQueueController():
         return self.state
 
     def display(self):
+        self.state["current_index"] = self.index
+        self.state["current_selection"] = self.selection
         self.queuePresenter.display(self.state)
 
     def handleInput(self, keyPressed):
@@ -41,17 +43,17 @@ class sabQueueController():
         elif keyPressed == 258:  # Curser down
             handled = self.handleDown()
 
-        elif keyPressed == 339: # Page up
-            handled = self.handlePageUp()
-
-        elif keyPressed == 338: # Page down
-            handled = self.handlePageDown()
-
         elif keyPressed == 260: # Left
             handled = self.handleLeft()
 
         elif keyPressed == 261: # Right
             handled = self.handleRight()
+
+        elif keyPressed == 339: # Page up
+            handled = self.handlePageUp()
+
+        elif keyPressed == 338: # Page down
+            handled = self.handlePageDown()
 
         elif keyPressed == 262: # Home
             handled = self.handleHome()
@@ -61,64 +63,82 @@ class sabQueueController():
 
         return handled
 
-    def handlePageUp(self):
-        handled = True
-        if self.index[self.view] - 5 > -1:
-            self.index[self.view] = self.index[self.view] - 5
-        else:
-            self.index[self.view] = -1
-        return handled
-
-    def handlePageDown(self):
-        handled = True
-        if self.index[self.view] == -1:
-            if self.indexCount[self.view] >= 5:
-                self.index[self.view] = 5
-            else:
-                self.index[self.view] = self.indexCount[self.view]
-        elif self.index[self.view] + 5 <= self.indexCount[self.view]:
-            self.index[self.view] = self.index[self.view] + 5
-        else:
-            self.index[self.view] = self.indexCount[self.view]
-        return handled
-
-    def handleHome(self):
-        self.index = 0
+    def handleResume(self):
+        #self.action = 5 # TODO: replace with call to api
         return True
 
-    def handleEnd(self):
-        self.index = len(self.state["queue"]) - 1
+    def handlePause(self):
+        #self.action = 4 # TODO: replace with call to api
         return True
 
-    def handleDown(self):
-        if self.selection == -1:
-            if self.index < 20: # TODO find max limit based on state:
-                self.index += 1
-                handled = True
-        if self.selection == 1 and self.details['priority'][self.index[0]] > -1:
-            self.details['priority'][self.index[0]] -= 1
-            #self.action = 11 # TODO: replace with call to api
-            handled = True
-        if self.selection == 2 and self.details['unpackopts'][self.index[0]] < 3:
-            self.details['unpackopts'][self.index[0]] += 1
-            #self.action = 12 # TODO: replace with call to api
-            handled = True
-        return handled
+    def handleDelete(self):
+        if self.index > -1 and self.index < len(self.state["queue"]):
+            download = self.state["queue"][self.index]
+            self.api.deleteDownload(download["id"])
+            return True
 
     def handleUp(self):
         if self.selection == -1:
-            if self.index > -1:
-                self.index -= 1
-                handled = True
-        if self.selection == 1 and self.state['priority'][self.index[0]] < 2:
-            #self.state['priority'] += 1
-            handled = True
-            # self.action = 11 # TODO: replace with call to api
-        if self.selection == 2 and self.details['unpackopts'][self.index[0]] > 0:
-            self.state['unpackopts'][self.selected] -= 1
-            handled = True
-            #self.action = 12 # TODO: replace with call to api
+            handled = self.scrollUp()
+        if self.selection == 1:
+            download = self.state["queue"][self.index]
+            handled = self.increaseDownloadPriority(download)
+        if self.selection == 2:
+            download = self.state["queue"][self.index]
+            handled = self.addDownloadPostPocessingSteps(download)
         return handled
+
+    def increaseDownloadPriority(self, download):
+        if download['priority'] < 2:
+            download["priority"] += 1
+            self.api.changeDownloadPriority(download["id"], download["priority"])
+        return True
+
+    def addDownloadPostPocessingSteps(self, download):
+        if download['unpackopts'] < 3:
+            self.state['unpackopts'][self.selected] += 1
+            self.api.changeDownloadPostProcessing(download["id"], download["unpackopts"])
+        return True
+
+    def scrollUp(self):
+        handled = False
+        if self.index > -1:
+            self.index -= 1
+            handled = True
+        if self.index == -1:
+            self.selected = False
+        return handled
+
+    def handleDown(self):
+        handled = False
+        if self.selection == -1:
+            handled = self.scrollDown()
+        if self.selection == 1:
+            download = self.state["queue"][self.index]
+            handled = self.decreaseDownloadPriority(download)
+        if self.selection == 2:
+            download = self.state["queue"][self.index]
+            handled = self.removeDownloadProcessingSteps(download)
+        return handled
+
+    def scrollDown(self):
+        handled = False
+        if self.index < len(self.state["queue"]) -1:
+            self.index += 1
+            handled = True
+        return handled
+
+    def decreaseDownloadPriority(self, download):
+        if download['priority'] > 0:
+            download["priority"] -= 1
+            self.api.changeDownloadPriority(download["id"], download["priority"])
+        return True
+
+    def removeDownloadProcessingSteps(self, download):
+        if download['unpackopts'] > 0:
+            download['unpackopts'] -= 1
+            self.api.changeDownloadPostProcessing(download["id"], download["unpackopts"])
+        return True
 
     def handleLeft(self):
         handled = False
@@ -128,15 +148,26 @@ class sabQueueController():
         handled = False
         return handled
 
-    def handleDelete(self):
-        #self.api.
-        #self.action = 6 # TODO: replace with call to api
+    def handlePageUp(self):
+        handled = True
+        if self.index - 5 > -1:
+            self.index -= 5
+        else:
+            self.index = -1
+        return handled
+
+    def handlePageDown(self):
+        maxListIndex = len(self.state["queue"]) - 1
+        if self.index + 5 <= maxListIndex:
+            self.index += 5
+        else:
+            self.index = maxListIndex
         return True
 
-    def handleResume(self):
-        #self.action = 5 # TODO: replace with call to api
+    def handleHome(self):
+        self.index = 0
         return True
 
-    def handlePause(self):
-        #self.action = 4 # TODO: replace with call to api
+    def handleEnd(self):
+        self.index = len(self.state["queue"]) - 1
         return True

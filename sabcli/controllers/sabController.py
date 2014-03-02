@@ -99,6 +99,7 @@ class sabController():
                 self.handleInput(keyPressed)
         else:
             self.handleInput(keyPressed)
+            self.currentController.handleInput(keyPressed)
 
     def waitForRefresh(self):
         delay = self.calculateRefreshDelay()

@@ -3,7 +3,8 @@ import sys
 class sabScrollController( object ):
 
     def __init__(self):
-        self.scroller = sys.modules["__main__"].scroller
+        self.view = 0
+'''        self.scroller = sys.modules["__main__"].scroller
         self.index = []
         self.view = 0
 
@@ -15,3 +16,4 @@ class sabScrollController( object ):
 
     def display(self):
         self.print_scroll()
+'''

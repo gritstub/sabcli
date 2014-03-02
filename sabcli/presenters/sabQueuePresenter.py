@@ -8,7 +8,6 @@ class sabQueuePresenter( object ):
         self.priority = { 'Low': -1, 'Normal': 0, 'High': 1, 'Force': 2, 'Repair': 3}
         self.options = ['Download', 'Repair', 'Unpack', 'Delete']
 
-
     def wait(self, delay):
         self.window.wait(delay)
 
@@ -67,3 +66,16 @@ class sabQueuePresenter( object ):
         for slot in state["queue"]:
             self.displayFileInformation(slot)
             self.displayProgress(padding, slot)
+        
+        self.displaySelectedItem(state)
+        self.scrollViewPort(state)
+
+    def displaySelectedItem(self, state):
+        if state["current_index"] > -1:
+            start = state["current_index"] * 3
+            for i in [0 , 1]:
+                self.window.pad.addString(i + start, 0, '*')
+
+    def scrollViewPort(self, state):
+        pass
+

@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b48f9771-20cf-487c-bf9c-5440de2ee94a" name="Default" comment="more refactoring">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabAPI/sabAPI.py" afterPath="$PROJECT_DIR$/sabcli/sabAPI/sabAPI.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabCore/sabCore.py" afterPath="$PROJECT_DIR$/sabcli/sabCore/sabCore.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabCore/sabEncoder.py" afterPath="$PROJECT_DIR$/sabcli/sabCore/sabEncoder.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabAPI/sabHistoryParser.py" afterPath="$PROJECT_DIR$/sabcli/sabAPI/sabHistoryParser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabQueueController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabQueueController.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py" afterPath="$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/sabTest.py" afterPath="$PROJECT_DIR$/sabcli/sabTest.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/presenters/sabQueuePresenter.py" afterPath="$PROJECT_DIR$/sabcli/presenters/sabQueuePresenter.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sabcli/controllers/sabScrollController.py" afterPath="$PROJECT_DIR$/sabcli/controllers/sabScrollController.py" />
     </list>
     <ignored path="sabcli.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,64 +28,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="sabAPI.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="sabAPI.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sabcli/sabAPI/sabAPI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="50" selection-start="1510" selection-end="1510" vertical-scroll-proportion="0.87197727" vertical-offset="77" max-vertical-offset="780">
-              <folding />
+            <state line="42" column="36" selection-start="1307" selection-end="1335" vertical-scroll-proportion="0.0" vertical-offset="77" max-vertical-offset="780">
+              <folding>
+                <marker date="1393722409000" expanded="true" signature="27:1510" placeholder="..." />
+                <marker date="1393722409000" expanded="true" signature="947:995" placeholder="..." />
+                <marker date="1393722409000" expanded="true" signature="1124:1183" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sabCore.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sabcli/sabCore/sabCore.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="38" selection-start="368" selection-end="368" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sabChannel.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sabcli/sabCore/sabChannel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="8" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="525">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sabEncoder.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sabcli/sabCore/sabEncoder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="33" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="1485">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sabQueuePresenter.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="sabQueuePresenter.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabQueuePresenter.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="23" selection-start="3106" selection-end="3106" vertical-scroll-proportion="0.0" vertical-offset="392" max-vertical-offset="1095">
+            <state line="7" column="16" selection-start="211" selection-end="211" vertical-scroll-proportion="-0.19487908" vertical-offset="227" max-vertical-offset="1290">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sabQueueController.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabQueueController.py">
+      <file leaf-file-name="sabScrollController.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabScrollController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="132" column="21" selection-start="4029" selection-end="4029" vertical-scroll-proportion="0.0" vertical-offset="1442" max-vertical-offset="2205">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sabTest.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sabcli/sabTest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="29" selection-start="3447" selection-end="3447" vertical-scroll-proportion="0.0" vertical-offset="1067" max-vertical-offset="1785">
+            <state line="18" column="3" selection-start="426" selection-end="426" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
               <folding />
             </state>
           </provider>
@@ -99,16 +62,16 @@
       <file leaf-file-name="sabQueueParser.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="41" selection-start="660" selection-end="660" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="765">
+            <state line="16" column="31" selection-start="502" selection-end="512" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="765">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sabHistoryParser.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sabcli/sabAPI/sabHistoryParser.py">
+      <file leaf-file-name="sabQueueController.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabQueueController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="52" selection-start="1768" selection-end="1768" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1140">
+            <state line="125" column="51" selection-start="3852" selection-end="3852" vertical-scroll-proportion="0.0" vertical-offset="1967" max-vertical-offset="2670">
               <folding />
             </state>
           </provider>
@@ -117,7 +80,45 @@
       <file leaf-file-name="sabController.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabController.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="106" column="18" selection-start="4014" selection-end="4014" vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="1845">
+            <state line="118" column="27" selection-start="4275" selection-end="4275" vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="1860">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sabWindow.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="0" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0" vertical-offset="32" max-vertical-offset="1500">
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sabPad.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabPad.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="17" selection-start="409" selection-end="418" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sabHistoryController.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabHistoryController.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sabHelpController.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabHelpController.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="20" selection-start="402" selection-end="402" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
               <folding />
             </state>
           </provider>
@@ -141,22 +142,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/sabcli/sabAPI/sabWarningsParser.py" />
-        <option value="$PROJECT_DIR$/sabcli/sabCore/sabParser.py" />
         <option value="$PROJECT_DIR$/sabcli/presenters/sabStatusPresenter.py" />
         <option value="$PROJECT_DIR$/sabcli/controllers/sabStatusController.py" />
         <option value="$PROJECT_DIR$/sabcli/presenters/sabNavigationControl.py" />
         <option value="$PROJECT_DIR$/sabcli/sabcurses.py" />
         <option value="$PROJECT_DIR$/sabcli/controllers/sabNavigationController.py" />
         <option value="$PROJECT_DIR$/sabcli/presenters/sabNavigationPresenter.py" />
-        <option value="$PROJECT_DIR$/sabcli/controllers/sabQueueController.py" />
         <option value="$PROJECT_DIR$/sabcli/sabTest.py" />
-        <option value="$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py" />
         <option value="$PROJECT_DIR$/sabcli/sabAPI/sabHistoryParser.py" />
         <option value="$PROJECT_DIR$/sabcli/sabCore/sabCore.py" />
-        <option value="$PROJECT_DIR$/sabcli/controllers/sabController.py" />
         <option value="$PROJECT_DIR$/sabcli/sabCore/sabEncoder.py" />
         <option value="$PROJECT_DIR$/sabcli/sabAPI/sabAPI.py" />
+        <option value="$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py" />
+        <option value="$PROJECT_DIR$/sabcli/controllers/sabScrollController.py" />
+        <option value="$PROJECT_DIR$/sabcli/controllers/sabController.py" />
+        <option value="$PROJECT_DIR$/sabcli/presenters/sabQueuePresenter.py" />
+        <option value="$PROJECT_DIR$/sabcli/controllers/sabQueueController.py" />
       </list>
     </option>
   </component>
@@ -564,73 +565,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabWindow.py">
+    <entry file="file://$PROJECT_DIR$/sabcli/cli-shared.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="17" selection-start="2094" selection-end="2103" vertical-scroll-proportion="0.5082418" vertical-offset="725" max-vertical-offset="1500" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/sabAPI/sabWarningsParser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="20" selection-start="632" selection-end="632" vertical-scroll-proportion="0.39148352" vertical-offset="0" max-vertical-offset="728" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabStatusController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="20" selection-start="92" selection-end="92" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/sabcurses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="28" selection-start="2655" selection-end="2675" vertical-scroll-proportion="0.0" vertical-offset="1072" max-vertical-offset="2040">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabNavigationController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="0" selection-start="998" selection-end="998" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabNavigationPresenter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="29" selection-start="289" selection-end="289" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="675">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/sabCore/sabChannel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="8" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabQueuePresenter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="23" selection-start="3106" selection-end="3106" vertical-scroll-proportion="0.0" vertical-offset="197" max-vertical-offset="1110">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/sabTest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="29" selection-start="3447" selection-end="3447" vertical-scroll-proportion="0.0" vertical-offset="1067" max-vertical-offset="1785">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="18" selection-start="4014" selection-end="4014" vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="1845">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabQueueController.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="21" selection-start="4029" selection-end="4029" vertical-scroll-proportion="0.0" vertical-offset="1442" max-vertical-offset="2205">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="703">
           <folding />
         </state>
       </provider>
@@ -642,20 +579,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="41" selection-start="660" selection-end="660" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="765">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sabcli/sabAPI/sabHistoryParser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="52" selection-start="1768" selection-end="1768" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1140">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sabcli/sabCore/sabEncoder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="42" column="33" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="1485">
@@ -663,9 +586,99 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/sabCore/sabParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="703">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/sabCore/sabChannel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="8" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabHistoryController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="703">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabHelpController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="20" selection-start="402" selection-end="402" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sabcli/sabAPI/sabAPI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="50" selection-start="1510" selection-end="1510" vertical-scroll-proportion="0.87197727" vertical-offset="77" max-vertical-offset="780">
+        <state line="42" column="36" selection-start="1307" selection-end="1335" vertical-scroll-proportion="0.0" vertical-offset="77" max-vertical-offset="780">
+          <folding>
+            <marker date="1393722409000" expanded="true" signature="27:1510" placeholder="..." />
+            <marker date="1393722409000" expanded="true" signature="947:995" placeholder="..." />
+            <marker date="1393722409000" expanded="true" signature="1124:1183" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/sabcurses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="36" selection-start="1836" selection-end="1844" vertical-scroll-proportion="0.57610244" vertical-offset="510" max-vertical-offset="2040">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabPad.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="17" selection-start="409" selection-end="418" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0" vertical-offset="32" max-vertical-offset="1500">
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/sabAPI/sabQueueParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="31" selection-start="502" selection-end="512" vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabScrollController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="3" selection-start="426" selection-end="426" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="27" selection-start="4275" selection-end="4275" vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="1860">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/controllers/sabQueueController.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="125" column="51" selection-start="3852" selection-end="3852" vertical-scroll-proportion="0.0" vertical-offset="1967" max-vertical-offset="2670">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sabcli/presenters/sabQueuePresenter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="16" selection-start="211" selection-end="211" vertical-scroll-proportion="-0.19487908" vertical-offset="227" max-vertical-offset="1290">
           <folding />
         </state>
       </provider>
