@@ -16,34 +16,16 @@ class sabHistoryParser():
         item["unpack_fail"] = unpack_fail
         item["unpack_log"] = unpack_log
 
-    def parse(self, response = {}):
-        state = {'last_fetch_time':time.time(),
-                 "status":response["history"]["status"],
-                 "speed":"%.2f kb/s" % float(response["history"]["kbpersec"]),
-                 "size_left":response["history"]["sizeleft"],
-                 "time_left":response["history"]["timeleft"],
-                 "mb":response["history"]["mb"],
-                 "mbleft":response["history"]["mbleft"],
-                 "diskspace2":response["history"]["diskspace2"],
-                 "diskspacetotal2":response["history"]["diskspacetotal2"],
-                 "total_size":response["history"]["total_size"],
-                 "month_size":response["history"]["month_size"],
-                 "week_size":response["history"]["week_size"]
-        }
-
-        slots = []
-        if response["history"]['slots'] != None:
-            try:
-                slots = response["history"]['slots']
-            except AttributeError:
-                slots = response["history"]['slots']['slot']
+    def parseHistory(self, response):
+        print repr(response)
+        slots = response["history"]['slots']
 
         history = []
         for slot in slots:
-            item = {"name":slot["name"],
-                        "size":slot["size"],
-                        "status":slot["status"],
-                        }
+            item = {"name": slot["name"],
+                    "size": slot["size"],
+                    "status": slot["status"],
+            }
 
             stage_log = self.extractStageLog(slot)
 
@@ -55,9 +37,26 @@ class sabHistoryParser():
                     self.extractRepairOperationStatus(action, item)
 
             history.append(item)
-
         history.reverse()
-        state["history"] = history
+        return history
+
+    def parse(self, response = {}):
+        state = {'last_fetch_time':time.time(),
+                 "status":response["history"]["status"],
+                 "speed":"%.2f kb/s" % float(response["history"]["kbpersec"]),
+                 "size_left":response["history"]["sizeleft"],
+                 "time_left":response["history"]["timeleft"],
+                 "mb":response["history"]["mb"],
+                 "id":response["history"]["nzo_id"],
+                 "mbleft":response["history"]["mbleft"],
+                 "diskspace2":response["history"]["diskspace2"],
+                 "diskspacetotal2":response["history"]["diskspacetotal2"],
+                 "total_size":response["history"]["total_size"],
+                 "month_size":response["history"]["month_size"],
+                 "week_size":response["history"]["week_size"]
+        }
+
+        state["history"] = self.parseHistory(response)
         return state
 
     def extractRepairOperationStatus(self, action, item):

@@ -100,6 +100,10 @@ class sabController():
         else:
             self.handleInput(keyPressed)
 
+    def waitForRefresh(self):
+        delay = self.calculateRefreshDelay()
+        self.window.wait(delay)
+
     def run(self):
 
         while self.quit == 0:
@@ -107,8 +111,7 @@ class sabController():
 
             self.display()
 
-            delay = self.calculateRefreshDelay()
-            self.window.wait(delay)
+            self.waitForRefresh()
 
             self.handleUserEvents()
 

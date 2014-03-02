@@ -36,57 +36,61 @@ class sabQueueController():
             handled = self.handleDelete()
 
         elif keyPressed == 259: # Curser up
-            handled = self.handleUp(handled)
+            handled = self.handleUp()
 
         elif keyPressed == 258:  # Curser down
-            handled = self.handleDown(handled)
+            handled = self.handleDown()
 
         elif keyPressed == 339: # Page up
-            handled = self.handlePageUp(handled)
+            handled = self.handlePageUp()
 
         elif keyPressed == 338: # Page down
-            handled = self.handlePageDown(handled)
+            handled = self.handlePageDown()
+
+        elif keyPressed == 260: # Left
+            handled = self.handleLeft()
+
+        elif keyPressed == 261: # Right
+            handled = self.handleRight()
 
         elif keyPressed == 262: # Home
-            handled = self.handleHome(handled)
+            handled = self.handleHome()
 
         elif keyPressed in ( 360, 385 ): # end
-            handled = self.handleEnd(handled)
+            handled = self.handleEnd()
 
         return handled
 
-    def handlePageUp(self, handled):
+    def handlePageUp(self):
         handled = True
-        if sabnzbd.index[sabnzbd.view] - 5 > -1:
-            sabnzbd.index[sabnzbd.view] = sabnzbd.index[sabnzbd.view] - 5
+        if self.index[self.view] - 5 > -1:
+            self.index[self.view] = self.index[self.view] - 5
         else:
-            sabnzbd.index[sabnzbd.view] = -1
+            self.index[self.view] = -1
         return handled
 
-    def handlePageDown(self, handled):
+    def handlePageDown(self):
         handled = True
-        if sabnzbd.index[sabnzbd.view] == -1:
-            if sabnzbd.indexCount[sabnzbd.view] >= 5:
-                sabnzbd.index[sabnzbd.view] = 5
+        if self.index[self.view] == -1:
+            if self.indexCount[self.view] >= 5:
+                self.index[self.view] = 5
             else:
-                sabnzbd.index[sabnzbd.view] = sabnzbd.indexCount[sabnzbd.view]
-        elif sabnzbd.index[sabnzbd.view] + 5 <= sabnzbd.indexCount[sabnzbd.view]:
-            sabnzbd.index[sabnzbd.view] = sabnzbd.index[sabnzbd.view] + 5
+                self.index[self.view] = self.indexCount[self.view]
+        elif self.index[self.view] + 5 <= self.indexCount[self.view]:
+            self.index[self.view] = self.index[self.view] + 5
         else:
-            sabnzbd.index[sabnzbd.view] = sabnzbd.indexCount[sabnzbd.view]
+            self.index[self.view] = self.indexCount[self.view]
         return handled
 
-    def handleHome(self, handled):
-        sabnzbd.index[sabnzbd.view] = -1
-        handled = True
-        return handled
+    def handleHome(self):
+        self.index = 0
+        return True
 
-    def handleEnd(self, handled):
-        sabnzbd.index[sabnzbd.view] = sabnzbd.indexCount[sabnzbd.view]
-        handled = True
-        return handled
+    def handleEnd(self):
+        self.index = len(self.state["queue"]) - 1
+        return True
 
-    def handleDown(self, handled):
+    def handleDown(self):
         if self.selection == -1:
             if self.index < 20: # TODO find max limit based on state:
                 self.index += 1
@@ -101,19 +105,27 @@ class sabQueueController():
             handled = True
         return handled
 
-    def handleUp(self, handled):
+    def handleUp(self):
         if self.selection == -1:
             if self.index > -1:
                 self.index -= 1
                 handled = True
-        if self.selection == 1 and self.details['priority'][self.index[0]] < 2:
-            self.details['priority'][self.index[0]] += 1
+        if self.selection == 1 and self.state['priority'][self.index[0]] < 2:
+            #self.state['priority'] += 1
             handled = True
             # self.action = 11 # TODO: replace with call to api
         if self.selection == 2 and self.details['unpackopts'][self.index[0]] > 0:
-            self.details['unpackopts'][self.index[0]] -= 1
+            self.state['unpackopts'][self.selected] -= 1
             handled = True
             #self.action = 12 # TODO: replace with call to api
+        return handled
+
+    def handleLeft(self):
+        handled = False
+        return handled
+
+    def handleRight(self):
+        handled = False
         return handled
 
     def handleDelete(self):

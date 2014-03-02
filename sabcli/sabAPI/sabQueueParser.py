@@ -17,6 +17,7 @@ class sabQueueParser():
                     "unpackopts": slot["unpackopts"],
                     "status": slot["status"],
                     "mb": slot["mb"],
+                    "id": slot["nzo_id"],
                     "mb_left": slot["mbleft"],
                     "percentage": slot["percentage"],
                     "timeleft": timeleft
@@ -26,7 +27,6 @@ class sabQueueParser():
         return queue
 
     def parse(self, response = {}):
-
         state = {'last_fetch_time':time.time(),
                  "status":response["queue"]["status"],
                  "speed":"%.2f kb/s" % float(response["queue"]["kbpersec"]),
@@ -43,5 +43,4 @@ class sabQueueParser():
         }
 
         state["queue"] = self.parseQueue(response)
-
         return state

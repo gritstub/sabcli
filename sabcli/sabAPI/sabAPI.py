@@ -24,3 +24,24 @@ class sabAPI():
     def getApiInfo(self):
         info = self.core.list("version")
         return self.infoParser.parse(info)
+
+    def deleteDownload(self, id):
+        self.core.sendQueueCommand("delete", id)
+
+    def pauseDownload(self, id):
+        self.core.sendQueueCommand("pause", id)
+
+    def resumeDownload(self, id):
+        self.core.sendQueueCommand("resume", id)
+
+    def renameDownload(self, id, new_name):
+        self.core.sendQueueCommand("rename", id, new_name)
+
+    def changeDownloadPriority(self, id, priority):
+        self.core.sendQueueCommand("priority", id, priority)
+
+    def changeDownloadPostProcessing(self, id, steps):
+        self.core.sendQueueCommand("postprocessing", id, steps)
+
+    def deleteDownloadHistory(self, id):
+        self.core.sendHistoryCommand("delete", id)

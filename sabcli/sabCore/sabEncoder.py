@@ -34,8 +34,6 @@ class sabEncoder( object ):
                 url_fragment = 'queue&name=change_complete_action&value=' + args[0]
             elif command == 'delete':
                 url_fragment = 'queue&name=delete&value=' + args[0]
-            elif command == 'details':
-                url_fragment = 'get_files&output=xml&value=' + args[0]
             elif command == 'pause':
                 url_fragment = 'queue&name=pause&value=' + args[0]
             elif command == 'resume':

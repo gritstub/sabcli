@@ -109,7 +109,8 @@ if __name__ == '__main__':
     buildDependencyGraph()
 
     try:
-        tmp = api.getApiInfo()
+        tmp = api.listHistory()
+        print repr(tmp)
     except Exception as e:
         print repr(e)
         traceback.print_tb(sys.exc_info()[2])
