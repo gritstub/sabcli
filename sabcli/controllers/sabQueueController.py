@@ -66,6 +66,7 @@ class sabQueueController():
         elif keyPressed == 10: #enter
             handled = self.handleEnter()
 
+        self.selected = self.index != -1
         return handled
 
     def handleResume(self):
@@ -113,9 +114,6 @@ class sabQueueController():
             self.index -= 1
         else:
             self.index = len(self.state["queue"]) -1
-            self.selected = True
-        if self.index == -1:
-            self.selected = False
         return True
 
     def handleDown(self):
@@ -135,7 +133,6 @@ class sabQueueController():
             self.index += 1
         else:
             self.index = -1
-            self.selected = False
         return True
 
     def decreaseDownloadPriority(self, download):
@@ -163,12 +160,11 @@ class sabQueueController():
         return True
 
     def handlePageUp(self):
-        handled = True
         if self.index - 5 > -1:
             self.index -= 5
         else:
             self.index = -1
-        return handled
+        return True
 
     def handlePageDown(self):
         maxListIndex = len(self.state["queue"]) - 1
@@ -187,7 +183,6 @@ class sabQueueController():
         return True
 
     def handleEnter(self):
-
         if self.index > -1 and self.index < len(self.state["queue"]) -1 and self.selection == 0:
             return True
         return True

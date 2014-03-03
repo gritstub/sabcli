@@ -33,6 +33,12 @@ class sabHistoryController( object ):
         elif keyPressed == 258:  # Curser down
             handled = self.handleDown()
 
+        elif keyPressed == 260: # Left
+            handled = True
+
+        elif keyPressed == 261: # Right
+            handled = True
+
         elif keyPressed == 339: # Page up
             handled = self.handlePageUp()
 
@@ -45,11 +51,12 @@ class sabHistoryController( object ):
         elif keyPressed in ( 360, 385 ): # end
             handled = self.handleEnd()
 
-        return False
+        self.selected = self.index != -1
+        return handled
 
     def handleDelete(self):
-        if self.index > -1 and self.index < len(self.state["queue"]):
-            self.api.deleteDownload(self.state["queue"][self.index]["id"])
+        if self.index > -1 and self.index < len(self.state["history"]):
+            self.api.deleteDownload(self.state["history"][self.index]["id"])
         return True
 
     def handleDown(self):
@@ -57,7 +64,6 @@ class sabHistoryController( object ):
             self.index += 1
         else:
             self.index = -1
-            self.selected = False
         return True
 
     def handleUp(self):
@@ -65,18 +71,14 @@ class sabHistoryController( object ):
             self.index -= 1
         else:
             self.index = len(self.state["history"]) -1
-            self.selected = True
-        if self.index == -1:
-            self.selected = False
         return True
 
     def handlePageUp(self):
-        handled = True
         if self.index - 5 > -1:
             self.index -= 5
         else:
             self.index = -1
-        return handled
+        return True
 
     def handlePageDown(self):
         maxListIndex = len(self.state["history"]) - 1

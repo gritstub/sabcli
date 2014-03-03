@@ -6,7 +6,7 @@ class sabScrollPresenter( object ):
         self.window = sys.modules["__main__"].window
         self.item_size = 0
 
-    def display(self, state):
+    def display(self, state, item_positions = []):
         self.item_size = state.get("item_size", 3)
         self.max_window_items = int((int(self.window.size[0]) - 6) / self.item_size)
 
@@ -16,8 +16,8 @@ class sabScrollPresenter( object ):
 
     def displaySelectedItem(self, state):
         if state["current_index"] > -1:
-            start = state["current_index"] * 3
-            for i in [0 , 1]:
+            start = state["current_index"] * self.item_size
+            for i in range(self.item_size - 1):
                 self.window.pad.addString(i + start, 0, '*')
 
     def displayScrollBar(self, state):
