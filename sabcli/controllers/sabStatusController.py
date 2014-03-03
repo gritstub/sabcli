@@ -35,3 +35,6 @@ class sabStatusController():
 
     def display(self):
         self.statusPresenter.display(self.status)
+
+    def display_fetching(self):
+        self.statusPresenter.display_fetching()

@@ -8,7 +8,7 @@ class sabController():
         self.settings = sys.modules["__main__"].settings
 
         #internal members
-        self.last_fetch = {'fetch': '', 'refresh': 10, 'time': time.mktime(time.localtime())}
+        self.last_fetch = {'state_owner':-1, 'refresh': 10, 'time': time.mktime(time.localtime())}
         self.state = {}
         self.debug = True
         self.quit = 0
@@ -22,8 +22,6 @@ class sabController():
         self.controllers = [sys.modules["__main__"].queueController, sys.modules["__main__"].historyController, sys.modules["__main__"].warningsController, sys.modules["__main__"].miscController, sys.modules["__main__"].helpController]
 
     def handleInput(self, keyPressed):
-        self.window.addStr('handling keypress: ' + repr(keyPressed))
-
         if keyPressed == ord('Q') or keyPressed == ord('q'): # quit
             self.quit = 1
 
@@ -92,9 +90,15 @@ class sabController():
         self.window.update()
 
     def updateApplicationState(self):
-        self.state = self.currentController.update()
-        self.navigation.update(self.controllers.index(self.currentController), self.state)
-        self.status.update(self.state)
+        refresh = self.last_fetch['state_owner'] != self.controllers.index(self.currentController)
+        if refresh or time.mktime(time.localtime()) - self.last_fetch['time'] >= self.last_fetch['refresh']:
+            self.last_fetch['time'] = time.mktime(time.localtime())
+            self.status.display_fetching()
+            self.state = self.currentController.update()
+            self.navigation.update(self.controllers.index(self.currentController), self.state)
+            self.status.update(self.state)
+            self.last_fetch['state_owner'] = self.controllers.index(self.currentController)
+            self.refresh = False
 
     def handleUserEvents(self):
         keyPressed = self.getUserInput()

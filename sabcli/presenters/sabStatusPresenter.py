@@ -6,8 +6,10 @@ class sabStatusPresenter():
 
     def __init__(self):
         self.window = sys.modules["__main__"].window
+        self.fetching = 'Fetching...'
 
     def display(self, state = {}):
+        self.fetching = 'Fetching...' + (' ' * (len(state["disk_usage"]) - len('Fetching...')))
         self.display_diskwarnings(state)
         self.display_status(state)
 
@@ -43,3 +45,7 @@ class sabStatusPresenter():
 
             # Remove trailing whitespaces from above.
         return combined.strip()
+
+    def display_fetching(self):
+        self.window.addString(int(self.window.size[0])-1, 0, self.fetching)
+        self.window.refresh()
