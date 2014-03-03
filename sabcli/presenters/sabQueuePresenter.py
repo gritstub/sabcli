@@ -12,7 +12,7 @@ class sabQueuePresenter( object ):
 
     def display(self, state = {}):
         self.displayQueue(state)
-        self.scroller.display()
+        self.scroller.display(state)
 
     def displayFileInformation(self, slot, current_selection = -1):
         self.window.pad.addStr('   ' + str(slot['index']), curses.color_pair(3))
@@ -79,17 +79,3 @@ class sabQueuePresenter( object ):
             else:
                 self.displayFileInformation(slot)
             self.displayProgress(padding, slot)
-        
-        self.displaySelectedItem(state)
-        self.scrollViewPort(state)
-
-    def displaySelectedItem(self, state):
-        if state["current_index"] > -1:
-            start = state["current_index"] * 3
-            for i in [0 , 1]:
-                self.window.pad.addString(i + start, 0, '*')
-
-    def scrollViewPort(self, state):
-        #self.window.pad.scrollToLine()
-        pass
-

@@ -21,6 +21,7 @@ class sabQueueController():
     def display(self):
         self.state["current_index"] = self.index
         self.state["current_selection"] = self.selection
+        self.state["list_length"] = len(self.state["queue"])
         self.queuePresenter.display(self.state)
 
     def handleInput(self, keyPressed):
@@ -61,6 +62,9 @@ class sabQueueController():
 
         elif keyPressed in ( 360, 385 ): # end
             handled = self.handleEnd()
+
+        elif keyPressed == 10: #enter
+            handled = self.handleEnter()
 
         return handled
 
@@ -181,3 +185,19 @@ class sabQueueController():
     def handleEnd(self):
         self.index = len(self.state["queue"]) - 1
         return True
+
+    def handleEnter(self):
+
+        if self.index > -1 and self.index < len(self.state["queue"]) -1 and self.selection == 0:
+            return True
+        return True
+        '''
+        	# Enter
+            elif c == 10:
+
+			line = 4 + sabnzbd.scroll['item'][sabnzbd.index[sabnzbd.view]][0]
+			editwin = sabnzbd.win.subwin(1, int(sabnzbd.size[1])-33, line, 7)
+			editwin.addstr(0, 0, ' ' * ( int(sabnzbd.size[1]) - 34 ) )
+                        editwin.addstr(0, 0, sabnzbd.details['filename'][sabnzbd.index[0]][:( int(sabnzbd.size[1]) - 34 )])
+			newname = editfield(editwin)
+		'''

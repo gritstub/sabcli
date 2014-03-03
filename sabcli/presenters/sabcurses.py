@@ -25,11 +25,9 @@
 
 # export TERM=linux; sabcurses.py
 
-import os, sys, time, httplib, curses, traceback, signal
-import xml.etree.ElementTree as ElementTree
+import os, sys, time, curses, traceback, signal
 import getopt, ConfigParser
 import curses.textpad
-#import cProfile
 
 VERSION="0.7-1"
 APIVERSION="0.7.11"
