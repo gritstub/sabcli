@@ -63,3 +63,5 @@ class sabHistoryPresenter( object ):
             self.displayUnpackLog(item)
 
             self.window.pad.addStr('\n')
+
+        self.scroller.display(state)

@@ -54,3 +54,10 @@ class sabAPI():
 
     def shutdownServer(self):
         self.core.sendGeneralCommand("shutdown")
+
+    def deleteFromHistory(self, id):
+        self.core.sendHistoryCommand("delete", id)
+
+# TODD: figure this out
+#    def deleteHistory(self, id):
+#        self.core.

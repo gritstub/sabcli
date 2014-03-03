@@ -21,7 +21,8 @@ class sabHistoryParser():
 
         history = []
         for slot in slots:
-            item = {"name": slot["name"],
+            item = {"index": slot["id"] - 1,
+                    "name": slot["name"],
                     "size": slot["size"],
                     "id":slot["nzo_id"],
                     "status": slot["status"],
