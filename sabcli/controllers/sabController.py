@@ -58,6 +58,8 @@ class sabController():
             self.api.pauseServer()
         elif keyPressed == ord('r'): # resume
             self.api.resumeServer()
+        elif keyPressed == ord('R'): # restart
+            self.api.restartServer()
         elif keyPressed == ord('S'): # shutdown
             self.api.shutdownServer()
         elif keyPressed == 258: # Curser down

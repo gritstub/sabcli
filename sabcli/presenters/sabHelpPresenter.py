@@ -14,7 +14,7 @@ class sabHelpPresenter( object ):
         self.window.pad.addString(6,3,  '| 3              Warnings screen               |\n')
         self.window.pad.addString(7,3,  '| 4              More screen                   |\n')
         self.window.pad.addString(8,3,  '| 5/?            Help screen                   |\n')
-        self.window.pad.addString(9,3,  '| Q              Quit                          |\n')
+        self.window.pad.addString(9,3,  '| Q/q            Quit                          |\n')
         self.window.pad.addString(10,3, '| S              Shutdown                      |\n')
         self.window.pad.addString(11,3, '| R              Restart                       |\n')
         self.window.pad.addString(12,3, '| Up/Down        Select item/setting           |\n')
