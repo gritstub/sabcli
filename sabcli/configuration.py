@@ -1,9 +1,10 @@
 import sys
-from ConfigParser import ConfigParser, NoSectionError, NoOptionError
+from ConfigParser import ConfigParser
+
 
 class configuration():
-    def __init__(self, config):
-        self.extractServerConnectionDetailsFromConfiguration(config)
+    def __init__(self):
+        self.extractServerConnectionDetailsFromConfiguration(sys.modules["__main__"].configFile)
 
     def extractServerConnectionDetailsFromConfiguration(self, config):
         parser = self.parseAndReadConfigFileIntoMemory(config)
@@ -15,8 +16,8 @@ class configuration():
             self.password = parser.get('server', 'password')
             self.apikey = parser.get('server', 'apikey')
 
-        except (NoSectionError, NoOptionError):
-            self.displayConfigurationFormatHelpInstructions(config)
+        except:
+            self.displayConfigurationFileFormatInstructions(config)
             raise
 
     def parseAndReadConfigFileIntoMemory(self, config):
@@ -30,7 +31,7 @@ class configuration():
             sys.stderr.write('Unable to open ' + config + '\n')
         return parser
 
-    def displayConfigurationFormatHelpInstructions(self, config):
+    def displayConfigurationFileFormatInstructions(self, config):
         sys.stderr.write('Unable to parse ' + config + '\n')
         sys.stderr.write('Format should be:\n')
         sys.stderr.write('[server]\n')
