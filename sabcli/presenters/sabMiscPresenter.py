@@ -10,7 +10,7 @@ class sabMiscPresenter():
         self.screen = []
         self.pad = []
 
-    def display(self, apiInfo = {}):
+    def display(self, state = {}):
         self.screen = []
         self.pad = []
 
