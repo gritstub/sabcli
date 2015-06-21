@@ -14,8 +14,8 @@ class sabMiscPresenter():
         self.screen = []
         self.pad = []
 
-        self.displayGeneralInformation(apiInfo)
-        self.displayMiscellaneousInformation(apiInfo)
+        self.displayGeneralInformation(state)
+        self.displayMiscellaneousInformation(state)
 
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
