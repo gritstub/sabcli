@@ -1,10 +1,17 @@
-import sys
+from presenters.sabHelpPresenter import sabHelpPresenter
+import sabAPI
+
 
 class sabHelpController( object ):
+    def __init__(self, api = None, helpPresenter = None):
+        if not api:
+            api = sabAPI.api.api()
+        self.api = api
 
-    def __init__(self):
-        self.api = sys.modules["__main__"].api
-        self.helpPresenter = sys.modules["__main__"].helpPresenter
+        if not helpPresenter:
+            helpPresenter = sabHelpPresenter()
+        self.helpPresenter = helpPresenter
+
         self.selected = False
         self.state = {}
 

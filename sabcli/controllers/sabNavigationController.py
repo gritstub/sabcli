@@ -1,9 +1,12 @@
-import sys, time
+from presenters.sabNavigationPresenter import sabNavigationPresenter
+
 
 class sabNavigationController():
+    def __init__(self, navigationPresenter = None):
+        if not navigationPresenter:
+            navigationPresenter = sabNavigationPresenter()
+        self.navigationPresenter = navigationPresenter
 
-    def __init__(self):
-        self.navigation = sys.modules["__main__"].navigationPresenter
         self.status = {}
         self.view_strings = [('[1-Queue]', 0), (' [2-History]', 1), (' [3-Warnings]', 2), (' [4-More]', 3), (' [5-Help]', 4)]
 
@@ -28,7 +31,7 @@ class sabNavigationController():
         self.updateSelectedView(selected_view)
 
     def displayKeyPress(self, key_press):
-        self.navigation.displayKeyPress(key_press)
+        self.navigationPresenter.displayKeyPress(key_press)
 
     def display(self):
-        self.navigation.display(self.status)
+        self.navigationPresenter.display(self.status)

@@ -1,10 +1,13 @@
-import sys
+import sabAPI
+
 
 class sabQueueDetailsController():
+    def __init__(self, api = None, queueDetailsPresenter = None):
+        if not api:
+            api = sabAPI.api.api()
+        self.api = api
 
-    def __init__(self):
-        self.api = sys.modules["__main__"].api
-        self.queueDetailsPresenter = sys.modules["__main__"].queueDetailsPresenter
+        self.queueDetailsPresenter = queueDetailsPresenter
 
         self.selected = False
 

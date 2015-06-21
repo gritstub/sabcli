@@ -1,12 +1,18 @@
-import sys
+from presenters.sabMiscPresenter import sabMiscPresenter
+import sabAPI
+
 
 class sabMiscController():
+    def __init__(self, api = None, miscPresenter = None):
+        if not api:
+            api = sabAPI.api.api()
+        self.api = api
 
-    def __init__(self):
-        self.api = sys.modules["__main__"].api
-        self.miscPresenter = sys.modules["__main__"].miscPresenter
+        if not miscPresenter:
+            miscPresenter = sabMiscPresenter()
+        self.miscPresenter = miscPresenter
+
         self.selected = False
-
         self.cached = False
 
     def update(self):

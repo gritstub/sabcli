@@ -1,10 +1,17 @@
-import sys
+from presenters.sabWarningsPresenter import sabWarningsPresenter
+import sabAPI
 
-class sabWarningsController( object ):
 
-    def __init__(self):
-        self.api = sys.modules["__main__"].api
-        self.warningsPresenter = sys.modules["__main__"].warningsPresenter
+class sabWarningsController():
+    def __init__(self, api = None, warningsPresenter = None):
+        if not api:
+            api = sabAPI.api.api()
+        self.api = api
+
+        if not warningsPresenter:
+            warningsPresenter = sabWarningsPresenter()
+        self.warningsPresenter = warningsPresenter
+
         self.selected = False
         self.state = {}
         self.index = -1

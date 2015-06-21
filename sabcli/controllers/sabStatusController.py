@@ -1,9 +1,13 @@
-import sys, time
+import time
+from presenters.sabStatusPresenter import sabStatusPresenter
+
 
 class sabStatusController():
+    def __init__(self, statusPresenter = None):
+        if not statusPresenter:
+            statusPresenter = sabStatusPresenter()
+        self.statusPresenter = statusPresenter
 
-    def __init__(self):
-        self.statusPresenter = sys.modules["__main__"].statusPresenter
         self.status = {}
 
     def updateWarnings(self, state):
@@ -36,5 +40,5 @@ class sabStatusController():
     def display(self):
         self.statusPresenter.display(self.status)
 
-    def display_fetching(self):
-        self.statusPresenter.display_fetching()
+    def displayFetching(self):
+        self.statusPresenter.displayFetching()

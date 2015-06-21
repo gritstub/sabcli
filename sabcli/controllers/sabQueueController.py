@@ -1,26 +1,31 @@
-import sys
+from presenters.sabQueuePresenter import sabQueuePresenter
+import sabAPI
+
 
 class sabQueueController():
+    def __init__(self, api = None, queuePresenter = None):
+        if not api:
+            api = sabAPI.api.api()
+        self.api = api
 
-    def __init__(self):
-        self.api = sys.modules["__main__"].api
-        self.queuePresenter = sys.modules["__main__"].queuePresenter
+        if not queuePresenter:
+            queuePresenter = sabQueuePresenter()
+        self.queuePresenter = queuePresenter
 
         self.selected = False
-
         self.state = {}
+        self.selectedItem = -1
+        self.selectedProperty = -1
 
-        self.index = -1
-        self.selection = -1
-        self.priority = ['Low', 'Normal','High','Force','Repair']
+        self.priority = ['Low', 'Normal', 'High', 'Force', 'Repair']
 
     def update(self):
         self.state = self.api.listQueue()
         return self.state
 
     def display(self):
-        self.state["current_index"] = self.index
-        self.state["current_selection"] = self.selection
+        self.state["current_index"] = self.selectedItem
+        self.state["current_selection"] = self.selectedProperty
         self.state["list_length"] = len(self.state["queue"])
         self.queuePresenter.display(self.state)
 
@@ -30,68 +35,68 @@ class sabQueueController():
         if not self.selected:
             return handled
 
-        elif keyPressed == ord('p'): # pause
+        elif keyPressed == ord('p'):  # Pause
             handled = self.handlePause()
 
-        elif keyPressed == ord('r'): # resume
+        elif keyPressed == ord('r'):  # Resume
             handled = self.handleResume()
 
-        elif keyPressed in ( 330, 263, 127): # delete #263 (backspace linux) #127 (backspace freebsd) 330 (delete freebsd/linux)
+        elif keyPressed in (330, 263, 127):  # Delete
             handled = self.handleDelete()
 
-        elif keyPressed == 259: # Curser up
+        elif keyPressed == 259:  # Cursor up
             handled = self.handleUp()
 
-        elif keyPressed == 258:  # Curser down
+        elif keyPressed == 258:  # Cursor down
             handled = self.handleDown()
 
-        elif keyPressed == 260: # Left
+        elif keyPressed == 260:  # Left
             handled = self.handleLeft()
 
-        elif keyPressed == 261: # Right
+        elif keyPressed == 261:  # Right
             handled = self.handleRight()
 
-        elif keyPressed == 339: # Page up
+        elif keyPressed == 339:  # Page up
             handled = self.handlePageUp()
 
-        elif keyPressed == 338: # Page down
+        elif keyPressed == 338:  # Page down
             handled = self.handlePageDown()
 
-        elif keyPressed == 262: # Home
+        elif keyPressed == 262:  # Home
             handled = self.handleHome()
 
-        elif keyPressed in ( 360, 385 ): # end
+        elif keyPressed in (360, 385):  # End
             handled = self.handleEnd()
 
-        elif keyPressed == 10: #enter
+        elif keyPressed == 10:  # Enter
             handled = self.handleEnter()
 
-        self.selected = self.index != -1
+        self.selected = self.selectedItem != -1
         return handled
 
     def handleResume(self):
-        if self.index > -1 and self.index < len(self.state["queue"]):
-            self.api.resumeDownload(self.state["queue"][self.index]["id"])
+        if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]):
+            self.api.resumeDownload(self.state["queue"][self.selectedItem]["id"])
         return True
 
     def handlePause(self):
-        if self.index > -1 and self.index < len(self.state["queue"]):
-            self.api.pauseDownload(self.state["queue"][self.index]["id"])
+        if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]):
+            self.api.pauseDownload(self.state["queue"][self.selectedItem]["id"])
         return True
 
     def handleDelete(self):
-        if self.index > -1 and self.index < len(self.state["queue"]):
-            self.api.deleteDownload(self.state["queue"][self.index]["id"])
+        if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]):
+            self.api.deleteDownload(self.state["queue"][self.selectedItem]["id"])
         return True
 
     def handleUp(self):
-        if self.selection == -1:
+        if self.selectedProperty == -1:
             handled = self.scrollUp()
-        if self.selection == 1:
-            download = self.state["queue"][self.index]
+        if self.selectedProperty == 1:
+            download = self.state["queue"][self.selectedItem]
             handled = self.increaseDownloadPriority(download)
-        if self.selection == 2:
-            download = self.state["queue"][self.index]
+        if self.selectedProperty == 2:
+            download = self.state["queue"][self.selectedItem]
             handled = self.addDownloadPostPocessingSteps(download)
         return handled
 
@@ -106,33 +111,33 @@ class sabQueueController():
     def addDownloadPostPocessingSteps(self, download):
         if download['unpackopts'] < 3:
             self.state['unpackopts'][self.selected] += 1
-            self.api.changeDownloadPostProcessing(download["id"], download["unpackopts"])
+            self.api.changeDownloadProcessingSteps(download["id"], download["unpackopts"])
         return True
 
     def scrollUp(self):
-        if self.index > -1:
-            self.index -= 1
+        if self.selectedItem > -1:
+            self.selectedItem -= 1
         else:
-            self.index = len(self.state["queue"]) -1
+            self.selectedItem = len(self.state["queue"]) - 1
         return True
 
     def handleDown(self):
         handled = False
-        if self.selection == -1:
+        if self.selectedProperty == -1:
             handled = self.scrollDown()
-        if self.selection == 1:
-            download = self.state["queue"][self.index]
+        if self.selectedProperty == 1:
+            download = self.state["queue"][self.selectedItem]
             handled = self.decreaseDownloadPriority(download)
-        if self.selection == 2:
-            download = self.state["queue"][self.index]
+        if self.selectedProperty == 2:
+            download = self.state["queue"][self.selectedItem]
             handled = self.removeDownloadProcessingSteps(download)
         return handled
 
     def scrollDown(self):
-        if self.index < len(self.state["queue"]) -1:
-            self.index += 1
+        if self.selectedItem < len(self.state["queue"]) - 1:
+            self.selectedItem += 1
         else:
-            self.index = -1
+            self.selectedItem = -1
         return True
 
     def decreaseDownloadPriority(self, download):
@@ -146,46 +151,47 @@ class sabQueueController():
     def removeDownloadProcessingSteps(self, download):
         if download['unpackopts'] > 0:
             download['unpackopts'] -= 1
-            self.api.changeDownloadPostProcessing(download["id"], download["unpackopts"])
+            self.api.changeDownloadProcessingSteps(download["id"], download["unpackopts"])
         return True
 
     def handleLeft(self):
-        if self.index > -1 and self.selection > -1:
-            self.selection -= 1
+        if self.selectedItem > -1 and self.selectedProperty > -1:
+            self.selectedProperty -= 1
         return True
 
     def handleRight(self):
-        if self.index > -1 and self.selection < 2:
-            self.selection +=1
+        if self.selectedItem > -1 and self.selectedProperty < 2:
+            self.selectedProperty +=1
         return True
 
     def handlePageUp(self):
-        if self.index - 5 > -1:
-            self.index -= 5
+        if self.selectedItem - 5 > -1:
+            self.selectedItem -= 5
         else:
-            self.index = -1
+            self.selectedItem = -1
         return True
 
     def handlePageDown(self):
         maxListIndex = len(self.state["queue"]) - 1
-        if self.index + 5 <= maxListIndex:
-            self.index += 5
+        if self.selectedItem + 5 <= maxListIndex:
+            self.selectedItem += 5
         else:
-            self.index = maxListIndex
+            self.selectedItem = maxListIndex
         return True
 
     def handleHome(self):
-        self.index = 0
+        self.selectedItem = 0
         return True
 
     def handleEnd(self):
-        self.index = len(self.state["queue"]) - 1
+        self.selectedItem = len(self.state["queue"]) - 1
         return True
 
     def handleEnter(self):
-        if self.index > -1 and self.index < len(self.state["queue"]) -1 and self.selection == 0:
+        if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]) -1 and self.selectedProperty == 0:
             return True
         return True
+
         '''
         	# Enter
             elif c == 10:

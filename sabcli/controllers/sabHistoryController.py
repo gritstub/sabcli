@@ -1,12 +1,19 @@
-import sys
+from presenters.sabHistoryPresenter import sabHistoryPresenter
+import sabAPI
 
-class sabHistoryController( object ):
 
-    def __init__(self):
-        self.api = sys.modules["__main__"].api
-        self.historyPresenter = sys.modules["__main__"].historyPresenter
+class sabHistoryController():
+    def __init__(self, api = None, historyPresenter = None):
+        if not api:
+            api = sabAPI.api.api()
+        self.api = api
+
+        if not historyPresenter:
+            historyPresenter = sabHistoryPresenter()
+        self.historyPresenter = historyPresenter
+
         self.selected = False
-        self.index = -1
+        self.selectedItem = -1
         self.state = {}
 
     def update(self):
@@ -14,7 +21,8 @@ class sabHistoryController( object ):
         return self.state
 
     def display(self):
-        self.state["current_index"] = self.index
+        self.state["current_index"] = self.selectedItem
+        self.state["item_size"] = 2
         self.state["list_length"] = len(self.state["history"])
         self.historyPresenter.display(self.state)
 
@@ -51,47 +59,47 @@ class sabHistoryController( object ):
         elif keyPressed in ( 360, 385 ): # end
             handled = self.handleEnd()
 
-        self.selected = self.index != -1
+        self.selected = self.selectedItem != -1
         return handled
 
     def handleDelete(self):
-        if self.index > -1 and self.index < len(self.state["history"]):
-            self.api.deleteDownload(self.state["history"][self.index]["id"])
+        if self.selectedItem > -1 and self.selectedItem < len(self.state["history"]):
+            self.api.deleteDownload(self.state["history"][self.selectedItem]["id"])
         return True
 
     def handleDown(self):
-        if self.index < len(self.state["history"]) -1:
-            self.index += 1
+        if self.selectedItem < len(self.state["history"]) -1:
+            self.selectedItem += 1
         else:
-            self.index = -1
+            self.selectedItem = -1
         return True
 
     def handleUp(self):
-        if self.index > -1:
-            self.index -= 1
+        if self.selectedItem > -1:
+            self.selectedItem -= 1
         else:
-            self.index = len(self.state["history"]) -1
+            self.selectedItem = len(self.state["history"]) -1
         return True
 
     def handlePageUp(self):
-        if self.index - 5 > -1:
-            self.index -= 5
+        if self.selectedItem - 5 > -1:
+            self.selectedItem -= 5
         else:
-            self.index = -1
+            self.selectedItem = -1
         return True
 
     def handlePageDown(self):
         maxListIndex = len(self.state["history"]) - 1
-        if self.index + 5 <= maxListIndex:
-            self.index += 5
+        if self.selectedItem + 5 <= maxListIndex:
+            self.selectedItem += 5
         else:
-            self.index = maxListIndex
+            self.selectedItem = maxListIndex
         return True
 
     def handleHome(self):
-        self.index = 0
+        self.selectedItem = 0
         return True
 
     def handleEnd(self):
-        self.index = len(self.state["history"]) - 1
+        self.selectedItem = len(self.state["history"]) - 1
         return True
