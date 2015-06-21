@@ -1,31 +1,41 @@
-import curses
-import sys
+from cursesUI.cursesWindow import cursesWindow
 
-class sabWarningsPresenter( object ):
-    def __init__(self):
-        self.window = sys.modules["__main__"].window
-        self.scroller = sys.modules["__main__"].scroller
 
-    def display_warning(self, warning):
-        self.window.pad.addStr('   [' + warning["timestamp"] + '] ')
-        if warning["type"] == 'ERROR':
-            self.window.pad.addStr(warning["type"], curses.color_pair(2))
-        else:
-            self.window.pad.addStr(warning["type"])
-        warnings_length = len(warning["timestamp"]) + len(warning["type"])
-        if warnings_length < 32:
-            self.window.pad.addStr(" " * (32 - warnings_length))
-        self.window.pad.addStr('|')
-        self.window.pad.addStr(' ' + warning["message"] + '\n\n')
+class sabWarningsPresenter():
+    def __init__(self, window = None):
+        if not window:
+            window = cursesWindow()
+        self.window = window
 
-    def display_header(self):
-        self.window.addString(2, 3, '[Date/Timestamp         ] Type     | System message\n')
-        self.window.addString(3, 0, '-' * int(self.window.size[1] + '\n'))
+        self.screen = []
+        self.pad = []
 
     def display(self, state = {}):
-        self.display_header()
+        self.screen = []
+        self.pad = []
+
+        self.displayGeneralInformation()
 
         for warning in state["warnings"]:
-            self.display_warning(warning)
+            self.displayWarningInformation(warning)
 
-        self.scroller.display(state)
+        self.window.draw(self.screen)
+        self.window.pad.draw(self.pad)
+
+    def displayGeneralInformation(self):
+        self.screen.append((3, 2, '[Date/Timestamp]          Type     | System message\n', ''))
+        self.screen.append((0, 3, '-' * int(self.window.size[1] + '\n'), ''))
+
+    def displayWarningInformation(self, warning):
+        self.pad.append(('   [' + warning["timestamp"] + '] ', ''))
+        if warning["type"] == 'ERROR':
+            self.pad.append((warning["type"], 2))
+        else:
+            self.pad.append((warning["type"]), '')
+
+        warnings_length = len(warning["timestamp"]) + len(warning["type"])
+        if warnings_length < 32:
+            self.pad.append((" " * (32 - warnings_length), ''))
+
+        self.pad.append(('|', ''))
+        self.pad.append((' ' + warning["message"] + '\n\n', ''))
