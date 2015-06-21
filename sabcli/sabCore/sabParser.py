@@ -1,5 +1,6 @@
 import json
 
+
 class sabParser():
 
     def parse(self, response = ""):
