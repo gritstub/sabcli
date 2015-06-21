@@ -1,17 +1,28 @@
-import  curses
-import sys
-import time
+import curses
+from cursesUI.cursesWindow import cursesWindow
+
 
 class sabStatusPresenter():
 
-    def __init__(self):
-        self.window = sys.modules["__main__"].window
+    def __init__(self, window = None):
+        if not window:
+            window = cursesWindow()
+        self.window = window
         self.fetching = 'Fetching...'
 
-    def display(self, state = {}):
+        self.screen = []
+        self.pad = []
+
+    def display(self, state):
+        self.screen = []
+        self.pad = []
+
         self.fetching = 'Fetching...' + (' ' * (len(state["disk_usage"]) - len('Fetching...')))
         self.display_diskwarnings(state)
         self.display_status(state)
+
+        self.window.draw(self.screen)
+        self.window.pad.draw(self.pad)
 
     def display_diskwarnings(self, state = {}):
         if 'warning' in state:
