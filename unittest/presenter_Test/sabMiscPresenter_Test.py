@@ -19,7 +19,7 @@ class sabMiscPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayMiscellaneousInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.displayGeneralInformation.assert_called_with({})
 
@@ -28,7 +28,7 @@ class sabMiscPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayMiscellaneousInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.displayMiscellaneousInformation.assert_called_with({})
 
@@ -37,7 +37,7 @@ class sabMiscPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayMiscellaneousInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.window.draw.assert_called_with([])
 
@@ -46,7 +46,7 @@ class sabMiscPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayMiscellaneousInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.window.pad.draw.assert_called_with([])
 
