@@ -1,0 +1,139 @@
+from mock import Mock, patch
+
+import nose
+
+import BaseTestCase
+from sabAPI import sabHistoryParser
+
+
+class sabHistoryParser_Test(BaseTestCase.BaseTestCase):
+    def setUp(self):
+        super(self.__class__, self).setUp()
+
+        self.test_parser = sabHistoryParser.sabHistoryParser()
+
+    def test_should_instantiate(self):
+        assert (isinstance(self.test_parser, sabHistoryParser.sabHistoryParser))
+
+    @patch('sabAPI.sabHistoryParser.time.time')
+    def test_parse_should_extract_main_structure(self, mock_time):
+        mock_time.return_value = "000001"
+        self.test_parser.parseHistory = Mock(return_value="history")
+        response = {"history": {"status": "history_status_test",
+                                "kbpersec": "90", "sizeleft": "100",
+                                "timeleft": "test_time", "mb": "1000",
+                                "mbleft": "999", "diskspace2": "2000",
+                                "diskspacetotal2": "20000", "total_size": "1001",
+                                "month_size": "1", "week_size": "2"}}
+
+        result = self.test_parser.parse(response)
+
+        assert (result == {'status': 'history_status_test',
+                           'time_left': 'test_time',
+                           'mbleft': '999',
+                           'diskspace2': '2000',
+                           'speed': '90.00 kb/s',
+                           'mb': '1000',
+                           'total_size': '1001',
+                           'month_size': '1',
+                           'last_fetch_time': '000001',
+                           'week_size': '2',
+                           'size_left': '100',
+                           'diskspacetotal2': '20000',
+                           'history': 'history'})
+
+    def test_parseHistory_should_extract_history_details(self):
+        self.test_parser.extractStageLog = Mock(return_value=[])
+
+        response = {"history": {"slots": [{"id": 1, "name": "test", "size": "100", "nzo_id": "nzo_1", "status": "fine"}]}}
+
+        result = self.test_parser.parseHistory(response)
+
+        assert (result == [{'id': 'nzo_1', 'index': 0, 'status': 'fine', 'name': 'test', 'size': '100'}])
+
+    def test_parseHistory_should_try_to_extract_stage_log(self):
+        self.test_parser.extractStageLog = Mock(return_value=[])
+
+        response = {"history": {"slots": [{"id": 1, "name": "test", "size": "100", "nzo_id": "nzo_1", "status": "fine"}]}}
+
+        result = self.test_parser.parseHistory(response)
+
+        self.test_parser.extractStageLog.assert_called_with(response["history"]["slots"][0])
+
+    def test_parseHistory_should_try_to_extract_unpack_details_log(self):
+        self.test_parser.extractUnpackOperationStatus = Mock()
+        self.test_parser.extractStageLog = Mock(return_value=[{"name": "Unpack"}])
+
+        response = {"history": {"slots": [{"id": 1, "name": "test", "size": "100", "nzo_id": "nzo_1", "status": "fine"}]}}
+
+        result = self.test_parser.parseHistory(response)
+
+        assert (self.test_parser.extractUnpackOperationStatus.called)
+
+    def test_parseHistory_should_try_to_extract_repair_details_log(self):
+        self.test_parser.extractRepairOperationStatus = Mock()
+        self.test_parser.extractStageLog = Mock(return_value=[{"name": "Repair"}])
+
+        response = {"history": {"slots": [{"id": 1, "name": "test", "size": "100", "nzo_id": "nzo_1", "status": "fine"}]}}
+
+        result = self.test_parser.parseHistory(response)
+
+        assert (self.test_parser.extractRepairOperationStatus.called)
+
+    def test_extractStageLog_should_extract_actions_from_log(self):
+        slot = {"stage_log": [{"name": "repair"}]}
+
+        result = self.test_parser.extractStageLog(slot)
+
+        assert (result == slot["stage_log"])
+
+    def test_extractUnpackOperationStatus_should_give_success_on_empty_log(self):
+        action = {"actions": []}
+        item = {}
+
+        self.test_parser.extractUnpackOperationStatus(action, item)
+
+        assert (item == {"unpack_fail": 0, "unpack_log": []})
+
+    def test_extractUnpackOperationStatus_should_give_failure_on_non_unpacked_entries(self):
+        action = {"actions": ["failed"]}
+        item = {}
+
+        self.test_parser.extractUnpackOperationStatus(action, item)
+
+        assert (item == {"unpack_fail": 1, "unpack_log": ["failed"]})
+
+    def test_extractUnpackOperationStatus_should_give_success_if_all_entires_are_unpacked(self):
+        action = {"actions": ["test Unpacked"]}
+        item = {}
+
+        self.test_parser.extractUnpackOperationStatus(action, item)
+
+        assert (item == {"unpack_fail": 0, "unpack_log": []})
+
+    def test_extractRepairOperationStatus_should_give_success_on_empty_log(self):
+        action = {"actions": []}
+        item = {}
+
+        self.test_parser.extractRepairOperationStatus(action, item)
+
+        assert (item == {"repair_status": 0, "repair_log": []})
+
+    def test_extractRepairOperationStatus_should_give_failure_on_nonrepaired_entries(self):
+        action = {"actions": ["failed"]}
+        item = {}
+
+        self.test_parser.extractRepairOperationStatus(action, item)
+
+        assert (item == {"repair_status": 1, "repair_log": ["failed"]})
+
+    def test_extractRepairOperationStatus_should_give_success_if_all_entries_are_repaired(self):
+        action = {"actions": ["Quick Check OK", "Repaired in", "all files correct"]}
+        item = {}
+
+        self.test_parser.extractRepairOperationStatus(action, item)
+
+        assert (item == {"repair_status": 0, "repair_log": []})
+
+if __name__ == '__main__':
+    nose.runmodule()
