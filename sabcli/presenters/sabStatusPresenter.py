@@ -1,4 +1,3 @@
-import curses
 from cursesUI.cursesWindow import cursesWindow
 
 
@@ -18,18 +17,18 @@ class sabStatusPresenter():
         self.pad = []
 
         self.fetching = 'Fetching...' + (' ' * (len(state["disk_usage"]) - len('Fetching...')))
-        self.display_diskwarnings(state)
-        self.display_status(state)
+        self.displayDiskWarning(state)
+        self.displayGeneralStatus(state)
 
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
 
-    def display_diskwarnings(self, state = {}):
+    def displayDiskWarning(self, state = {}):
         if 'warning' in state:
             self.window.addString(1, 3, "WARNING:", curses.color_pair(2))
             self.window.addStr(state["warning"])
 
-    def display_status(self, state = {}):
+    def displayGeneralStatus(self, state = {}):
         status = self.printLine([state["disk_usage"], state["main_stats"], state["last_update"]])
         self.window.addString(int(self.window.size[0]) - 1, 0, status)
 
@@ -57,6 +56,8 @@ class sabStatusPresenter():
             # Remove trailing whitespaces from above.
         return combined.strip()
 
-    def display_fetching(self):
-        self.window.addString(int(self.window.size[0])-1, 0, self.fetching)
+    def displayFetching(self):
+        self.screen = []
+        self.window.addString(int(self.window.size[0]) - 1, 0, self.fetching)
+        self.window.draw(self.screen)
         self.window.refresh()
