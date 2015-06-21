@@ -20,7 +20,7 @@ class sabHelpPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayQueueViewInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.displayGeneralInformation.assert_called_with()
 
@@ -30,7 +30,7 @@ class sabHelpPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayQueueViewInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.displayNavigationInformation.assert_called_with()
 
@@ -40,7 +40,7 @@ class sabHelpPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayQueueViewInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.displayQueueViewInformation.assert_called_with()
 
@@ -50,7 +50,7 @@ class sabHelpPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayQueueViewInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.window.draw.assert_called_with([])
 
@@ -60,7 +60,7 @@ class sabHelpPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayQueueViewInformation = Mock()
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.display()
+        self.test_presenter.display({})
 
         self.test_presenter.window.pad.draw.assert_called_with([])
 
