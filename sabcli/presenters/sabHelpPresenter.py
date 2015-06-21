@@ -2,45 +2,57 @@ from cursesUI.cursesWindow import cursesWindow
 
 
 class sabHelpPresenter:
-    def __init__(self, window = cursesWindow()):
+    def __init__(self, window = None):
+        if not window:
+            window = cursesWindow()
         self.window = window
 
-    def displayGeneralInformation(self):
-        self.window.pad.addString(1,3,  '|' + '-' * 46 + '|' + '\n')
-        self.window.pad.addString(2,3,  '| General and Navigation                       |\n')
-        self.window.pad.addString(3,3,  '|' + '-' * 46 + '|' + '\n')
-        self.window.pad.addString(4,3,  '| 1              Queue screen                  |\n')
-        self.window.pad.addString(5,3,  '| 2              History screen                |\n')
-        self.window.pad.addString(6,3,  '| 3              Warnings screen               |\n')
-        self.window.pad.addString(7,3,  '| 4              More screen                   |\n')
-        self.window.pad.addString(8,3,  '| 5/?            Help screen                   |\n')
-        self.window.pad.addString(9,3,  '| Q/q            Quit                          |\n')
-        self.window.pad.addString(10,3, '| S              Shutdown                      |\n')
-        self.window.pad.addString(11,3, '| R              Restart                       |\n')
-        self.window.pad.addString(12,3, '| Up/Down        Select item/setting           |\n')
-        self.window.pad.addString(13,3, '| PageUp/Down    Select item (jump 5)          |\n')
-        self.window.pad.addString(14,3, '| Home/End       Jump to first or last item    |\n')
-        self.window.pad.addString(15,3, '| Enter          Access/Apply changes          |\n')
-        self.window.pad.addString(16,3, '| Del/Backspace  Delete (all* or selected)     |\n')
-        self.window.pad.addString(17,3, '|                *only on history screen       |\n')
-        self.window.pad.addString(18,3, '|' + '-' * 46 + '|' + '\n')
-
-    def displayQueueViewInformation(self):
-        self.window.pad.addString(1, 53, '|' + '-' * 45 + '|' + '\n')
-        self.window.pad.addString(2, 53, '| Queue view                                  |\n')
-        self.window.pad.addString(3, 53, '|' + '-' * 45 + '|' + '\n')
-        self.window.pad.addString(4, 53, '| Left/Right  Access settings                 |\n')
-        self.window.pad.addString(5, 53, '| m           Move (select and place)         |\n')
-        self.window.pad.addString(6, 53, '| r           Resume (all or selected)        |\n')
-        self.window.pad.addString(7, 53, '| p           Pause (all or selected)         |\n')
-        self.window.pad.addString(8, 53, '| d           Enter/Exit details view         |\n')
-        self.window.pad.addString(9, 53, '|' + '-' * 45 + '|' + '\n')
+        self.screen = []
+        self.pad = []
 
     def display(self):
-        self.window.addString(2, 3, 'Keymap:\n')
-        self.window.addString(3, 0, '-' * int(self.window.size[1] + '\n'))
+        self.screen = []
+        self.pad = []
 
-        self.window.pad.addStr('\n')
         self.displayGeneralInformation()
-        self.window.pad.addStr('\n')
+        self.displayNavigationInformation()
+
         self.displayQueueViewInformation()
+
+        self.window.draw(self.screen)
+        self.window.pad.draw(self.pad)
+
+    def displayGeneralInformation(self):
+        self.screen.append((3, 2, 'Keymap:\n', ''))
+        self.screen.append((0, 3, '-' * int(self.window.size[1]) + '\n', ''))
+
+    def displayNavigationInformation(self):
+        self.pad.append((3, 1,  '|' + '-' * 46 + '|' + '\n', ''))
+        self.pad.append((3, 2,  '| General and Navigation                       |\n', ''))
+        self.pad.append((3, 3,  '|' + '-' * 46 + '|' + '\n', ''))
+        self.pad.append((3, 4,  '| 1              Queue screen                  |\n', ''))
+        self.pad.append((3, 5,  '| 2              History screen                |\n', ''))
+        self.pad.append((3, 6,  '| 3              Warnings screen               |\n', ''))
+        self.pad.append((3, 7,  '| 4              More screen                   |\n', ''))
+        self.pad.append((3, 8,  '| 5/?            Help screen                   |\n', ''))
+        self.pad.append((3, 9,  '| Q/q            Quit                          |\n', ''))
+        self.pad.append((3, 10, '| S              Shutdown                      |\n', ''))
+        self.pad.append((3, 11, '| R              Restart                       |\n', ''))
+        self.pad.append((3, 12, '| Up/Down        Select item/setting           |\n', ''))
+        self.pad.append((3, 13, '| PageUp/Down    Select item (jump 5)          |\n', ''))
+        self.pad.append((3, 14, '| Home/End       Jump to first or last item    |\n', ''))
+        self.pad.append((3, 15, '| Enter          Access/Apply changes          |\n', ''))
+        self.pad.append((3, 16, '| Del/Backspace  Delete (all* or selected)     |\n', ''))
+        self.pad.append((3, 17, '|                *only on history screen       |\n', ''))
+        self.pad.append((3, 18, '|' + '-' * 46 + '|' + '\n', ''))
+
+    def displayQueueViewInformation(self):
+        self.pad.append((53, 1, '|' + '-' * 45 + '|' + '\n', ''))
+        self.pad.append((53, 2, '| Queue view                                  |\n', ''))
+        self.pad.append((53, 3, '|' + '-' * 45 + '|' + '\n', ''))
+        self.pad.append((53, 4, '| Left/Right  Access settings                 |\n', ''))
+        self.pad.append((53, 5, '| m           Move (select and place)         |\n', ''))
+        self.pad.append((53, 6, '| r           Resume (all or selected)        |\n', ''))
+        self.pad.append((53, 7, '| p           Pause (all or selected)         |\n', ''))
+        self.pad.append((53, 8, '| d           Enter/Exit details view         |\n', ''))
+        self.pad.append((53, 9, '|' + '-' * 45 + '|' + '\n', ''))
