@@ -18,32 +18,32 @@ def buildDependencyGraph():
     #loadControlLayer()
 
 def loadCoreLayer():
-    from sabCore.sabChannel import sabChannel
+    from core.sabChannel import sabChannel
     sys.modules["__main__"].channel = sabChannel()
 
-    from sabCore.sabEncoder import sabEncoder
+    from core.sabEncoder import sabEncoder
     sys.modules["__main__"].encoder = sabEncoder()
 
-    from sabCore.sabParser import sabParser
+    from core.sabParser import sabParser
     sys.modules["__main__"].parser = sabParser()
 
-    from sabCore.sabCore import sabCore
-    sys.modules["__main__"].core = sabCore()
+    from core.core import core
+    sys.modules["__main__"].core = core()
 
 def loadAPILayer():
-    from sabAPI.sabInfoParser import sabInfoParser
+    from api.sabInfoParser import sabInfoParser
     sys.modules["__main__"].infoParser = sabInfoParser()
 
-    from sabAPI.sabQueueParser import sabQueueParser
+    from api.sabQueueParser import sabQueueParser
     sys.modules["__main__"].queueParser = sabQueueParser()
 
-    from sabAPI.sabHistoryParser import sabHistoryParser
+    from api.sabHistoryParser import sabHistoryParser
     sys.modules["__main__"].historyParser = sabHistoryParser()
 
-    from sabAPI.sabWarningsParser import sabWarningsParser
+    from api.sabWarningsParser import sabWarningsParser
     sys.modules["__main__"].warningsParser = sabWarningsParser()
 
-    from sabAPI.sabAPI import sabAPI
+    from api.api import sabAPI
     api = sabAPI()
     sys.modules["__main__"].api = api
 
@@ -51,8 +51,9 @@ def loadAPILayer():
 def loadPresentationLayer():
     sys.modules["__main__"].pad = ""
 
-    from presenters.sabWindow import sabWindow
-    window = sabWindow()
+    from cursesUI import cursesWindow
+
+    window = cursesWindow()
     sys.modules["__main__"].window = window
 
     from presenters.sabStatusPresenter import sabStatusPresenter
