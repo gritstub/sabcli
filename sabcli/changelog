@@ -1,4 +1,7 @@
 = Changelog =
+  = SABcurses 0.8 =
+    * Complete rewrite to be more crash resistant
+
   = SABcurses 0.7-11 =
     * A lot of fixes
 	
