@@ -9,6 +9,7 @@ class cursesWindow():
         if not pad:
             pad = cursesPad()
         self.pad = pad
+
         self.screen = ''
         self.window = ''
         self.size = os.popen('stty size', 'r').read().split()
@@ -65,12 +66,11 @@ class cursesWindow():
     def wait(self, delay):
         self.screen.timeout(delay)
 
-    def refresh(self, scroll_pad_to_line_number):
+    def refresh(self):
         try:
             self.screen.noutrefresh()
         except:
             pass
-        self.pad.refresh(scroll_pad_to_line_number)
 
     def update(self):
         curses.doupdate()
