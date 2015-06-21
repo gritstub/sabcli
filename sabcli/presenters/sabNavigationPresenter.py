@@ -1,40 +1,43 @@
-import curses, sys
+from cursesUI.cursesWindow import cursesWindow
+
 
 class sabNavigationPresenter():
+    def __init__(self, window = None):
+        if not window:
+            window = cursesWindow()
+        self.window = window
 
-    def __init__(self):
-        self.window = sys.modules["__main__"].window
+        self.screen = []
 
-    def displayKeyPress(self, key_press):
-        self.window.addString(1, int(self.window.size[1]) - len(key_press), key_press)
-        self.window.refresh()
+    def display(self, state):
+        self.screen = []
+
+        self.displayNavigation(state)
+        self.displaySpeed(state)
+
+        self.window.draw(self.screen)
 
     def displaySpeed(self, state = {}):
         if 'speed' not in state:
             return
 
-        try:
-            self.window.addString(0, int(self.window.size[1]) - 7 - len(state['speed']), 'Speed: ')
-        except:
-            pass
-
-        try:
-            self.window.addString(0, int(self.window.size[1]) - len(state['speed']), state['speed'], curses.color_pair(7))
-        except:
-            pass
+        self.screen.append((int(self.window.size[1]) - 7 - len(state['speed']), 0, 'Speed: ', ''))
+        self.screen.append((int(self.window.size[1]) - len(state['speed']), 0, state['speed'], 7))
 
     def displayNavigation(self, state):
         if 'views' not in state:
             return
 
-        self.window.addString(0, 0, '')
-
-        for name, selected_view in state["views"]:
+        for index, (name, selected_view) in enumerate(state["views"]):
             if selected_view:
-                self.window.addStr(name, curses.color_pair(7))
+                self.screen.append((index * 13, 0, name, 7))
             else:
-                self.window.addStr(name)
+                self.screen.append((index * 13, 0, name, ''))
 
-    def display(self, state = {}):
-        self.displayNavigation(state)
-        self.displaySpeed(state)
+    # TODO: remove this, since we don't test in production
+    def displayKeyPress(self, key_press):
+        self.screen = []
+        self.screen.append((int(self.window.size[1]) - len(key_press), 1, key_press, ''))
+        self.window.draw(self.screen)
+        self.window.refresh()
+        self.window.update()
