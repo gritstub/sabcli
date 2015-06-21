@@ -207,7 +207,7 @@ class cursesWindow_Test(BaseTestCase.BaseTestCase):
     def test_refresh_should_draw_screen(self, mock_curses):
         self.test_window.screen = Mock()
 
-        self.test_window.refresh(1)
+        self.test_window.refresh()
 
         self.test_window.screen.noutrefresh.assert_called_with()
 
@@ -216,17 +216,9 @@ class cursesWindow_Test(BaseTestCase.BaseTestCase):
         self.test_window.screen = Mock()
         self.test_window.screen.noutrefresh.side_effect = Exception("Test Exception")
 
-        self.test_window.refresh(1)
+        self.test_window.refresh()
 
         self.test_window.screen.noutrefresh.assert_called_with()
-
-    @patch('cursesUI.cursesWindow.curses')
-    def test_update_should_force_drawing_of_pad(self, mock_curses):
-        self.test_window.screen = Mock()
-
-        self.test_window.refresh(1)
-
-        self.test_window.pad.refresh.assert_called_with(1)
 
     @patch('cursesUI.cursesWindow.curses')
     def test_update_should_force_update_of_curses(self, mock_curses):
