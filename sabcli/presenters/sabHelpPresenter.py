@@ -1,9 +1,9 @@
-import sys
+from cursesUI.cursesWindow import cursesWindow
 
-class sabHelpPresenter( object ):
 
-    def __init__(self):
-        self.window = sys.modules["__main__"].window
+class sabHelpPresenter:
+    def __init__(self, window = cursesWindow()):
+        self.window = window
 
     def displayGeneralInformation(self):
         self.window.pad.addString(1,3,  '|' + '-' * 46 + '|' + '\n')

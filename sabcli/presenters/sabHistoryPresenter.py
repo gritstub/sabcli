@@ -1,9 +1,12 @@
-import sys, curses
+import sys
+import curses
+from cursesUI.cursesWindow import cursesWindow
 
-class sabHistoryPresenter( object ):
-    def __init__(self):
-        self.window = sys.modules["__main__"].window
-        self.scroller = sys.modules["__main__"].scroller
+
+class sabHistoryPresenter:
+    def __init__(self, , window = cursesWindow(), scroller = sabScroller()):
+        self.window = window
+        self.scroller = scroller
 
 
     def displayUnpackStatus(self, item):
