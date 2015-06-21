@@ -23,12 +23,12 @@ class sabStatusPresenter():
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
 
-    def displayDiskWarning(self, state = {}):
+    def displayDiskWarning(self, state):
         if 'warning' in state:
             self.window.addString(1, 3, "WARNING:", curses.color_pair(2))
             self.window.addStr(state["warning"])
 
-    def displayGeneralStatus(self, state = {}):
+    def displayGeneralStatus(self, state):
         status = self.printLine([state["disk_usage"], state["main_stats"], state["last_update"]])
         self.window.addString(int(self.window.size[0]) - 1, 0, status)
 
