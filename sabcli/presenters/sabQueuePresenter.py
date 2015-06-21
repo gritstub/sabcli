@@ -1,45 +1,39 @@
-import sys
-import curses
+from cursesUI.cursesWindow import cursesWindow
 
-class sabQueuePresenter( object ):
-    def __init__(self):
-        self.window = sys.modules["__main__"].window
-        self.scroller = sys.modules["__main__"].scroller
+
+class sabQueuePresenter():
+    def __init__(self, window = None):
+        if not window:
+            window = cursesWindow()
+        self.window = window
         self.options = ['Download', 'Repair', 'Unpack', 'Delete']
 
-    def wait(self, delay):
-        self.window.wait(delay)
+        self.screen = []
+        self.pad = []
 
-    def display(self, state = {}):
+    def display(self, state):
+        self.screen = []
+        self.pad = []
+
+        self.displayGeneralInformation()
         self.displayQueue(state)
-        self.scroller.display(state)
 
-    def displayFileInformation(self, slot, current_selection = -1):
-        self.window.pad.addStr('   ' + str(slot['index']), curses.color_pair(3))
-        self.window.pad.addStr(' - ')
-        if current_selection == 0:
-            self.window.pad.addStr(slot['filename'], curses.color_pair(2))
-        else:
-            self.window.pad.addStr(slot['filename'])
+        self.window.draw(self.screen)
+        self.window.pad.draw(self.pad)
 
-        self.window.pad.addStr(' [')
-        self.window.pad.addStr(slot['avg_age'], curses.color_pair(3))
-        self.window.pad.addStr('/')
+    def displayGeneralInformation(self):
+        self.screen.append((3, 2, '# - Filename [Age/Priority/Options] (Status):\n', ''))
+        self.screen.append((0, 3, '-' * int(self.window.size[1] + '\n'), ''))
 
-        if current_selection == 1:
-            self.window.pad.addStr(slot['priority'], curses.color_pair(2))
-        else:
-            self.window.pad.addStr(slot['priority'], curses.color_pair(3))
-        self.window.pad.addStr('/')
+    def displayQueue(self, state = {}):
+        padding = self.calculateProgressBarPadding(state)
 
-        if current_selection == 2:
-            self.window.pad.addStr(self.options[int(slot['unpackopts'])], curses.color_pair(2))
-        else:
-            self.window.pad.addStr(self.options[int(slot['unpackopts'])], curses.color_pair(3))
-
-        self.window.pad.addStr('] (')
-        self.window.pad.addStr(slot['status'], curses.color_pair(2))
-        self.window.pad.addStr(')\n')
+        for slot in state["queue"]:
+            if slot["index"] == state["current_index"]:
+                self.displayFileInformation(slot, state["current_selection"])
+            else:
+                self.displayFileInformation(slot)
+            self.displayProgress(padding, slot)
 
     def calculateProgressBarPadding(self, state):
         doubleMaxTailLength = 0
@@ -49,33 +43,52 @@ class sabQueuePresenter( object ):
         doubleMaxTailLength += doubleMaxTailLength
         return doubleMaxTailLength
 
-    def displayProgress(self, alignementLength, slot):
-        self.window.pad.addStr('      ')
-        self.window.pad.addStr(slot["timeleft"], curses.color_pair(2))
-        self.window.pad.addStr(' ')
-        tail = "%.2f / %.2f [%2.0f%%]" % (float(slot['mb']) - float(slot['mb_left']), float(slot['mb']), float(slot['percentage']) )
+    def displayFileInformation(self, slot, current_selection = -1):
+        self.pad.append(('   ' + str(slot['index']), 3))
+        self.pad.append((' - ', ''))
+        if current_selection == 0:
+            self.pad.append((slot['filename'], 2))
+        else:
+            self.pad.append((slot['filename'], ''))
+
+        self.pad.append((' [', ''))
+        self.pad.append((slot['avg_age'], 3))
+        self.pad.append(('/', ''))
+
+        if current_selection == 1:
+            self.pad.append((slot['priority'], 2))
+        else:
+            self.pad.append((slot['priority'], 3))
+        self.pad.append(('/', ''))
+
+        if current_selection == 2:
+            self.pad.append((self.options[int(slot['unpackopts'])], 2))
+        else:
+            self.pad.append((self.options[int(slot['unpackopts'])], 3))
+
+        self.pad.append(('] (', ''))
+        self.pad.append((slot['status'], 2))
+        self.pad.append((')\n', ''))
+
+    def displayProgress(self, alignment_length, slot):
+        self.pad.append(('      ', ''))
+        self.pad.append((slot["timeleft"], 2))
+        self.pad.append((' ', ''))
+
+        tail = "%.2f / %.2f [%2.0f%%]" % (float(slot['mb']) - float(slot['mb_left']), float(slot['mb']), float(slot['percentage']))
         tailLength = len(tail)
-        charsLeft = int(self.window.size[1]) - len(slot["timeleft"]) - tailLength - 9 - (alignementLength + 9 - tailLength) - 5
-        pct = (charsLeft) / 100.0 * float(slot['percentage'])
+        charsLeft = int(self.window.size[1]) - len(slot["timeleft"]) - tailLength - 9 - (alignment_length + 9 - tailLength) - 5
+        pct = charsLeft / 100.0 * float(slot['percentage'])
         progress = "=" * int(pct) + ">" + " " * (charsLeft - int(pct))
-        self.window.pad.addStr('[' + progress + ']', curses.color_pair(5) | curses.A_BOLD) #
-        self.window.pad.addStr(' ' * ( alignementLength + 10 - tailLength))
-        self.window.pad.addStr("%.2f" % (float(slot['mb']) - float(slot['mb_left'])), curses.color_pair(2))
-        self.window.pad.addStr(' / ')
-        self.window.pad.addStr("%.2f" % (float(slot['mb'])), curses.color_pair(2))
-        self.window.pad.addStr(' [')
-        self.window.pad.addStr("%2.0f%%" % (float(slot['percentage'])), curses.color_pair(2))
-        self.window.pad.addStr(']\n\n')
 
-    def displayQueue(self, state = {}):
-        self.window.addString(2, 3, '# - Filename [Age/Priority/Options] (Status):\n')
-        self.window.addString(3, 0, '-' * int(self.window.size[1] + '\n'))
+        self.pad.append(('[' + progress + ']', 5))
+        self.pad.append((' ' * ( alignment_length + 10 - tailLength), ''))
+        self.pad.append(("%.2f" % (float(slot['mb']) - float(slot['mb_left'])), 2))
+        self.pad.append((' / ', ''))
+        self.pad.append(("%.2f" % (float(slot['mb'])), 2))
+        self.pad.append((' [', ''))
+        self.pad.append(("%2.0f%%" % (float(slot['percentage'])), 2))
+        self.pad.append((']\n\n', ''))
 
-        padding = self.calculateProgressBarPadding(state)
-
-        for slot in state["queue"]:
-            if slot["index"] == state["current_index"]:
-                self.displayFileInformation(slot, state["current_selection"])
-            else:
-                self.displayFileInformation(slot)
-            self.displayProgress(padding, slot)
+    def wait(self, delay):
+        self.window.wait(delay)
