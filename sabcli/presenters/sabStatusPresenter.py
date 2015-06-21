@@ -2,7 +2,6 @@ from cursesUI.cursesWindow import cursesWindow
 
 
 class sabStatusPresenter():
-
     def __init__(self, window = None):
         if not window:
             window = cursesWindow()
@@ -25,12 +24,11 @@ class sabStatusPresenter():
 
     def displayDiskWarning(self, state):
         if 'warning' in state:
-            self.window.addString(1, 3, "WARNING:", curses.color_pair(2))
-            self.window.addStr(state["warning"])
+            self.screen.append((3, 1, "WARNING: " + state["warning"], 2))
 
     def displayGeneralStatus(self, state):
         status = self.printLine([state["disk_usage"], state["main_stats"], state["last_update"]])
-        self.window.addString(int(self.window.size[0]) - 1, 0, status)
+        self.screen.append((0, int(self.window.size[0]) - 1, status, ''))
 
     def printLine(self, segments):
         # Calculate spacing between segments in line.
@@ -58,6 +56,6 @@ class sabStatusPresenter():
 
     def displayFetching(self):
         self.screen = []
-        self.window.addString(int(self.window.size[0]) - 1, 0, self.fetching)
+        self.screen.append((0, int(self.window.size[0]) - 1, self.fetching, ''))
         self.window.draw(self.screen)
         self.window.refresh()
