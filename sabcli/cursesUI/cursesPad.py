@@ -3,7 +3,11 @@ import curses
 
 
 class cursesPad():
+    __shared_state = {}
+
     def __init__(self):
+        self.__dict__ = self.__shared_state
+
         self.size = os.popen('stty size', 'r').read().split()
         self.pad = ''
 
