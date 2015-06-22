@@ -19,7 +19,7 @@ class sabHelpController( object ):
         return {}
 
     def display(self):
-        self.helpPresenter.display()
+        self.helpPresenter.display({})
 
     def handleInput(self, keyPressed):
         return False
