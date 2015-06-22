@@ -1,4 +1,3 @@
-import sys
 import time
 import configuration
 from controllers.sabHelpController import sabHelpController
