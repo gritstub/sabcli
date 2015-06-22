@@ -18,6 +18,14 @@ class cursesPad_Test(BaseTestCase.BaseTestCase):
     def test_should_instantiate(self):
         assert(isinstance(self.test_pad, cursesPad.cursesPad))
 
+    def test_pad_should_be_part_of_the_borg_collective(self):
+        pad1 = cursesPad.cursesPad()
+        pad2 = cursesPad.cursesPad()
+
+        pad1.test = "test"
+
+        assert(pad2.test == "test")
+
     @patch('cursesUI.cursesPad.curses.newpad')
     def test_initialize_should_call_curses_newpad_correctly(self, mock_curses):
 
