@@ -58,6 +58,54 @@ class sabController():
         self.currentController = queueController
         self.controllers = [queueController, historyController, warningsController, miscController, helpController]
 
+    def run(self):
+        self.window.initialize()
+        self.window.pad.initialize()
+
+        while self.quit == 0:
+            self.updateApplicationState()
+
+            self.display()
+
+            self.waitForRefresh()
+
+            self.handleUserEvents()
+
+        self.window.close()
+
+    def updateApplicationState(self):
+        refresh = self.last_fetch['state_owner'] != self.controllers.index(self.currentController)
+        if refresh or time.mktime(time.localtime()) - self.last_fetch['time'] >= self.last_fetch['refresh']:
+            self.last_fetch['time'] = time.mktime(time.localtime())
+            self.status.displayFetching()
+            self.state = self.currentController.update()
+            self.navigationController.update(self.controllers.index(self.currentController), self.state)
+            self.status.update(self.state)
+            self.last_fetch['state_owner'] = self.controllers.index(self.currentController)
+            self.refresh = False
+
+    def display(self):
+        self.window.clear()
+
+        self.navigationController.display()
+        self.currentController.display()
+        self.status.display()
+
+        self.window.update()
+    
+    def waitForRefresh(self):
+        delay = self.calculateRefreshDelay()
+        self.window.wait(delay)
+
+    def handleUserEvents(self):
+        keyPressed = self.getUserInput()
+        if not self.currentController.selected:
+            self.handleInput(keyPressed)
+
+        if self.currentController.selected:
+            if not self.currentController.handleInput(keyPressed):
+                self.handleInput(keyPressed)
+
     def handleInput(self, keyPressed):
 
         # Global App Navigation
@@ -128,54 +176,3 @@ class sabController():
             self.navigationController.displayKeyPress(key_press)
 
         return keyPressed
-
-    def display(self):
-        self.window.clear()
-
-        self.navigationController.display()
-        self.currentController.display()
-        self.status.display()
-
-        self.window.update()
-
-    def updateApplicationState(self):
-        refresh = self.last_fetch['state_owner'] != self.controllers.index(self.currentController)
-        if refresh or time.mktime(time.localtime()) - self.last_fetch['time'] >= self.last_fetch['refresh']:
-            self.last_fetch['time'] = time.mktime(time.localtime())
-            self.status.displayFetching()
-            self.state = self.currentController.update()
-            self.navigationController.update(self.controllers.index(self.currentController), self.state)
-            self.status.update(self.state)
-            self.last_fetch['state_owner'] = self.controllers.index(self.currentController)
-            self.refresh = False
-
-    def handleUserEvents(self):
-        keyPressed = self.getUserInput()
-        if not self.currentController.selected:
-            self.handleInput(keyPressed)
-
-        if self.currentController.selected:
-            if not self.currentController.handleInput(keyPressed):
-                self.handleInput(keyPressed)
-
-    def waitForRefresh(self):
-        delay = self.calculateRefreshDelay()
-        self.window.wait(delay)
-
-    def run(self):
-        self.window.initialize()
-        self.window.pad.initialize()
-
-        try:
-            while self.quit == 0:
-                self.updateApplicationState()
-
-                self.display()
-
-                self.waitForRefresh()
-
-                self.handleUserEvents()
-        except Exception as e:
-            print repr(e)
-
-        self.window.close()
