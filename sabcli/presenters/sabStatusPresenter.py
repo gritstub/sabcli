@@ -15,7 +15,6 @@ class sabStatusPresenter():
         self.screen = []
         self.pad = []
 
-        self.fetching = 'Fetching...' + (' ' * (len(state["disk_usage"]) - len('Fetching...')))
         self.displayDiskWarning(state)
         self.displayGeneralStatus(state)
 
@@ -54,8 +53,9 @@ class sabStatusPresenter():
             # Remove trailing whitespaces from above.
         return combined.strip()
 
-    def displayFetching(self):
+    def displayFetching(self, state):
         self.screen = []
+        self.fetching = 'Fetching...' + (' ' * (len(state["disk_usage"]) - len('Fetching...')))
         self.screen.append((0, int(self.window.size[0]) - 1, self.fetching, ''))
         self.window.draw(self.screen)
         self.window.refresh()
