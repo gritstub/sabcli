@@ -21,11 +21,13 @@ class sabNavigationPresenter():
         if 'views' not in state:
             return
 
-        for index, (name, selected_view) in enumerate(state["views"]):
+        index = 0
+        for name, selected_view in state["views"]:
             if selected_view:
-                self.screen.append((index * 13, 0, name, 7))
+                self.screen.append((index, 0, name, 7))
             else:
-                self.screen.append((index * 13, 0, name, ''))
+                self.screen.append((index, 0, name, ''))
+            index += len(name)
 
     def displaySpeed(self, state = {}):
         if 'speed' not in state:
