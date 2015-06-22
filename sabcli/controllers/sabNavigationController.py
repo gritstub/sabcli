@@ -8,7 +8,7 @@ class sabNavigationController():
         self.navigationPresenter = navigationPresenter
 
         self.status = {}
-        self.view_strings = [('[1-Queue]', 0), (' [2-History]', 1), (' [3-Warnings]', 2), (' [4-More]', 3), (' [5-Help]', 4)]
+        self.view_strings = [('[1 - Queue]', 0), (' [2 - History]', 1), (' [3 - Warnings]', 2), (' [4 - More]', 3), (' [5 - Help]', 4)]
 
     def updateSpeed(self, state):
         if "status" not in state:
