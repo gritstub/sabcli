@@ -11,27 +11,32 @@ class sabHistoryPresenter:
         self.pad = []
 
     def display(self, state):
+        self.screen = []
+        self.pad = []
+
         self.displayGeneralInformation()
+        self.displayHistory(state)
 
+        self.window.draw(self.screen)
+        self.window.pad.draw(self.pad)
+
+    def displayGeneralInformation(self):
+        self.screen.append((3, 2, '# - Filename\n', ''))
+        self.screen.append((0, 3, '-' * int(self.window.size[1] + '\n'), ''))
+
+    def displayHistory(self, state):
         for index, item in enumerate(state["history"]):
-
             self.displayDownloadInformation(index, item)
 
             self.displayRepairStatus(item)
             self.displayUnpackStatus(item)
 
-            self.window.pad.addStr('\n')
+            self.pad.append(('\n', ''))
 
             self.displayRepairLog(item)
             self.displayUnpackLog(item)
 
-            self.window.pad.addStr('\n')
-
-        self.scroller.display(state)
-
-    def displayGeneralInformation(self):
-        self.window.addString(2, 3, '# - Filename\n', '')
-        self.window.addString(3, 0, '-' * int(self.window.size[1] + '\n'), '')
+            self.pad.append(('\n', ''))
 
     def displayDownloadInformation(self, index, item):
         self.pad.append(('  ' + str(index), 3))
