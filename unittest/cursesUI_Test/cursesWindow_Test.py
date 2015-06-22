@@ -16,6 +16,14 @@ class cursesWindow_Test(BaseTestCase.BaseTestCase):
 
         self.test_window = cursesWindow.cursesWindow(pad=Mock(spec=cursesPad))
 
+    def test_window_should_be_part_of_the_borg_collective(self):
+        window1 = cursesWindow.cursesWindow()
+        window2 = cursesWindow.cursesWindow()
+
+        window1.test = "test"
+
+        assert(window2.test == "test")
+
     def test_should_instantiate(self):
         assert(isinstance(self.test_window, cursesWindow.cursesWindow))
 
