@@ -89,7 +89,7 @@ class sabStatusPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.displayFetching({"disk_usage": "100GB"})
+        self.test_presenter.displayFetching()
 
         assert len(self.test_presenter.screen) == 1
 
@@ -97,7 +97,7 @@ class sabStatusPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.displayFetching({"disk_usage": "100GB"})
+        self.test_presenter.displayFetching()
 
         assert self.test_presenter.window.draw.called
 
@@ -105,7 +105,7 @@ class sabStatusPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.displayFetching({"disk_usage": "100GB"})
+        self.test_presenter.displayFetching()
 
         assert self.test_presenter.window.refresh.called
 
