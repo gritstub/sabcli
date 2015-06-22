@@ -2,17 +2,17 @@ import nose
 import BaseTestCase
 from mock import Mock
 from cursesUI import cursesWindow
-from presenters.sabNavigationPresenter import sabQueuePresenter
+from presenters.sabNavigationPresenter import sabNavigationPresenter
 
 
 class sabNavigationPresenter_Test(BaseTestCase.BaseTestCase):
 
     def setUp(self):
         super(self.__class__, self).setUp()
-        self.test_presenter = sabQueuePresenter(window=Mock(spec=cursesWindow.cursesWindow))
+        self.test_presenter = sabNavigationPresenter(window=Mock(spec=cursesWindow.cursesWindow))
 
     def test_should_instantiate(self):
-        assert(isinstance(self.test_presenter, sabQueuePresenter))
+        assert(isinstance(self.test_presenter, sabNavigationPresenter))
 
     def test_display_should_call_displayGeneralInformation(self):
         self.test_presenter.displaySpeed = Mock()
