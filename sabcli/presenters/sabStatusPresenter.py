@@ -27,6 +27,7 @@ class sabStatusPresenter():
 
     def displayGeneralStatus(self, state):
         status = self.printLine([state["disk_usage"], state["main_stats"], state["last_update"]])
+        self.fetching = 'Fetching...' + (' ' * (len(state["disk_usage"]) - len('Fetching...')))
         self.screen.append((0, int(self.window.size[0]) - 1, status, ''))
 
     def printLine(self, segments):
@@ -53,9 +54,8 @@ class sabStatusPresenter():
             # Remove trailing whitespaces from above.
         return combined.strip()
 
-    def displayFetching(self, state):
+    def displayFetching(self):
         self.screen = []
-        self.fetching = 'Fetching...' + (' ' * (len(state["disk_usage"]) - len('Fetching...')))
         self.screen.append((0, int(self.window.size[0]) - 1, self.fetching, ''))
         self.window.draw(self.screen)
         self.window.refresh()
