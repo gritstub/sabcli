@@ -5,7 +5,11 @@ from cursesUI.cursesPad import cursesPad
 
 
 class cursesWindow():
+    __shared_state = {}
+
     def __init__(self, pad = None):
+        self.__dict__ = self.__shared_state
+
         if not pad:
             pad = cursesPad()
         self.pad = pad
