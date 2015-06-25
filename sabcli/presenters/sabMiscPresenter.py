@@ -1,11 +1,16 @@
 from cursesUI.cursesWindow import cursesWindow
+from presenters.sabScrollPresenter import sabScrollPresenter
 
 
 class sabMiscPresenter():
-    def __init__(self, window = None):
+    def __init__(self, window = None, scrollPresenter = None):
         if not window:
             window = cursesWindow()
         self.window = window
+
+        if not scrollPresenter:
+            scrollPresenter = sabScrollPresenter()
+        self.scrollPresenter = scrollPresenter
 
         self.screen = []
         self.pad = []
@@ -19,6 +24,8 @@ class sabMiscPresenter():
 
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
+
+        self.scrollPresenter.display(state)
 
     def displayGeneralInformation(self, apiInfo):
         self.screen.append((3, 2, 'Option - Description\n', ''))
