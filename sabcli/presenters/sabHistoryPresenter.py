@@ -44,7 +44,7 @@ class sabHistoryPresenter:
         self.pad.append(('       [size: ' + item['size'] + '] ', ''))
 
     def displayRepairStatus(self, item):
-        if not item.has_key("repair_status"):
+        if "repair_status" not in item:
             return
 
         self.pad.append(('[par2: ', ''))
@@ -55,7 +55,7 @@ class sabHistoryPresenter:
         self.pad.append((']', ''))
 
     def displayUnpackStatus(self, item):
-        if not item.has_key("unpack_status"):
+        if "unpack_status" not in item:
             return
 
         self.pad.append(('[unpack: ', ''))
@@ -66,8 +66,10 @@ class sabHistoryPresenter:
         self.pad.append((']', ''))
 
     def displayRepairLog(self, item):
-        if not item.has_key("repair_log"):
+        if "repair_log" not in item:
             return
+
+        length = item.get("item_length", 0)
 
         for log_item in item["repair_log"]:
             if log_item.find("Repair failed") > -1:
@@ -76,10 +78,18 @@ class sabHistoryPresenter:
                 self.pad.append(("Repair failed" + part2 + '\n', 2))
             else:
                 self.pad.append(("       " + log_item + '\n', ''))
+            length += 1
+
+        item["length"] = length
 
     def displayUnpackLog(self, item):
-        if not item.has_key("unpack_log"):
+        if "unpack_log" not in item:
             return
+
+        length = item.get("item_length", 0)
 
         for log_item in item["unpack_log"]:
             self.pad.append(("       " + log_item + '\n', ''))
+            length += 1
+
+        item["length"] = length
