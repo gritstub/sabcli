@@ -32,7 +32,7 @@ class cursesPad():
         except:
             pass
 
-    def refresh(self, line_number):
+    def scrollToLine(self, line_number):
         try:
             self.pad.noutrefresh(line_number, 0, 4, 0, int(self.size[0]) - 2, int(self.size[1]) - 2)
         except:
