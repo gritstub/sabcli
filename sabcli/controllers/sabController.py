@@ -87,6 +87,7 @@ class sabController():
     def display(self):
         self.window.clear()
 
+        self.window.refresh()
         self.navigationController.display()
         self.currentController.display()
         self.status.display()
