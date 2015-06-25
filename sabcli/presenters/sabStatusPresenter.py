@@ -39,7 +39,7 @@ class sabStatusPresenter():
             space -= len(segment)
 
         if ls > 1:
-            space = space / (ls-1)
+            space = space / (ls - 1)
 
         if space <= 0:
             space = 1
