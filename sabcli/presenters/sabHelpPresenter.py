@@ -22,6 +22,8 @@ class sabHelpPresenter:
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
 
+        self.window.pad.scrollToLine(0)
+
     def displayGeneralInformation(self):
         self.screen.append((3, 2, 'Keymap:\n', ''))
         self.screen.append((0, 3, '-' * int(self.window.size[1]) + '\n', ''))
