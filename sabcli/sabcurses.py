@@ -19,6 +19,16 @@ def getConfigFileLocation():
     return result
 
 
+def tryToRecoverTerminal():
+    try:
+        from cursesUI.cursesWindow import cursesWindow
+        tmp = cursesWindow()
+        tmp.initialize()
+        tmp.close()
+    except:
+        pass
+
+
 if __name__ == '__main__':
     sys.modules["__main__"].configFile = getConfigFileLocation()
 
@@ -28,5 +38,6 @@ if __name__ == '__main__':
     try:
         controller.run()
     except Exception as e:
+        tryToRecoverTerminal()
         print repr(e)
         traceback.print_tb(sys.exc_info()[2])
