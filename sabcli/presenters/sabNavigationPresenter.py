@@ -18,7 +18,7 @@ class sabNavigationPresenter():
         self.window.draw(self.screen)
 
     def displayNavigation(self, state):
-        if 'views' not in state:
+        if "views" not in state:
             return
 
         index = 0
@@ -30,16 +30,16 @@ class sabNavigationPresenter():
             index += len(name)
 
     def displaySpeed(self, state = {}):
-        if 'speed' not in state:
+        if "speed" not in state:
             return
 
-        self.screen.append((int(self.window.size[1]) - 7 - len(state['speed']), 0, 'Speed: ', ''))
-        self.screen.append((int(self.window.size[1]) - len(state['speed']), 0, state['speed'], 7))
+        self.screen.append((int(self.window.size[1]) - 7 - len(state["speed"]), 0, "Speed: ", ""))
+        self.screen.append((int(self.window.size[1]) - len(state["speed"]), 0, state["speed"], 7))
 
     # TODO: remove this, since we don't test in production
     def displayKeyPress(self, key_press):
         self.screen = []
-        self.screen.append((int(self.window.size[1]) - len(key_press), 1, key_press, ''))
+        self.screen.append((int(self.window.size[1]) - len(key_press), 1, key_press, ""))
         self.window.draw(self.screen)
         self.window.refresh()
         self.window.update()
