@@ -100,12 +100,12 @@ class sabController():
 
     def handleUserEvents(self):
         keyPressed = self.getUserInput()
-        if not self.currentController.selected:
-            self.handleInput(keyPressed)
 
         if self.currentController.selected:
             if not self.currentController.handleInput(keyPressed):
                 self.handleInput(keyPressed)
+        else:
+            self.handleInput(keyPressed)
 
     def handleInput(self, keyPressed):
 
@@ -113,7 +113,7 @@ class sabController():
         if keyPressed == ord('Q') or keyPressed == ord('q'): # quit
             self.quit = 1
 
-        elif keyPressed == 260:  # Curser left
+        elif keyPressed == 260:  # Cursor left
             current_controller_index = self.controllers.index(self.currentController)
             if current_controller_index > 0:
                 current_controller_index -= 1
@@ -122,7 +122,7 @@ class sabController():
 
             self.currentController = self.controllers[current_controller_index]
 
-        elif keyPressed == 261:  # Curser right
+        elif keyPressed == 261:  # Cursor right
             current_controller_index = self.controllers.index(self.currentController)
             if current_controller_index < len(self.controllers) - 1:
                 current_controller_index += 1
@@ -162,9 +162,9 @@ class sabController():
             self.api.shutdownServer()
 
     def calculateRefreshDelay(self):
-        delay = int((self.last_fetch['refresh'] - ( time.mktime(time.localtime()) - self.last_fetch['time'] )) * 1000 + 100)
-        if delay > 10100:
-            delay = 10100
+        delay = int((self.last_fetch['refresh'] - (time.mktime(time.localtime()) - self.last_fetch['time'])) * 1000 + 100)
+        if delay > 5100:
+            delay = 5100
         if self.quit:
             delay = 100
         return delay
