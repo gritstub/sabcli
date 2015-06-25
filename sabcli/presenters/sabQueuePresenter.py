@@ -1,12 +1,18 @@
 from cursesUI.cursesWindow import cursesWindow
+from presenters.sabScrollPresenter import sabScrollPresenter
 
 
 class sabQueuePresenter():
-    def __init__(self, window = None):
+    def __init__(self, window = None, scrollPresenter = None):
         if not window:
             window = cursesWindow()
         self.window = window
-        self.options = ['Download', 'Repair', 'Unpack', 'Delete']
+
+        if not scrollPresenter:
+            scrollPresenter = sabScrollPresenter()
+        self.scrollPresenter = scrollPresenter
+
+        self.options = ["Download", "Repair", "Unpack", "Delete"]
 
         self.screen = []
         self.pad = []
@@ -21,9 +27,12 @@ class sabQueuePresenter():
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
 
+        state["item_size"] = 3
+        self.scrollPresenter.display(state)
+
     def displayGeneralInformation(self):
-        self.screen.append((3, 2, '# - Filename [Age/Priority/Options] (Status):\n', ''))
-        self.screen.append((0, 3, '-' * int(self.window.size[1] + '\n'), ''))
+        self.screen.append((3, 2, "# - Filename [Age/Priority/Options] (Status):\n", ""))
+        self.screen.append((0, 3, "-" * int(self.window.size[1] + "\n"), ""))
 
     def displayQueue(self, state = {}):
         padding = self.calculateProgressBarPadding(state)
@@ -38,18 +47,18 @@ class sabQueuePresenter():
     def calculateProgressBarPadding(self, state):
         doubleMaxTailLength = 0
         for slot in state["queue"]:
-            if doubleMaxTailLength < len(slot['mb']):
-                doubleMaxTailLength = len(slot['mb'])
+            if doubleMaxTailLength < len(slot["mb"]):
+                doubleMaxTailLength = len(slot["mb"])
         doubleMaxTailLength += doubleMaxTailLength
         return doubleMaxTailLength
 
     def displayFileInformation(self, slot, current_selection = -1):
-        self.pad.append(('   ' + str(slot['index']), 3))
-        self.pad.append((' - ', ''))
+        self.pad.append(("   {0}".format(str(slot['index'])), 3))
+        self.pad.append((" - ", ""))
         if current_selection == 0:
-            self.pad.append((slot['filename'], 2))
+            self.pad.append((slot["filename"], 2))
         else:
-            self.pad.append((slot['filename'], ''))
+            self.pad.append((slot["filename"], ""))
 
         self.pad.append((' [', ''))
         self.pad.append((slot['avg_age'], 3))
