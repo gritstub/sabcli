@@ -64,7 +64,17 @@ class sabHelpPresenter_Test(BaseTestCase.BaseTestCase):
 
         self.test_presenter.window.pad.draw.assert_called_with([])
 
-    def test_prepare_should_add_screen_instructions(self):
+    def test_display_should_ensure_that_help_screen_never_scrolls(self):
+        self.test_presenter.window.size = ["1", "1"]
+        self.test_presenter.window.pad = Mock()
+        self.test_presenter.displayNavigationInformation = Mock()
+        self.test_presenter.displayQueueViewInformation = Mock()
+
+        self.test_presenter.display({})
+
+        self.test_presenter.window.pad.scrollToLine.assert_called_with(0)
+
+    def test_displayGeneralInformation_should_add_screen_instructions(self):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.displayNavigationInformation = Mock()
         self.test_presenter.displayQueueViewInformation = Mock()
@@ -73,7 +83,7 @@ class sabHelpPresenter_Test(BaseTestCase.BaseTestCase):
 
         assert len(self.test_presenter.screen) == 2
 
-    def test_displayGeneralInformation_should_update_pad_with_general_information(self):
+    def test_displayNavigationInformation_should_update_pad_with_general_information(self):
 
         self.test_presenter.displayNavigationInformation()
 
