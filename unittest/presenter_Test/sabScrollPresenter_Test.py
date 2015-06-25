@@ -18,6 +18,7 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.displaySelectedItem = Mock()
         self.test_presenter.displayScrollBar = Mock()
+        self.test_presenter.scrollViewPort = Mock()
         self.test_presenter.window.pad = Mock()
 
         self.test_presenter.display({})
@@ -28,6 +29,7 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.displaySelectedItem = Mock()
         self.test_presenter.displayScrollBar = Mock()
+        self.test_presenter.scrollViewPort = Mock()
         self.test_presenter.window.pad = Mock()
 
         self.test_presenter.display({})
@@ -38,6 +40,7 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.displaySelectedItem = Mock()
         self.test_presenter.displayScrollBar = Mock()
+        self.test_presenter.scrollViewPort = Mock()
         self.test_presenter.window.pad = Mock()
 
         self.test_presenter.display({})
@@ -48,11 +51,23 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.displaySelectedItem = Mock()
         self.test_presenter.displayScrollBar = Mock()
+        self.test_presenter.scrollViewPort = Mock()
         self.test_presenter.window.pad = Mock()
 
         self.test_presenter.display({})
 
         self.test_presenter.window.pad.draw.assert_called_with([])
+
+    def test_display_should_scroll_viewport_to_selected_item(self):
+        self.test_presenter.window.size = ["1", "1"]
+        self.test_presenter.displaySelectedItem = Mock()
+        self.test_presenter.displayScrollBar = Mock()
+        self.test_presenter.scrollViewPort = Mock()
+        self.test_presenter.window.pad = Mock()
+
+        self.test_presenter.display({})
+
+        self.test_presenter.scrollViewPort.assert_called_with({})
 
     def test_displaySelectedItem_should_not_add_pad_instructions_if_current_index_negative(self):
 
@@ -92,6 +107,40 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.drawProgressBar(15, 1)
 
         assert len(self.test_presenter.screen) == 15
+
+    def test_scrollViewPort_should_call_centerViewOnSelectedItem_if_selected_item_is_not_at_end_of_list(self):
+        self.test_presenter.centerViewOnSelectedItem = Mock()
+        self.test_presenter.window.size = ["1", "1"]
+        self.test_presenter.max_window_items = 2
+
+        self.test_presenter.scrollViewPort({"list_length": 8, "current_index": 3})
+
+        self.test_presenter.centerViewOnSelectedItem.assert_called_with(1, {"list_length": 8, "current_index": 3})
+
+    def test_scrollViewPort_should_call_goToLastScreenInList_if_selected_item_is_at_end_of_list(self):
+        self.test_presenter.goToLastScreenInList = Mock()
+        self.test_presenter.window.size = ["1", "1"]
+        self.test_presenter.max_window_items = 2
+
+        self.test_presenter.scrollViewPort({"list_length": 8, "current_index": 7})
+
+        self.test_presenter.goToLastScreenInList.assert_called_with(1, {"list_length": 8, "current_index": 7})
+
+    def test_centerViewOnSelectedItem_should_calculate_centered_line_correctly(self):
+        self.test_presenter.window.pad = Mock()
+        self.test_presenter.item_size = 3
+
+        self.test_presenter.centerViewOnSelectedItem(4, {"list_length": 20, "current_index": 10})
+
+        self.test_presenter.window.pad.scrollToLine.assert_called_with((10 - 4) * 3)
+
+    def test_goToLastScreenInList_should_calculate_last_line_correctly(self):
+        self.test_presenter.window.pad = Mock()
+        self.test_presenter.item_size = 3
+
+        self.test_presenter.goToLastScreenInList(4, {"list_length": 20, "current_index": 17})
+
+        self.test_presenter.window.pad.scrollToLine.assert_called_with((20 - (4 * 2)) * 3)
 
 if __name__ == '__main__':
     nose.runmodule()
