@@ -25,6 +25,8 @@ class sabScrollPresenter():
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
 
+        self.scrollViewPort(state)
+
     def displaySelectedItem(self, state):
         if state["current_index"] < 0:
             return
@@ -60,10 +62,6 @@ class sabScrollPresenter():
                 self.screen.append((screen_right_side, current_line + 4, '#', ''))
             current_line += 1
 
-''' TODO: This presenter contains to much logic to calculate what needs to be updated on
-    screen, this data needs to be prepared by a view controller '''
-
-'''
     def scrollViewPort(self, state):
         center_item = int(self.max_window_items / 2)
 
@@ -72,12 +70,13 @@ class sabScrollPresenter():
 
         elif state["current_index"] >= state["list_length"] - center_item:
             self.goToLastScreenInList(center_item, state)
+        else:
+            self.window.pad.scrollToLine(0)
 
     def centerViewOnSelectedItem(self, center_item, state):
         first_line_where_selected_item_is_centered = (state["current_index"] - center_item) * self.item_size
-        #self.window.pad.scrollToLine(first_line_where_selected_item_is_centered)
+        self.window.pad.scrollToLine(first_line_where_selected_item_is_centered)
 
     def goToLastScreenInList(self, center_item, state):
         first_line_of_last_screen = (state["list_length"] - (center_item * 2)) * self.item_size
-        #self.window.pad.scrollToLine(first_line_of_last_screen)
-'''
+        self.window.pad.scrollToLine(first_line_of_last_screen)
