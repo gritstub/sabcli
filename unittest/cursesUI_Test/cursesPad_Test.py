@@ -104,7 +104,7 @@ class cursesPad_Test(BaseTestCase.BaseTestCase):
     def test_refresh_should_refresh_pad_content_to_window(self):
         self.test_pad.pad = Mock()
 
-        self.test_pad.refresh(1)
+        self.test_pad.scrollToLine(1)
 
         self.test_pad.pad.noutrefresh.assert_called_with(1, 0, 4, 0, int(self.test_pad.size[0]) - 2, int(self.test_pad.size[1]) - 2)
 
@@ -112,7 +112,7 @@ class cursesPad_Test(BaseTestCase.BaseTestCase):
         self.test_pad.pad = Mock()
         self.test_pad.pad.noutrefresh.side_effect = Exception("Test Exception")
 
-        self.test_pad.refresh(1)
+        self.test_pad.scrollToLine(1)
 
         self.test_pad.pad.noutrefresh.assert_called_with(1, 0, 4, 0, int(self.test_pad.size[0]) - 2, int(self.test_pad.size[1]) - 2)
 
