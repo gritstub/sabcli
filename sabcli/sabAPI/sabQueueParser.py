@@ -34,7 +34,7 @@ class sabQueueParser():
                     "index": slot["index"],
                     "avg_age": slot["avg_age"],
                     "priority": slot["priority"],
-                    "unpackopts": slot["unpackopts"],
+                    "unpackopts": int(slot["unpackopts"]),
                     "status": slot["status"],
                     "mb": slot["mb"],
                     "id": slot["nzo_id"],
