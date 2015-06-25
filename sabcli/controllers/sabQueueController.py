@@ -103,14 +103,14 @@ class sabQueueController():
     def increaseDownloadPriority(self, download):
         priority_index = self.priority.index(download["priority"])
 
-        if priority_index < 2:
+        if priority_index < 4:
             download["priority"] = self.priority[priority_index + 1]
-            self.api.changeDownloadPriority(download["id"], download["priority"])
+            self.api.changeDownloadPriority(download["id"], priority_index)
         return True
 
     def addDownloadPostPocessingSteps(self, download):
         if download['unpackopts'] < 3:
-            self.state['unpackopts'][self.selected] += 1
+            download['unpackopts'] += 1
             self.api.changeDownloadProcessingSteps(download["id"], download["unpackopts"])
         return True
 
@@ -145,7 +145,7 @@ class sabQueueController():
 
         if priority_index > 0:
             download["priority"] = self.priority[priority_index - 1]
-            self.api.changeDownloadPriority(download["id"], download["priority"])
+            self.api.changeDownloadPriority(download["id"], priority_index - 2)
         return True
 
     def removeDownloadProcessingSteps(self, download):
