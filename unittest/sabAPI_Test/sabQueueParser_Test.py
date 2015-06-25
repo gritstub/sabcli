@@ -41,7 +41,7 @@ class sabQueueParser_Test(BaseTestCase.BaseTestCase):
                            'queue': 'queue'})
 
     def test_parseQueue_should_extract_queue_details(self):
-        response = {"queue": {"slots": [{"id": 1, "filename": "test_name", "index": 0, "unpackopts": "repair",
+        response = {"queue": {"slots": [{"id": 1, "filename": "test_name", "index": 0, "unpackopts": "1",
                                          "avg_age": "3 Weeks", "size": "100", "nzo_id": "nzo_1", "mb": "100",
                                          "status": "fine", "priority": "high", "timeleft": '000001',
                                          "mbleft": "10", "percentage": "90"}]}}
@@ -49,7 +49,7 @@ class sabQueueParser_Test(BaseTestCase.BaseTestCase):
         result = self.test_parser.parseQueue(response)
 
         assert (result == [{'filename': 'test_name', 'index': 0, "avg_age": "3 Weeks", "priority": "high",
-                            "unpackopts": "repair", "mb": "100", "percentage": "90", "mb_left": "10", "timeleft": '000001',
+                            "unpackopts": 1, "mb": "100", "percentage": "90", "mb_left": "10", "timeleft": '000001',
                             'id': 'nzo_1', 'status': 'fine'}])
 
 if __name__ == '__main__':
