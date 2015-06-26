@@ -14,7 +14,7 @@ class sabMiscController():
 
         self.item_length = 6
         self.selected = False
-        self.cached = False
+
         self.selectedItem = -1
 
     def update(self):
@@ -39,12 +39,6 @@ class sabMiscController():
         elif keyPressed == 258:  # Cursor down
             handled = self.handleDown()
 
-        elif keyPressed == 260:  # Left
-            handled = self.handleLeft()
-
-        elif keyPressed == 261:  # Right
-            handled = self.handleRight()
-
         self.selected = self.selectedItem != -1
         return handled
 
@@ -61,11 +55,3 @@ class sabMiscController():
         else:
             self.selectedItem = -1
         return True
-
-    def handleLeft(self):
-        self.selected = False
-        return False
-
-    def handleRight(self):
-        self.selected = False
-        return False
