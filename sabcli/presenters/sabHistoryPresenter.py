@@ -1,11 +1,15 @@
 from cursesUI.cursesWindow import cursesWindow
-
+from presenters.sabFlexibleScrollPresenter import sabFlexibleScrollPresenter
 
 class sabHistoryPresenter:
-    def __init__(self, window = None):
+    def __init__(self, window = None, scrollPresenter = None):
         if not window:
             window = cursesWindow()
         self.window = window
+
+        if not scrollPresenter:
+            scrollPresenter = sabFlexibleScrollPresenter()
+        self.scrollPresenter = scrollPresenter
 
         self.screen = []
         self.pad = []
@@ -20,12 +24,15 @@ class sabHistoryPresenter:
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
 
+        self.displayScrollAndItemSelection(state)
+
     def displayGeneralInformation(self):
         self.screen.append((3, 2, '# - Filename\n', ''))
         self.screen.append((0, 3, '-' * int(self.window.size[1] + '\n'), ''))
 
     def displayHistory(self, state):
         for index, item in enumerate(state["history"]):
+            item["item_length"] = 2
             self.displayDownloadInformation(index, item)
 
             self.displayRepairStatus(item)
@@ -38,8 +45,22 @@ class sabHistoryPresenter:
 
             self.pad.append(('\n', ''))
 
+    def displayScrollAndItemSelection(self, state):
+        lengths = [item["item_length"] for item in state["history"]]
+        state["item_lengths"] = lengths
+        state["list_length"] = sum(lengths) + len(lengths)
+
+        current_index = state["current_index"]
+        if current_index < 0:
+            current_index = 0
+
+        before_start = [item["item_length"] for item in state["history"][:current_index]]
+        state["selected_item_start"] = sum(before_start) + len(before_start)
+
+        self.scrollPresenter.display(state)
+
     def displayDownloadInformation(self, index, item):
-        self.pad.append(('  ' + str(index), 3))
+        self.pad.append(('   ' + str(index), 3))
         self.pad.append((' - ' + item["name"] + '\n', ''))
         self.pad.append(('       [size: ' + item['size'] + '] ', ''))
 
@@ -80,7 +101,7 @@ class sabHistoryPresenter:
                 self.pad.append(("       " + log_item + '\n', ''))
             length += 1
 
-        item["length"] = length
+        item["item_length"] = length
 
     def displayUnpackLog(self, item):
         if "unpack_log" not in item:
@@ -92,4 +113,4 @@ class sabHistoryPresenter:
             self.pad.append(("       " + log_item + '\n', ''))
             length += 1
 
-        item["length"] = length
+        item["item_length"] = length
