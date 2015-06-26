@@ -65,9 +65,10 @@ class sabScrollPresenter():
     def scrollViewPort(self, state):
         center_item = int(self.max_window_items / 2)
 
-        if state["current_index"] > center_item - 1 and state["current_index"] < state["list_length"] - center_item:
+        if state["list_length"] * self.item_size <= self.max_window_items:
+            self.window.pad.scrollToLine(0)
+        elif state["current_index"] > center_item - 1 and state["current_index"] < state["list_length"] - center_item:
             self.centerViewOnSelectedItem(center_item, state)
-
         elif state["current_index"] >= state["list_length"] - center_item:
             self.goToLastScreenInList(center_item, state)
         else:
