@@ -31,9 +31,11 @@ def tryToRecoverTerminal():
 
 if __name__ == '__main__':
     sys.modules["__main__"].configFile = getConfigFileLocation()
-
     from controllers.sabController import sabController
     controller = sabController()
+
+    if len(sys.argv) > 2:
+        controller.debug = True
 
     try:
         controller.run()
