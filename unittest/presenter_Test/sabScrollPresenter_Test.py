@@ -39,6 +39,7 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
     def test_display_should_draw_window_instructions(self):
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.displaySelectedItem = Mock()
+        self.test_presenter.scrollViewPort = Mock()
         self.test_presenter.displayScrollBar = Mock()
         self.test_presenter.scrollViewPort = Mock()
         self.test_presenter.window.pad = Mock()
@@ -108,10 +109,22 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
 
         assert len(self.test_presenter.screen) == 15
 
+    def test_scrollViewPort_should_call_pad_scroll_to_line_if_view_is_at_first_screen(self):
+        self.test_presenter.centerViewOnSelectedItem = Mock()
+        self.test_presenter.window.size = ["1", "1"]
+        self.test_presenter.window.pad = Mock()
+        self.test_presenter.max_window_items = 30
+        self.test_presenter.item_size = 3
+
+        self.test_presenter.scrollViewPort({"list_length": 8, "current_index": 0})
+
+        self.test_presenter.window.pad.scrollToLine.assert_called_with(0)
+
     def test_scrollViewPort_should_call_centerViewOnSelectedItem_if_selected_item_is_not_at_end_of_list(self):
         self.test_presenter.centerViewOnSelectedItem = Mock()
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.max_window_items = 2
+        self.test_presenter.item_size = 3
 
         self.test_presenter.scrollViewPort({"list_length": 8, "current_index": 3})
 
@@ -121,6 +134,7 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.goToLastScreenInList = Mock()
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.max_window_items = 2
+        self.test_presenter.item_size = 3
 
         self.test_presenter.scrollViewPort({"list_length": 8, "current_index": 7})
 
