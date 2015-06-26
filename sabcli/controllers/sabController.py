@@ -21,7 +21,7 @@ class sabController():
         # Internal members
         self.last_fetch = {'state_owner':-1, 'refresh': 10, 'time': time.mktime(time.localtime())}
         self.state = {}
-        self.debug = True
+        self.debug = False
         self.quit = 0
 
     def initApplicationCore(self, config, sabApi, window):
@@ -104,8 +104,10 @@ class sabController():
         if self.currentController.selected:
             if not self.currentController.handleInput(keyPressed):
                 self.handleInput(keyPressed)
-        else:
+        elif not self.currentController.selected:
             self.handleInput(keyPressed)
+            if self.currentController.selected:
+                self.currentController.handleInput(keyPressed)
 
     def handleInput(self, keyPressed):
 
