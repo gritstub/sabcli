@@ -32,31 +32,25 @@ class sabHistoryController():
         if not self.selected:
             return handled
 
-        elif keyPressed in ( 330, 263, 127): # delete #263 (backspace linux) #127 (backspace freebsd) 330 (delete freebsd/linux)
+        elif keyPressed in ( 330, 263, 127):  # Delete
             handled = self.handleDelete()
 
-        elif keyPressed == 259: # Curser up
+        elif keyPressed == 259:  # Cursor up
             handled = self.handleUp()
 
-        elif keyPressed == 258:  # Curser down
+        elif keyPressed == 258:  # Cursor down
             handled = self.handleDown()
 
-        elif keyPressed == 260: # Left
-            handled = True
-
-        elif keyPressed == 261: # Right
-            handled = True
-
-        elif keyPressed == 339: # Page up
+        elif keyPressed == 339:  # Page up
             handled = self.handlePageUp()
 
-        elif keyPressed == 338: # Page down
+        elif keyPressed == 338:  # Page down
             handled = self.handlePageDown()
 
-        elif keyPressed == 262: # Home
+        elif keyPressed == 262:  # Home
             handled = self.handleHome()
 
-        elif keyPressed in ( 360, 385 ): # end
+        elif keyPressed in (360, 385):  # End
             handled = self.handleEnd()
 
         self.selected = self.selectedItem != -1
