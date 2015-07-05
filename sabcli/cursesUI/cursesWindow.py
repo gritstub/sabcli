@@ -1,3 +1,4 @@
+from curses.textpad import Textbox
 import os
 import curses
 import signal
@@ -16,6 +17,7 @@ class cursesWindow():
 
         self.screen = ''
         self.window = ''
+        self.textbox = ''
         self.size = os.popen('stty size', 'r').read().split()
 
     def initialize(self):
@@ -45,7 +47,7 @@ class cursesWindow():
     def windowSizeChangeEventHandler(self, n, frame):
         self.size = os.popen('stty size', 'r').read().split()
 
-    def setCursorVisibility(self, visible = 0):
+    def setCursorVisibility(self, visible):
         try:
             curses.curs_set(visible)
         except:
@@ -112,3 +114,25 @@ class cursesWindow():
         elif len(screen[0]) == 2:
             for (line, color) in screen:
                 self.addStr(line, color)
+
+    def editTextOnScreen(self, line_index, line_contents):
+        editwin = self.window.subwin(1, int(self.size[1]) - 33, line_index, 7)
+        editwin.addstr(0, 0, ' ' * (int(self.size[1]) - 34))
+        editwin.addstr(0, 0, line_contents)
+        return self.editTextField(editwin)
+
+    def editTextField(self, editwin):
+        self.setCursorVisibility(1)
+        self.textbox = Textbox(editwin, insert_mode = True)
+        newname = self.textbox.edit(self.deleteKeyPressHandler).strip()
+        self.textbox = ''
+        self.setCursorVisibility(0)
+        return newname
+
+    def deleteKeyPressHandler(self, keyPressed):
+        if keyPressed in (330, 263, 127):  # Delete
+            self.textbox.do_command(curses.KEY_BACKSPACE)
+        else:
+            return keyPressed
+
+        return
