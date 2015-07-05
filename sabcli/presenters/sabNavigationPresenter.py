@@ -6,7 +6,6 @@ class sabNavigationPresenter():
         if not window:
             window = cursesWindow()
         self.window = window
-
         self.screen = []
 
     def display(self, state):
