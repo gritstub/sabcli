@@ -25,6 +25,7 @@ class sabMiscPresenter():
         self.window.draw(self.screen)
         self.window.pad.draw(self.pad)
 
+        state["item_size"] = 3
         self.scrollPresenter.display(state)
 
     def displayGeneralInformation(self, apiInfo):
