@@ -19,27 +19,25 @@ class sabMiscController():
 
     def update(self):
         self.state = self.api.getApiInfo()
-        self.state["list_length"] = 6
         return self.state
 
     def display(self):
         self.state["current_index"] = self.selectedItem
-        self.state["list_length"] = self.selectedItem
+        self.state["list_length"] = 6
         self.miscPresenter.display(self.state)
 
     def handleInput(self, keyPressed):
         handled = False
 
-        if not self.selected:
-            return handled
-
-        elif keyPressed == 259:  # Cursor up
+        if keyPressed == 259:  # Cursor up
             handled = self.handleUp()
 
         elif keyPressed == 258:  # Cursor down
             handled = self.handleDown()
 
-        self.selected = self.selectedItem != -1
+        if not self.selected:
+            return handled
+
         return handled
 
     def handleUp(self):
