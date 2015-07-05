@@ -109,52 +109,67 @@ class sabScrollPresenter_Test(BaseTestCase.BaseTestCase):
 
         assert len(self.test_presenter.screen) == 15
 
-    def test_scrollViewPort_should_call_pad_scroll_to_line_if_view_is_at_first_screen(self):
+    def test_calculateScrollingLine_should_return_0_if_view_is_at_first_screen(self):
         self.test_presenter.centerViewOnSelectedItem = Mock()
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.window.pad = Mock()
         self.test_presenter.max_window_items = 30
         self.test_presenter.item_size = 3
 
-        self.test_presenter.scrollViewPort({"list_length": 8, "current_index": 0})
+        result = self.test_presenter.calculateScrollingLine({"list_length": 8, "current_index": 0})
 
-        self.test_presenter.window.pad.scrollToLine.assert_called_with(0)
+        assert result == 0
 
-    def test_scrollViewPort_should_call_centerViewOnSelectedItem_if_selected_item_is_not_at_end_of_list(self):
+    def test_calculateScrollingLine_should_call_centerViewOnSelectedItem_if_selected_item_is_not_at_end_of_list(self):
         self.test_presenter.centerViewOnSelectedItem = Mock()
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.max_window_items = 2
         self.test_presenter.item_size = 3
 
-        self.test_presenter.scrollViewPort({"list_length": 8, "current_index": 3})
+        self.test_presenter.calculateScrollingLine({"list_length": 8, "current_index": 3})
 
         self.test_presenter.centerViewOnSelectedItem.assert_called_with(1, {"list_length": 8, "current_index": 3})
 
-    def test_scrollViewPort_should_call_goToLastScreenInList_if_selected_item_is_at_end_of_list(self):
+    def test_calculateScrollingLine_should_call_goToLastScreenInList_if_selected_item_is_at_end_of_list(self):
         self.test_presenter.goToLastScreenInList = Mock()
+
         self.test_presenter.window.size = ["1", "1"]
         self.test_presenter.max_window_items = 2
         self.test_presenter.item_size = 3
 
-        self.test_presenter.scrollViewPort({"list_length": 8, "current_index": 7})
+        self.test_presenter.calculateScrollingLine({"list_length": 8, "current_index": 7})
 
         self.test_presenter.goToLastScreenInList.assert_called_with(1, {"list_length": 8, "current_index": 7})
 
-    def test_centerViewOnSelectedItem_should_calculate_centered_line_correctly(self):
+    def test_scrollViewPort_should_call_calculateScrollingLine_to_find_correct_line_to_scroll_to(self):
+        self.test_presenter.calculateScrollingLine = Mock(return_value=1)
         self.test_presenter.window.pad = Mock()
+
+        self.test_presenter.scrollViewPort({})
+
+        self.test_presenter.calculateScrollingLine.assert_called_with({})
+
+    def test_scrollViewPort_should_call_pad_correctly(self):
+        self.test_presenter.calculateScrollingLine = Mock(return_value=1)
+        self.test_presenter.window.pad = Mock()
+
+        self.test_presenter.scrollViewPort({})
+
+        self.test_presenter.window.pad.scrollToLine.assert_called_with(1)
+
+    def test_centerViewOnSelectedItem_should_calculate_centered_line_correctly(self):
         self.test_presenter.item_size = 3
 
-        self.test_presenter.centerViewOnSelectedItem(4, {"list_length": 20, "current_index": 10})
+        result = self.test_presenter.centerViewOnSelectedItem(4, {"list_length": 20, "current_index": 10})
 
-        self.test_presenter.window.pad.scrollToLine.assert_called_with((10 - 4) * 3)
+        assert result == ((10 - 4) * 3)
 
     def test_goToLastScreenInList_should_calculate_last_line_correctly(self):
-        self.test_presenter.window.pad = Mock()
         self.test_presenter.item_size = 3
 
-        self.test_presenter.goToLastScreenInList(4, {"list_length": 20, "current_index": 17})
+        result = self.test_presenter.goToLastScreenInList(4, {"list_length": 20, "current_index": 17})
 
-        self.test_presenter.window.pad.scrollToLine.assert_called_with((20 - (4 * 2)) * 3)
+        assert result == ((20 - (4 * 2)) * 3)
 
 if __name__ == '__main__':
     nose.runmodule()
