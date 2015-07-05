@@ -27,15 +27,17 @@ class sabWarningsController():
         self.warningsPresenter.display(self.state)
 
     def handleInput(self, keyPressed):
-        handled = False
+        handled = self.handleItemSelection(keyPressed)
 
         if not self.selected:
             return handled
 
-        elif keyPressed in ( 330, 263, 127):  # Delete
-            handled = self.handleDelete()
+        return self.handleItemManipulation(handled, keyPressed)
 
-        elif keyPressed == 259:  # Cursor up
+    def handleItemSelection(self, keyPressed):
+        handled = False
+
+        if keyPressed == 259:  # Cursor up
             handled = self.handleUp()
 
         elif keyPressed == 258:  # Cursor down
@@ -54,6 +56,12 @@ class sabWarningsController():
             handled = self.handleEnd()
 
         self.selected = self.index != -1
+
+        return handled
+
+    def handleItemManipulation(self, handled, keyPressed):
+        if keyPressed in ( 330, 263, 127):  # Delete
+            handled = self.handleDelete()
         return handled
 
     def handleDelete(self):
