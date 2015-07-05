@@ -1,7 +1,7 @@
 import time
 
 
-class sabQueueParser():
+class sabDownloadQueueParser():
 
     def parse(self, response = {}):
         state = {'last_fetch_time': time.time(),
