@@ -17,7 +17,7 @@ class sabScrollPresenter():
         self.pad = []
 
         self.item_size = state.get("item_size", 3)
-        self.max_window_items = int((int(self.window.size[0]) - 6) / self.item_size)
+        self.max_window_items = int((float(self.window.size[0]) - 5) / float(self.item_size))
 
         self.displaySelectedItem(state)
         self.displayScrollBar(state)
@@ -62,22 +62,26 @@ class sabScrollPresenter():
                 self.screen.append((screen_right_side, current_line + 4, '#', ''))
             current_line += 1
 
-    def scrollViewPort(self, state):
+    def calculateScrollingLine(self, state):
         center_item = int(self.max_window_items / 2)
 
-        if state["list_length"] * self.item_size <= self.max_window_items:
-            self.window.pad.scrollToLine(0)
+        line = 0
+        if state["list_length"] <= self.max_window_items:
+            line = 0
         elif state["current_index"] > center_item - 1 and state["current_index"] < state["list_length"] - center_item:
-            self.centerViewOnSelectedItem(center_item, state)
+            line = self.centerViewOnSelectedItem(center_item, state)
         elif state["current_index"] >= state["list_length"] - center_item:
-            self.goToLastScreenInList(center_item, state)
-        else:
-            self.window.pad.scrollToLine(0)
+            line = self.goToLastScreenInList(center_item, state)
+        return line
+
+    def scrollViewPort(self, state):
+        line = self.calculateScrollingLine(state)
+        self.window.pad.scrollToLine(line)
 
     def centerViewOnSelectedItem(self, center_item, state):
         first_line_where_selected_item_is_centered = (state["current_index"] - center_item) * self.item_size
-        self.window.pad.scrollToLine(first_line_where_selected_item_is_centered)
+        return first_line_where_selected_item_is_centered
 
     def goToLastScreenInList(self, center_item, state):
         first_line_of_last_screen = (state["list_length"] - (center_item * 2)) * self.item_size
-        self.window.pad.scrollToLine(first_line_of_last_screen)
+        return first_line_of_last_screen
