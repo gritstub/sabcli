@@ -1,6 +1,7 @@
 from cursesUI.cursesWindow import cursesWindow
 from presenters.sabFlexibleScrollPresenter import sabFlexibleScrollPresenter
 
+
 class sabHistoryPresenter:
     def __init__(self, window = None, scrollPresenter = None):
         if not window:
