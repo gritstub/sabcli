@@ -29,9 +29,9 @@ class core():
         path = self.encoder.encodeQueueCommand(command, args)
         self.channel.sendCommand(path)
 
-    def list(self, command):
+    def list(self, command, *args):
         result = {}
-        path = self.encoder.encodeQuery(command)
+        path = self.encoder.encodeQuery(command, *args)
         response = self.channel.requestData(path)
         if response:
             result = self.parser.parse(response)
