@@ -11,13 +11,16 @@ class sabEncoder(object):
         self.servername = self.settings.host + ":" + self.settings.port
         self.output = "&output=json"
 
-    def encodeQuery(self, command):
+    def encodeQuery(self, command, *args):
         url_fragment = command
 
         if command in ('version', 'warnings'):
             url_fragment += ''
         elif command in ('queue', 'history'):
             url_fragment += '&start=START&limit=LIMIT'
+
+        elif command == 'details' and len(args) == 1:
+            url_fragment = 'get_files&value=' + args[0]
 
         return 'http://' + self.servername + self.fetchpath + url_fragment + self.output
 
