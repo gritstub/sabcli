@@ -1,6 +1,6 @@
 from sabAPI.sabHistoryParser import sabHistoryParser
 from sabAPI.sabInfoParser import sabInfoParser
-from sabAPI.sabQueueParser import sabQueueParser
+from sabAPI.sabDownloadQueueParser import sabDownloadQueueParser
 from sabAPI.sabWarningsParser import sabWarningsParser
 from sabCore.core import core
 
@@ -12,7 +12,7 @@ class api():
         self.core = sabCore
 
         if not queueParser:
-            queueParser = sabQueueParser()
+            queueParser = sabDownloadQueueParser()
         self.queueParser = queueParser
 
         if not infoParser:
@@ -39,6 +39,9 @@ class api():
     def listHistory(self):
         history = self.core.list("history")
         return self.historyParser.parse(history)
+
+    def listDownloadFiles(self, download_id):
+        return self.core.list("details", download_id)
 
     def getApiInfo(self):
         info = self.core.list("version")
