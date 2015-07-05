@@ -1,11 +1,11 @@
 import nose
 import BaseTestCase
 from mock import Mock
-from sabAPI import api
 from sabCore import core
+from sabAPI import api
 from sabAPI import sabHistoryParser
 from sabAPI import sabInfoParser
-from sabAPI import sabQueueParser
+from sabAPI import sabDownloadQueueParser
 from sabAPI import sabWarningsParser
 
 
@@ -16,7 +16,7 @@ class api_Test(BaseTestCase.BaseTestCase):
         self.core = Mock(spec=core.core)
         self.history_parser = Mock(spec=sabHistoryParser.sabHistoryParser)
         self.info_parser = Mock(spec=sabInfoParser.sabInfoParser)
-        self.queue_parser = Mock(spec=sabQueueParser.sabQueueParser)
+        self.queue_parser = Mock(spec=sabDownloadQueueParser.sabDownloadQueueParser)
         self.warnings_parser = Mock(spec=sabWarningsParser.sabWarningsParser)
 
         self.test_api = api.api(sabCore=self.core, queueParser=self.queue_parser, infoParser=self.info_parser,
@@ -90,6 +90,12 @@ class api_Test(BaseTestCase.BaseTestCase):
         self.test_api.resumeDownload(1)
 
         self.core.sendQueueCommand.assert_called_with("resume", 1)
+
+    def test_getDownloadFiles_should_call_core_correctly(self):
+
+        self.test_api.listDownloadFiles(1)
+
+        self.core.list.assert_called_with("details", 1)
 
     def test_renameDownload_should_call_core_correctly(self):
 
