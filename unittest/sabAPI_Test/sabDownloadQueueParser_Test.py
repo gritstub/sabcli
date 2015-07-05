@@ -1,19 +1,19 @@
 from mock import Mock, patch
 import nose
 import BaseTestCase
-from sabAPI import sabDownloadQueueParser
+from sabAPI.sabDownloadQueueParser import sabDownloadQueueParser
 
 
 class sabDownloadQueueParser_Test(BaseTestCase.BaseTestCase):
     def setUp(self):
         super(self.__class__, self).setUp()
 
-        self.test_parser = sabDownloadQueueParser.sabQueueParser()
+        self.test_parser = sabDownloadQueueParser()
 
     def test_should_instantiate(self):
-        assert (isinstance(self.test_parser, sabDownloadQueueParser.sabQueueParser))
+        assert (isinstance(self.test_parser, sabDownloadQueueParser))
 
-    @patch('sabAPI.sabQueueParser.time.time')
+    @patch('sabAPI.sabDownloadQueueParser.time.time')
     def test_parse_should_extract_general_queue_state(self, mock_time):
         mock_time.return_value = "000001"
         self.test_parser.parseQueue = Mock(return_value="queue")
