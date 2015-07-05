@@ -58,6 +58,12 @@ class sabCore_Test(BaseTestCase.BaseTestCase):
 
         self.encoder.encodeQuery.assert_called_with("listing")
 
+    def test_list_should_encode_query_with_more_than_one_parameter(self):
+
+        self.test_core.list("details", "1")
+
+        self.encoder.encodeQuery.assert_called_with("details", '1')
+
     def test_list_should_request_data(self):
         self.encoder.encodeQuery.return_value = "path"
 
