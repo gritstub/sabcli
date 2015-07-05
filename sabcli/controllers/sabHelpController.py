@@ -2,18 +2,13 @@ from presenters.sabHelpPresenter import sabHelpPresenter
 import sabAPI
 
 
-class sabHelpController( object ):
-    def __init__(self, api = None, helpPresenter = None):
-        if not api:
-            api = sabAPI.api.api()
-        self.api = api
-
+class sabHelpController(object):
+    def __init__(self, helpPresenter = None):
         if not helpPresenter:
             helpPresenter = sabHelpPresenter()
         self.helpPresenter = helpPresenter
 
         self.selected = False
-        self.state = {}
 
     def update(self):
         return {}
