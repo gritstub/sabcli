@@ -27,15 +27,17 @@ class sabHistoryController():
         self.historyPresenter.display(self.state)
 
     def handleInput(self, keyPressed):
-        handled = False
+        handled = self.handleItemSelection(keyPressed)
 
         if not self.selected:
             return handled
 
-        elif keyPressed in ( 330, 263, 127):  # Delete
-            handled = self.handleDelete()
+        return self.handleItemManipulation(keyPressed)
 
-        elif keyPressed == 259:  # Cursor up
+    def handleItemSelection(self, keyPressed):
+        handled = False
+
+        if keyPressed == 259:  # Cursor up
             handled = self.handleUp()
 
         elif keyPressed == 258:  # Cursor down
@@ -54,6 +56,14 @@ class sabHistoryController():
             handled = self.handleEnd()
 
         self.selected = self.selectedItem != -1
+        return handled
+
+    def handleItemManipulation(self, keyPressed):
+        handled = False
+
+        if keyPressed in (330, 263, 127):  # Delete
+            handled = self.handleDelete()
+
         return handled
 
     def handleDelete(self):
