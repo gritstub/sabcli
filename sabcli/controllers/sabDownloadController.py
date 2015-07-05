@@ -77,27 +77,35 @@ class sabQueueController():
     def handleResume(self):
         if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]):
             self.api.resumeDownload(self.state["queue"][self.selectedItem]["id"])
+            self.state["dirty"] = True
         return True
 
     def handlePause(self):
         if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]):
             self.api.pauseDownload(self.state["queue"][self.selectedItem]["id"])
+            self.state["dirty"] = True
         return True
 
     def handleDelete(self):
         if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]):
             self.api.deleteDownload(self.state["queue"][self.selectedItem]["id"])
+            self.state["dirty"] = True
         return True
 
     def handleUp(self):
+        handled = False
+
         if self.selectedProperty == -1:
             handled = self.scrollUp()
         if self.selectedProperty == 1:
             download = self.state["queue"][self.selectedItem]
             handled = self.increaseDownloadPriority(download)
+            self.state["dirty"] = True
         if self.selectedProperty == 2:
             download = self.state["queue"][self.selectedItem]
             handled = self.addDownloadPostPocessingSteps(download)
+            self.state["dirty"] = True
+
         return handled
 
     def increaseDownloadPriority(self, download):
@@ -106,12 +114,17 @@ class sabQueueController():
         if priority_index < 4:
             download["priority"] = self.priority[priority_index + 1]
             self.api.changeDownloadPriority(download["id"], priority_index)
+            self.state["dirty"] = True
+
         return True
 
     def addDownloadPostPocessingSteps(self, download):
+
         if download['unpackopts'] < 3:
             download['unpackopts'] += 1
             self.api.changeDownloadProcessingSteps(download["id"], download["unpackopts"])
+            self.state["dirty"] = True
+
         return True
 
     def scrollUp(self):
@@ -123,14 +136,18 @@ class sabQueueController():
 
     def handleDown(self):
         handled = False
+
         if self.selectedProperty == -1:
             handled = self.scrollDown()
         if self.selectedProperty == 1:
             download = self.state["queue"][self.selectedItem]
             handled = self.decreaseDownloadPriority(download)
+            self.state["dirty"] = True
         if self.selectedProperty == 2:
             download = self.state["queue"][self.selectedItem]
             handled = self.removeDownloadProcessingSteps(download)
+            self.state["dirty"] = True
+
         return handled
 
     def scrollDown(self):
@@ -146,12 +163,14 @@ class sabQueueController():
         if priority_index > 0:
             download["priority"] = self.priority[priority_index - 1]
             self.api.changeDownloadPriority(download["id"], priority_index - 2)
+            self.state["dirty"] = True
         return True
 
     def removeDownloadProcessingSteps(self, download):
         if download['unpackopts'] > 0:
             download['unpackopts'] -= 1
             self.api.changeDownloadProcessingSteps(download["id"], download["unpackopts"])
+            self.state["dirty"] = True
         return True
 
     def handleLeft(self):
@@ -161,7 +180,7 @@ class sabQueueController():
 
     def handleRight(self):
         if self.selectedItem > -1 and self.selectedProperty < 2:
-            self.selectedProperty +=1
+            self.selectedProperty += 1
         return True
 
     def handlePageUp(self):
@@ -188,17 +207,10 @@ class sabQueueController():
         return True
 
     def handleEnter(self):
-        if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]) -1 and self.selectedProperty == 0:
+        if self.selectedItem > -1 and self.selectedItem < len(self.state["queue"]) and self.selectedProperty == 0:
+            new_name = self.queuePresenter.editDownloadName(self.selectedItem, self.state)
+            if new_name and new_name != self.state["queue"][self.selectedItem]["filename"]:
+                self.api.renameDownload(self.state["queue"][self.selectedItem]["id"], new_name)
+                self.state["dirty"] = True
             return True
-        return True
-
-        '''
-        	# Enter
-            elif c == 10:
-
-			line = 4 + sabnzbd.scroll['item'][sabnzbd.index[sabnzbd.view]][0]
-			editwin = sabnzbd.win.subwin(1, int(sabnzbd.size[1])-33, line, 7)
-			editwin.addstr(0, 0, ' ' * ( int(sabnzbd.size[1]) - 34 ) )
-                        editwin.addstr(0, 0, sabnzbd.details['filename'][sabnzbd.index[0]][:( int(sabnzbd.size[1]) - 34 )])
-			newname = editfield(editwin)
-		'''
+        return False

@@ -53,7 +53,8 @@ class sabQueuePresenter():
         return doubleMaxTailLength
 
     def displayFileInformation(self, slot, current_selection = -1):
-        self.pad.append(("   {0}".format(str(slot['index'])), 3))
+        self.pad.append((' ' * (4 - len(str(slot["index"]))), ''))
+        self.pad.append((str(slot['index']), 3))
         self.pad.append((" - ", ""))
         if current_selection == 0:
             self.pad.append((slot["filename"], 2))
@@ -91,7 +92,7 @@ class sabQueuePresenter():
         progress = "=" * int(pct) + ">" + " " * (charsLeft - int(pct))
 
         self.pad.append(('[' + progress + ']', 5))
-        self.pad.append((' ' * ( alignment_length + 10 - tailLength), ''))
+        self.pad.append((' ' * (alignment_length + 10 - tailLength), ''))
         self.pad.append(("%.2f" % (float(slot['mb']) - float(slot['mb_left'])), 2))
         self.pad.append((' / ', ''))
         self.pad.append(("%.2f" % (float(slot['mb'])), 2))
@@ -101,3 +102,12 @@ class sabQueuePresenter():
 
     def wait(self, delay):
         self.window.wait(delay)
+
+    def editDownloadName(self, selected_index, state):
+
+        line_pad_index = selected_index * state["item_size"]
+        pad_start_line = self.scrollPresenter.calculateScrollingLine(state)
+        line_index = line_pad_index - pad_start_line + 4
+        name = state["queue"][selected_index]["filename"]
+
+        return self.window.editTextOnScreen(line_index, name)

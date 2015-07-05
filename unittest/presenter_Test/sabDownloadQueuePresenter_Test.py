@@ -2,7 +2,7 @@ import nose
 import BaseTestCase
 from mock import Mock
 from cursesUI.cursesWindow import cursesWindow
-from presenters.sabQueuePresenter import sabQueuePresenter
+from presenters.sabDownloadQueuePresenter import sabQueuePresenter
 from presenters.sabScrollPresenter import sabScrollPresenter
 
 
