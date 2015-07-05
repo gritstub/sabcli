@@ -41,6 +41,13 @@ class sabEncoder_Test(BaseTestCase.BaseTestCase):
 
         assert(url == "http://localhost:8080/api?apikey=1234&mode=history&start=START&limit=LIMIT&output=json")
 
+    def test_encodeQuery_should_construct_details_action_urls_correctly(self):
+
+        url = self.test_encoder.encodeQuery("details", "1")
+
+        assert(url == "http://localhost:8080/api?apikey=1234&mode=get_files&value=1&output=json")
+
+
     def test_encodeGeneralCommand_should_contstruct_generic_command_urls_correctly(self):
 
         url = self.test_encoder.encodeGeneralCommand("command")
