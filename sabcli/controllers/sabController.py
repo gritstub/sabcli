@@ -4,7 +4,7 @@ from controllers.sabHelpController import sabHelpController
 from controllers.sabHistoryController import sabHistoryController
 from controllers.sabMiscController import sabMiscController
 from controllers.sabNavigationController import sabNavigationController
-from controllers.sabQueueController import sabQueueController
+from controllers.sabDownloadController import sabDownloadController
 from controllers.sabStatusController import sabStatusController
 from controllers.sabWarningsController import sabWarningsController
 from cursesUI.cursesWindow import cursesWindow
@@ -13,13 +13,13 @@ from sabAPI.api import api
 
 class sabController():
     def __init__(self, sabApi = None, window = None, config = None, navigationController = None, statusController = None,
-                 queueController = None, historyController = None, warningsController = None, miscController = None, helpController = None):
+                 downloadController = None, historyController = None, warningsController = None, miscController = None, helpController = None):
         self.initApplicationCore(config, sabApi, window)
         self.initGlobalControllers(navigationController, statusController)
-        self.initViewControllers(helpController, historyController, miscController, queueController, warningsController)
+        self.initViewControllers(helpController, historyController, miscController, downloadController, warningsController)
 
         # Internal members
-        self.last_fetch = {'state_owner':-1, 'refresh': 10, 'time': time.mktime(time.localtime())}
+        self.last_fetch = {'state_owner': -1, 'refresh': 10, 'time': time.mktime(time.localtime())}
         self.state = {}
         self.debug = False
         self.quit = 0
@@ -43,10 +43,10 @@ class sabController():
             statusController = sabStatusController()
         self.status = statusController
 
-    def initViewControllers(self, helpController, historyController, miscController, queueController,
+    def initViewControllers(self, helpController, historyController, miscController, downloadController,
                             warningsController):
-        if not queueController:
-            queueController = sabQueueController()
+        if not downloadController:
+            downloadController = sabDownloadController()
         if not historyController:
             historyController = sabHistoryController()
         if not warningsController:
@@ -55,8 +55,8 @@ class sabController():
             miscController = sabMiscController()
         if not helpController:
             helpController = sabHelpController()
-        self.currentController = queueController
-        self.controllers = [queueController, historyController, warningsController, miscController, helpController]
+        self.currentController = downloadController
+        self.controllers = [downloadController, historyController, warningsController, miscController, helpController]
 
     def run(self):
         self.window.initialize()
@@ -74,8 +74,10 @@ class sabController():
         self.window.close()
 
     def updateApplicationState(self):
-        refresh = self.last_fetch['state_owner'] != self.controllers.index(self.currentController)
-        if refresh or time.mktime(time.localtime()) - self.last_fetch['time'] >= self.last_fetch['refresh']:
+        view_has_changed = self.last_fetch['state_owner'] != self.controllers.index(self.currentController)
+        content_is_old = time.mktime(time.localtime()) - self.last_fetch['time'] >= self.last_fetch['refresh']
+        state_is_dirty = "dirty" in self.state
+        if view_has_changed or content_is_old or state_is_dirty:
             self.last_fetch['time'] = time.mktime(time.localtime())
             self.status.displayFetching()
             self.state = self.currentController.update()
@@ -101,18 +103,13 @@ class sabController():
     def handleUserEvents(self):
         keyPressed = self.getUserInput()
 
-        if self.currentController.selected:
-            if not self.currentController.handleInput(keyPressed):
-                self.handleInput(keyPressed)
-        elif not self.currentController.selected:
+        if not self.currentController.handleInput(keyPressed):
             self.handleInput(keyPressed)
-            if self.currentController.selected:
-                self.currentController.handleInput(keyPressed)
 
     def handleInput(self, keyPressed):
 
         # Global App Navigation
-        if keyPressed == ord('Q') or keyPressed == ord('q'): # quit
+        if keyPressed == ord('Q') or keyPressed == ord('q'):  # Quit
             self.quit = 1
 
         elif keyPressed == 260:  # Cursor left
@@ -133,14 +130,6 @@ class sabController():
 
             self.currentController = self.controllers[current_controller_index]
 
-        elif keyPressed == 258:  # Cursor down
-            if not self.currentController.selected:
-                self.currentController.selected = True
-
-        elif keyPressed == 259:  # Cursor up
-            if not self.currentController.selected:
-                self.currentController.selected = True
-
         # Screen select
         elif keyPressed == ord('1'):  # Queue
             self.currentController = self.controllers[0]
@@ -150,14 +139,16 @@ class sabController():
             self.currentController = self.controllers[2]
         elif keyPressed == ord('4'):  # More
             self.currentController = self.controllers[3]
-        elif keyPressed == ord('5') or keyPressed == ord('?'): # help
+        elif keyPressed == ord('5') or keyPressed == ord('?'):  # Help
             self.currentController = self.controllers[4]
 
         # Global server commands
         elif keyPressed == ord('p'):  # pause
             self.api.pauseServer()
+            self.state["dirty"] = True
         elif keyPressed == ord('r'):  # resume
             self.api.resumeServer()
+            self.state["dirty"] = True
         elif keyPressed == ord('R'):  # restart
             self.api.restartServer()
         elif keyPressed == ord('S'):  # shutdown
