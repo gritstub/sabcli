@@ -345,5 +345,72 @@ class cursesWindow_Test(BaseTestCase.BaseTestCase):
         self.test_window.addString.assert_called_with(1, 2, "test_string", 3)
         assert not self.test_window.addStr.called
 
+    def test_editTextOnScreen_should_create_subwindow_on_screen(self):
+        self.test_window.window = Mock()
+        self.test_window.size = [40, 40]
+        self.test_window.editTextField = Mock()
+
+        self.test_window.editTextOnScreen(1, "test")
+
+        self.test_window.window.subwin.assert_called_with(1, 7, 1, 7)
+
+    def test_editTextOnScreen_should_add_line_content_to_text_box(self):
+        self.test_window.window = Mock()
+        self.test_window.size = [40, 40]
+        self.test_window.editTextField = Mock()
+
+        self.test_window.editTextOnScreen(1, "test")
+
+        self.test_window.window.subwin(1, 7, 1, 7).addstr.assert_called_with(0, 0, "test")
+
+    def test_editTextOnScreen_should_call_editTextField(self):
+        self.test_window.window = Mock()
+        self.test_window.size = [40, 40]
+        self.test_window.editTextField = Mock()
+
+        self.test_window.editTextOnScreen(1, "test")
+
+        assert self.test_window.editTextField.called
+
+    @patch('cursesUI.cursesWindow.Textbox')
+    def test_editTextField_should_set_cursor_visibility(self, mock_textpad):
+        self.test_window.setCursorVisibility = Mock()
+
+        self.test_window.editTextField("")
+
+        self.test_window.setCursorVisibility.assert_any_call(1)
+        self.test_window.setCursorVisibility.assert_any_call(0)
+
+    @patch('cursesUI.cursesWindow.Textbox')
+    def test_editTextField_should_create_textbox(self, mock_textpad):
+        self.test_window.setCursorVisibility = Mock()
+
+        self.test_window.editTextField("")
+
+        assert mock_textpad.called
+
+    @patch('cursesUI.cursesWindow.Textbox')
+    def test_editTextField_should_call_textbox_edit(self, mock_textpad):
+        self.test_window.setCursorVisibility = Mock()
+
+        self.test_window.editTextField("")
+
+        assert mock_textpad().edit.called
+
+    def test_deleteKeyPressHandler_should_return_non_delete_keys(self):
+        self.test_window.textbox = Mock()
+
+        result = self.test_window.deleteKeyPressHandler(123)
+
+        assert result == 123
+
+    @patch('cursesUI.cursesWindow.curses')
+    def test_deleteKeyPressHandler_should_call_do_command_on_delete_key_press(self, mock_textpad):
+        self.test_window.textbox = Mock()
+
+        self.test_window.deleteKeyPressHandler(330)
+
+        self.test_window.textbox.do_command.assert_any_call(mock_textpad.KEY_BACKSPACE)
+
 if __name__ == '__main__':
     nose.runmodule()
