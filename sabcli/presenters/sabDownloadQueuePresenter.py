@@ -2,7 +2,7 @@ from cursesUI.cursesWindow import cursesWindow
 from presenters.sabScrollPresenter import sabScrollPresenter
 
 
-class sabQueuePresenter():
+class sabDownloadQueuePresenter():
     def __init__(self, window = None, scrollPresenter = None):
         if not window:
             window = cursesWindow()
@@ -99,9 +99,6 @@ class sabQueuePresenter():
         self.pad.append((' [', ''))
         self.pad.append(("%2.0f%%" % (float(slot['percentage'])), 2))
         self.pad.append((']\n\n', ''))
-
-    def wait(self, delay):
-        self.window.wait(delay)
 
     def editDownloadName(self, selected_index, state):
 
