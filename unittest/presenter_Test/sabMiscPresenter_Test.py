@@ -22,7 +22,7 @@ class sabMiscPresenter_Test(BaseTestCase.BaseTestCase):
 
         self.test_presenter.display({})
 
-        self.test_presenter.displayGeneralInformation.assert_called_with({})
+        self.test_presenter.displayGeneralInformation.assert_called_with({"item_size": 3})
 
     def test_display_should_call_displayMiscellaneousInformation(self):
         self.test_presenter.displayGeneralInformation = Mock()
@@ -31,7 +31,7 @@ class sabMiscPresenter_Test(BaseTestCase.BaseTestCase):
 
         self.test_presenter.display({})
 
-        self.test_presenter.displayMiscellaneousInformation.assert_called_with({})
+        self.test_presenter.displayMiscellaneousInformation.assert_called_with({"item_size": 3})
 
     def test_display_should_draw_window_instructions(self):
         self.test_presenter.displayGeneralInformation = Mock()
