@@ -6,7 +6,7 @@ from presenters.sabDownloadQueuePresenter import sabDownloadQueuePresenter
 from presenters.sabScrollPresenter import sabScrollPresenter
 
 
-class sabQueuePresenter_Test(BaseTestCase.BaseTestCase):
+class sabDownloadQueuePresenter_Test(BaseTestCase.BaseTestCase):
 
     def setUp(self):
         super(self.__class__, self).setUp()
