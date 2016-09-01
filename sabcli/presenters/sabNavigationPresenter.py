@@ -23,7 +23,7 @@ class sabNavigationPresenter():
         index = 0
         for name, selected_view in state["views"]:
             if selected_view:
-                self.screen.append((index, 0, name, 7))
+                self.screen.append((index, 0, name, 4))
             else:
                 self.screen.append((index, 0, name, ''))
             index += len(name)
