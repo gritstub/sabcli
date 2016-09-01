@@ -70,7 +70,9 @@ class sabHistoryPresenter:
             return
 
         self.pad.append(('[par2: ', ''))
-        if item["repair_status"] > 0:
+        if item["repair_status"] == 1:
+            self.pad.append(('NONE', 6))
+        elif item["repair_status"] > 1:
             self.pad.append(('FAIL', 2))
         else:
             self.pad.append(('OK', 3))

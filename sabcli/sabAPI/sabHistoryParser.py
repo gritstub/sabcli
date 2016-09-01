@@ -65,9 +65,11 @@ class sabHistoryParser():
         repair_log = []
         repair_fail = 0
         for error_string in action['actions']:
-            if error_string.find('Quick Check OK') < 0 and error_string.find('Repaired in') < 0 and error_string.find("all files correct") < 0:
-                repair_log.append(error_string)
+            if error_string.find('No par2 sets') >= 0:
                 repair_fail = 1
+            elif error_string.find('Quick Check OK') < 0 and error_string.find('Repaired in') < 0 and error_string.find("all files correct") < 0:
+                repair_log.append(error_string)
+                repair_fail = 2
 
         item["repair_status"] = repair_fail
         item["repair_log"] = repair_log
