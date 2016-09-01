@@ -1,10 +1,31 @@
 import sys
+import argparse
 from ConfigParser import ConfigParser
 
 
 class configuration():
     def __init__(self):
         self.extractServerConnectionDetailsFromConfiguration(sys.modules["__main__"].configFile)
+        self.overrideServerConnectionDetailsFromCommandLine()
+
+    def overrideServerConnectionDetailsFromCommandLine(self):
+        parser = argparse.ArgumentParser(description='Curses client for SABnzbd+')
+        parser.add_argument('-H', '--hostname')
+        parser.add_argument('-P', '--port')
+        parser.add_argument('-u', '--username')
+        parser.add_argument('-p', '--password')
+        parser.add_argument('-a', '--apikey')
+        args = parser.parse_args()
+        if args.hostname is not None:
+            self.host = args.hostname
+        if args.port is not None:
+            self.port = args.port
+        if args.username is not None:
+            self.username = args.username
+        if args.password is not None:
+            self.password = args.password
+        if args.apikey is not None:
+            self.apikey = args.apikey
 
     def extractServerConnectionDetailsFromConfiguration(self, config):
         parser = self.parseAndReadConfigFileIntoMemory(config)
