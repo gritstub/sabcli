@@ -68,7 +68,8 @@ class sabHistoryController():
 
     def handleDelete(self):
         if self.selectedItem > -1 and self.selectedItem < len(self.state["history"]):
-            self.api.deleteDownload(self.state["history"][self.selectedItem]["id"])
+            self.api.deleteFromHistory(self.state["history"][self.selectedItem]["id"])
+        self.update()
         return True
 
     def handleDown(self):
