@@ -34,9 +34,6 @@ if __name__ == '__main__':
     from controllers.sabController import sabController
     controller = sabController()
 
-    if len(sys.argv) > 2:
-        controller.debug = True
-
     try:
         controller.run()
     except Exception as e:
