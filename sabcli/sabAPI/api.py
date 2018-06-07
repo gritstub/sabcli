@@ -68,7 +68,7 @@ class api():
 
     # History Manipulation
     def deleteFromHistory(self, download_id):
-        self.core.sendHistoryCommand("history", download_id)
+        self.core.sendHistoryCommand("delete", download_id)
 
     def clearHistory(self):
         self.core.sendHistoryCommand("clear")
