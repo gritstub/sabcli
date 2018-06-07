@@ -45,8 +45,8 @@ class sabDownloadDetailsPresenter():
         if file_detail['status'] != "finished":
             status_color = 2
 
-        self.pad.append((' ' * (4 - len(str(file_detail["id"]))), ''))
-        self.pad.append((str(file_detail['id']), 3))
+        self.pad.append((' ' * 3, ''))
+        self.pad.append((str(file_detail['nzf_id']), 3))
         self.pad.append((" - ", ""))
 
         self.pad.append((file_detail['filename'] + '\n', ''))
