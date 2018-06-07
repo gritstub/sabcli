@@ -44,7 +44,7 @@ class api():
         return self.core.list("details", download_id)
 
     def getApiInfo(self):
-        info = self.core.list("version")
+        info = self.core.list("fullstatus")
         return self.infoParser.parse(info)
 
     # Download manipulation

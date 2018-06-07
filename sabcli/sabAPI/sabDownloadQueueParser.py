@@ -15,8 +15,7 @@ class sabDownloadQueueParser():
                  "diskspacetotal2": response["queue"]["diskspacetotal2"],
                  "downloaded": (float(response["queue"]['mb']) - float(response["queue"]['mbleft']) ) / 1024,
                  "total_queue": float(response["queue"]['mb']) / 1024,
-                 "progress_pct": 100 * (float(response["queue"]['mb']) - float(response["queue"]['mbleft'])) / (float(response["queue"]['mb']) + 0.01),
-                 "uptime": response["queue"]['uptime']
+                 "progress_pct": 100 * (float(response["queue"]['mb']) - float(response["queue"]['mbleft'])) / (float(response["queue"]['mb']) + 0.01)
         }
 
         state["queue"] = self.parseQueue(response)

@@ -30,7 +30,7 @@ class sabMiscPresenter():
 
     def displayGeneralInformation(self, apiInfo):
         self.screen.append((3, 2, 'Option - Description\n', ''))
-        version = 'SABCurses: ' + apiInfo['version']
+        version = 'SABnzbd: ' + apiInfo['version']
         self.screen.append((int(self.window.size[1]) - len(version), 2, version, ''))
         self.screen.append((0, 3, '-' * int(self.window.size[1] + '\n'), ''))
 

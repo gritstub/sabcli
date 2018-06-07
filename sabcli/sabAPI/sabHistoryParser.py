@@ -5,14 +5,6 @@ class sabHistoryParser():
 
     def parse(self, response):
         state = {"last_fetch_time": time.time(),
-                 "status": response["history"]["status"],
-                 "speed": "%.2f kb/s" % float(response["history"]["kbpersec"]),
-                 "size_left": response["history"]["sizeleft"],
-                 "time_left": response["history"]["timeleft"],
-                 "mb": response["history"]["mb"],
-                 "mbleft": response["history"]["mbleft"],
-                 "diskspace2": response["history"]["diskspace2"],
-                 "diskspacetotal2": response["history"]["diskspacetotal2"],
                  "total_size": response["history"]["total_size"],
                  "month_size": response["history"]["month_size"],
                  "week_size": response["history"]["week_size"]

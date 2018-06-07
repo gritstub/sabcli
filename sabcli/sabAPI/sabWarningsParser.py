@@ -1,3 +1,5 @@
+import datetime
+
 class sabWarningsParser():
 
     def parse(self, response):
@@ -10,14 +12,10 @@ class sabWarningsParser():
         log = []
 
         for warning in warnings:
-            warning = warning.split("\n")
-            warning[2] = warning[2].replace("WARNING: ", "")
-            warning[2] = warning[2].replace("filename=", "")
-            warning[2] = warning[2].replace(", type=None", "")
             entry = {
-                "timestamp": warning[0],
-                "type": warning[1],
-                "message": warning[2]
+                "timestamp": datetime.datetime.fromtimestamp(warning["time"]).strftime('%Y-%m-%d %H:%M:%S'),
+                "type": warning["type"],
+                "message": warning["text"]
             }
             log.append(entry)
 
