@@ -17,7 +17,7 @@ class sabEncoder(object):
         if command in ('version', 'warnings'):
             url_fragment += ''
         elif command in ('queue', 'history'):
-            url_fragment += '&start=START&limit=LIMIT'
+            url_fragment += '&start=0&limit=100'
 
         elif command == 'details' and len(args) == 1:
             url_fragment = 'get_files&value=' + args[0]
