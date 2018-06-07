@@ -16,7 +16,7 @@ class sabParser_Test(BaseTestCase.BaseTestCase):
     def test_should_parse_using_json(self, mock_loads):
         self.test_parser.parse("string")
 
-        mock_loads.assert_was_called("string")
+        mock_loads.assert_called_once_with("string")
 
 
     @patch('sabCore.sabParser.json.loads')

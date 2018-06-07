@@ -55,7 +55,7 @@ class sabNavigationPresenter_Test(BaseTestCase.BaseTestCase):
         self.test_presenter.displayNavigation({"views": [("main", 1)]})
 
         assert len(self.test_presenter.screen) == 1
-        assert self.test_presenter.screen[0][3] == 7
+        assert self.test_presenter.screen[0][3] == 4
 
     def test_displaySpeed_should_not_add_screen_instructions_if_speed_is_missing(self):
         self.test_presenter.window.size = ["1", "1"]

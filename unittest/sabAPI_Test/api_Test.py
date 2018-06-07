@@ -64,7 +64,7 @@ class api_Test(BaseTestCase.BaseTestCase):
     def test_getApiInfo_should_call_core_list_command(self):
         self.test_api.getApiInfo()
 
-        self.core.list.assert_called_with("version")
+        self.core.list.assert_called_with("fullstatus")
 
     def test_getApiInfo_should_call_correct_parser_with_content(self):
         self.core.list.return_value = "info"

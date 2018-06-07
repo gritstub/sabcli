@@ -76,7 +76,7 @@ class sabStatusPresenter_Test(BaseTestCase.BaseTestCase):
 
         self.test_presenter.displayGeneralStatus({"disk_usage": "test1", "main_stats": "test2", "last_update": "test3"})
 
-        self.test_presenter.printLine.assert_was_called("test1", "test2", "test3")
+        self.test_presenter.printLine.assert_called_once_with(["test1", "test2", "test3"])
 
     def test_printLine_should(self):
         self.test_presenter.window.size = ["20", "20"]

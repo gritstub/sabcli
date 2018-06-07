@@ -77,14 +77,14 @@ class cursesWindow_Test(BaseTestCase.BaseTestCase):
 
         self.test_window.initializeWindow()
 
-        self.test_window.screen.keypad.assert_was_called(1)
+        self.test_window.screen.keypad.assert_called_once_with(1)
 
     @patch('cursesUI.cursesWindow.curses')
     def test_initialiseWindow_should_hide_cursor(self, mock_curses):
         self.test_window.setCursorVisibility = Mock()
         self.test_window.initializeWindow()
 
-        self.test_window.setCursorVisibility.assert_was_called(0)
+        self.test_window.setCursorVisibility.assert_called_once_with(0)
 
     @patch('cursesUI.cursesWindow.curses')
     def test_initialiseWindow_should_setup_window(self, mock_curses):

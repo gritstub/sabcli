@@ -171,7 +171,7 @@ class sabHistoryPresenter_Test(BaseTestCase.BaseTestCase):
     def test_displayRepairStatus_should_display_failure_if_repair_status_is_true(self):
         self.test_presenter.window.pad = Mock()
 
-        self.test_presenter.displayRepairStatus({"repair_status": 1})
+        self.test_presenter.displayRepairStatus({"repair_status": 2})
 
         assert len(self.test_presenter.pad) == 3
         assert self.test_presenter.pad[1][0] == "FAIL"

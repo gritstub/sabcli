@@ -1,7 +1,6 @@
 from mock import Mock, patch
-
+import json
 import nose
-
 import BaseTestCase
 from sabAPI import sabHistoryParser
 
@@ -18,29 +17,24 @@ class sabHistoryParser_Test(BaseTestCase.BaseTestCase):
     @patch('sabAPI.sabHistoryParser.time.time')
     def test_parse_should_extract_main_structure(self, mock_time):
         mock_time.return_value = "000001"
-        self.test_parser.parseHistory = Mock(return_value="history")
-        response = {"history": {"status": "history_status_test",
-                                "kbpersec": "90", "sizeleft": "100",
-                                "timeleft": "test_time", "mb": "1000",
-                                "mbleft": "999", "diskspace2": "2000",
-                                "diskspacetotal2": "20000", "total_size": "1001",
-                                "month_size": "1", "week_size": "2"}}
+        with open('data/history.json') as f:
+            response = json.load(f)
 
         result = self.test_parser.parse(response)
 
-        assert (result == {'status': 'history_status_test',
-                           'time_left': 'test_time',
-                           'mbleft': '999',
-                           'diskspace2': '2000',
-                           'speed': '90.00 kb/s',
-                           'mb': '1000',
-                           'total_size': '1001',
-                           'month_size': '1',
-                           'last_fetch_time': '000001',
-                           'week_size': '2',
-                           'size_left': '100',
-                           'diskspacetotal2': '20000',
-                           'history': 'history'})
+        assert (result["total_size"] == "678.1 G")
+        assert (result["month_size"] == "167.3 G")
+        assert (result["week_size"] == "30.4 G")
+        assert (result["history"][0]["index"] == 233)
+        assert (result["history"][0]["name"] == "TV.Show.S04E13.720p.BluRay.x264-xHD")
+        assert (result["history"][0]["size"] == "2.3 GB")
+        assert (result["history"][0]["id"] == "SABnzbd_nzo_gqhp63")
+        assert (result["history"][0]["status"] == "Completed")
+        assert (result["history"][1]["index"] == 234)
+        assert (result["history"][1]["name"] == "TV.Show.S04E02.720p.BluRay.x264-xHD")
+        assert (result["history"][1]["size"] == "2.3 GB")
+        assert (result["history"][1]["id"] == "SABnzbd_nzo_sdkoun")
+        assert (result["history"][1]["status"] == "Completed")
 
     def test_parseHistory_should_extract_history_details(self):
         self.test_parser.extractStageLog = Mock(return_value=[])
@@ -125,7 +119,7 @@ class sabHistoryParser_Test(BaseTestCase.BaseTestCase):
 
         self.test_parser.extractRepairOperationStatus(action, item)
 
-        assert (item == {"repair_status": 1, "repair_log": ["failed"]})
+        assert (item == {"repair_status": 2, "repair_log": ["failed"]})
 
     def test_extractRepairOperationStatus_should_give_success_if_all_entries_are_repaired(self):
         action = {"actions": ["Quick Check OK", "Repaired in", "all files correct"]}

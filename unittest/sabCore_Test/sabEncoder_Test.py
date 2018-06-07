@@ -17,11 +17,11 @@ class sabEncoder_Test(BaseTestCase.BaseTestCase):
     def test_should_instantiate(self):
         assert(isinstance(self.test_encoder, sabEncoder.sabEncoder))
 
-    def test_encodeQuery_should_construct_version_url_correctly(self):
+    def test_encodeQuery_should_construct_fullstatus_url_correctly(self):
 
-        url = self.test_encoder.encodeQuery("version")
+        url = self.test_encoder.encodeQuery("fullstatus")
 
-        assert(url == "http://localhost:8080/api?apikey=1234&mode=version&output=json")
+        assert(url == "http://localhost:8080/api?apikey=1234&mode=fullstatus&output=json")
 
     def test_encodeQuery_should_construct_warning_url_correctly(self):
 
@@ -33,13 +33,13 @@ class sabEncoder_Test(BaseTestCase.BaseTestCase):
 
         url = self.test_encoder.encodeQuery("queue")
 
-        assert(url == "http://localhost:8080/api?apikey=1234&mode=queue&start=START&limit=LIMIT&output=json")
+        assert(url == "http://localhost:8080/api?apikey=1234&mode=queue&start=0&limit=100&output=json")
 
     def test_encodeQuery_should_construct_history_url_correctly(self):
 
         url = self.test_encoder.encodeQuery("history")
 
-        assert(url == "http://localhost:8080/api?apikey=1234&mode=history&start=START&limit=LIMIT&output=json")
+        assert(url == "http://localhost:8080/api?apikey=1234&mode=history&start=0&limit=100&output=json")
 
     def test_encodeQuery_should_construct_details_action_urls_correctly(self):
 
@@ -104,13 +104,13 @@ class sabEncoder_Test(BaseTestCase.BaseTestCase):
 
     def test_encodeHistoryCommand_should_clear_history_command_url_correctly(self):
 
-        url = self.test_encoder.encodeHistoryCommand("history", ["clear"])
+        url = self.test_encoder.encodeHistoryCommand("clear")
 
         assert(url == "http://localhost:8080/api?apikey=1234&mode=history&name=delete&value=all")
 
     def test_encodeHistoryCommand_should_delete_entry_command_url_correctly(self):
 
-        url = self.test_encoder.encodeHistoryCommand("history", ["SABnzbd_nzo_1"])
+        url = self.test_encoder.encodeHistoryCommand("delete", "SABnzbd_nzo_1")
 
         assert(url == "http://localhost:8080/api?apikey=1234&mode=history&name=delete&value=SABnzbd_nzo_1")
 

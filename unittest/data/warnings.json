@@ -1,0 +1,14 @@
+{
+    "warnings":[
+        {
+            "text": "API key missing, please enter the API key from Config->General into your 3rd party program",
+            "type": "WARNING",
+            "time": 1505153489
+        },
+        {
+            "text": "Thread 3@news.powerusenet.com:119: login failed",
+            "type": "ERROR",
+            "time": 1505139501
+        }
+    ]
+}
