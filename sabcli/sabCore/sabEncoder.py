@@ -53,11 +53,11 @@ class sabEncoder(object):
         url = 'http://' + self.servername + self.fetchpath + url_fragment
         return url
 
-    def encodeHistoryCommand(self, command, args):
+    def encodeHistoryCommand(self, command, *args):
         url_fragment = "history"
 
         if command == 'delete':
-            url_fragment += '&name=delete&value=' + args[0]
+            url_fragment += '&name=delete&value=' + args[0][0]
         elif command == 'clear':
             url_fragment += '&name=delete&value=all'
 
